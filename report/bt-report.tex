@@ -1,0 +1,106 @@
+% Preamble
+% ---
+\documentclass[paper=a4, fontsize=11pt]{scrartcl}
+
+% Packages
+% ---
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  left=15mm,
+  right=15mm,
+  headheight=50mm,
+  top=30mm,
+  bottom=16mm,
+  footskip=10mm
+}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}     % UTF-8 support
+\usepackage{amsmath,amsfonts}   % Advanced math typesetting
+\usepackage{listings}           % Source code formatting and highlighting
+\usepackage{lastpage}           % Reference to last page
+\usepackage[en-GB]{datetime2}   % Date and time macros
+\usepackage[parfill]{parskip}   % No indent at start of new line
+\usepackage{hyperref}           % Table of contents with clickable links
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+\usepackage{fancyhdr}           % Create headers and footers
+\pagestyle{fancy}
+
+% Header and footer things ====================================================================================
+% ---
+% Header of all pages
+\lhead{\includegraphics[width=5cm]{figures/heig.png}}
+\rhead{}
+
+% Footer of all pages
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{RF fingerprinting on NFC devices}
+\cfoot{}
+\rfoot{Page \textbf{\thepage} of \textbf{\pageref{LastPage}}}
+
+% Header and footer of the first page
+\fancypagestyle{firstpage}{
+  \renewcommand{\headrulewidth}{0pt}
+  \lhead{\includegraphics[width=5cm]{figures/heig.png}}
+  \rhead{Département~: Technologies de l'information et de la communication\linebreak Filière~: Informatique et systèmes de communication\linebreak Orientation~: Informatique logicielle}
+  \renewcommand{\footrulewidth}{0pt}
+  \lfoot{}
+  \rfoot{}
+}
+
+% Document
+% ---
+\begin{document}
+
+% Title page ==================================================================================================
+\begin{titlepage}
+  \thispagestyle{firstpage}
+  \begin{center}
+    \vspace*{5cm}
+
+    \Huge
+    \textbf{Bachelor's Thesis}
+
+    \vspace{1.5cm}
+    \LARGE
+    RF fingerprinting on NFC devices
+  \end{center}
+
+  \vspace{6cm}
+  \begin{tabbing}
+    \linespread{3}\textbf{Student:} \hspace{12em} \= Luc Wachter\\\\
+
+    \textbf{Project proposed by:} \> Joël Conus\\
+    \> Kudelski Group SA\\
+    \> 22-24, Route de Genève\\
+    \> 1033 Cheseaux-sur-Lausanne\\\\
+
+    \textbf{Teacher in charge:} \> Alberto Dassatti\\\\
+
+    \textbf{Academic year:} \> 2019-2020
+  \end{tabbing}
+
+  \vspace{3cm}
+  \begin{flushright}
+    Yverdon-les-Bains, \today
+  \end{flushright}
+\end{titlepage}
+
+\newpage
+% Contents page ===============================================================================================
+\renewcommand{\contentsname}{Table of contents}
+\tableofcontents
+
+\newpage
+% Document start ==============================================================================================
+\section{Introduction}
+\subsection{Test}
+\subsubsection{Title3}
+
+\end{document}
