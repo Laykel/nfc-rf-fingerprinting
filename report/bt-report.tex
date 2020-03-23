@@ -1,9 +1,7 @@
-% Preamble
-% ---
+% Preamble ====================================================================================
 \documentclass[paper=a4, fontsize=11pt]{scrartcl}
 
 % Packages
-% ---
 \usepackage{geometry}
 \geometry{
   a4paper,
@@ -14,37 +12,38 @@
   bottom=16mm,
   footskip=10mm
 }
-\usepackage{graphicx}
 \usepackage[utf8]{inputenc}     % UTF-8 support
+\usepackage[english]{babel}
 \usepackage{amsmath,amsfonts}   % Advanced math typesetting
+\usepackage{graphicx}
 \usepackage{listings}           % Source code formatting and highlighting
 \usepackage{lastpage}           % Reference to last page
 \usepackage[en-GB]{datetime2}   % Date and time macros
 \usepackage[parfill]{parskip}   % No indent at start of new line
-\usepackage{hyperref}           % Table of contents with clickable links
-\hypersetup{
-  colorlinks,
-  citecolor=black,
-  filecolor=black,
-  linkcolor=black,
-  urlcolor=black
-}
 \usepackage{fancyhdr}           % Create headers and footers
-\pagestyle{fancy}
+  \pagestyle{fancy}
+
+\usepackage{hyperref}           % Table of contents with clickable links
+  \hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+  }
+
+% Create horizontal rule command with 1 argument of height
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
 
 % Header and footer things ====================================================================================
-% ---
-% Header of all pages
+\renewcommand{\footrulewidth}{0.4pt}
 \lhead{\includegraphics[width=5cm]{figures/heig.png}}
 \rhead{}
-
-% Footer of all pages
-\renewcommand{\footrulewidth}{0.4pt}
 \lfoot{RF fingerprinting on NFC devices}
 \cfoot{}
 \rfoot{Page \textbf{\thepage} of \textbf{\pageref{LastPage}}}
 
-% Header and footer of the first page
+% First page header and footer
 \fancypagestyle{firstpage}{
   \renewcommand{\headrulewidth}{0pt}
   \lhead{\includegraphics[width=5cm]{figures/heig.png}}
@@ -54,11 +53,11 @@
   \rfoot{}
 }
 
-% Document
-% ---
+% Document ====================================================================================================
 \begin{document}
 
 % Title page ==================================================================================================
+% (Custom in order to stay close to the given model.)
 \begin{titlepage}
   \thispagestyle{firstpage}
   \begin{center}
@@ -93,14 +92,21 @@
 \end{titlepage}
 
 \newpage
+% Document start ==============================================================================================
+\section{Specification} % Cahier des charges
+
 % Contents page ===============================================================================================
+\newpage
 \renewcommand{\contentsname}{Table of contents}
 \tableofcontents
-
 \newpage
-% Document start ==============================================================================================
+
+\section{Summary} % Résumé publiable
+
 \section{Introduction}
-\subsection{Test}
-\subsubsection{Title3}
+\subsection{Description}
+\subsection{Context}
+
+\section{Conclusion}
 
 \end{document}
