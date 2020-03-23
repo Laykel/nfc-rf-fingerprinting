@@ -71,24 +71,6 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
-- name: blocks_add_const_vxx_0
-  id: blocks_add_const_vxx
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    const: '0.99'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    type: float
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [922, 416]
-    rotation: 0
-    state: disabled
 - name: blocks_complex_to_float_0
   id: blocks_complex_to_float
   parameters:
@@ -128,17 +110,17 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: ./nfc.txt
-    type: byte
+    file: ./nfc.bin
+    type: complex
     unbuffered: 'False'
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1256, 345]
+    coordinate: [780, 473]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: digital_binary_slicer_fb_0
   id: digital_binary_slicer_fb
   parameters:
@@ -151,7 +133,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1106, 445]
+    coordinate: [1024, 405]
     rotation: 0
     state: disabled
 - name: low_pass_filter_0
@@ -216,7 +198,7 @@ blocks:
     ant8: ''
     ant9: ''
     args: '"soapy=0,driver=lime"'
-    bb_gain0: '20'
+    bb_gain0: '16'
     bb_gain1: '20'
     bb_gain10: '20'
     bb_gain11: '20'
@@ -385,7 +367,7 @@ blocks:
     freq7: 100e6
     freq8: 100e6
     freq9: 100e6
-    gain0: '10'
+    gain0: '0'
     gain1: '10'
     gain10: '10'
     gain11: '10'
@@ -449,7 +431,7 @@ blocks:
     gain_mode7: 'False'
     gain_mode8: 'False'
     gain_mode9: 'False'
-    if_gain0: '20'
+    if_gain0: '16'
     if_gain1: '20'
     if_gain10: '20'
     if_gain11: '20'
@@ -532,7 +514,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [67, 109]
+    coordinate: [69, 175]
     rotation: 0
     state: enabled
 - name: qtgui_freq_sink_x_0
@@ -998,19 +980,18 @@ blocks:
     state: true
 
 connections:
-- [blocks_add_const_vxx_0, '0', digital_binary_slicer_fb_0, '0']
 - [blocks_complex_to_float_0, '0', qtgui_number_sink_0, '0']
 - [blocks_complex_to_float_0, '1', qtgui_number_sink_0, '1']
-- [blocks_complex_to_mag_0, '0', blocks_add_const_vxx_0, '0']
+- [blocks_complex_to_mag_0, '0', digital_binary_slicer_fb_0, '0']
 - [blocks_complex_to_mag_0, '0', qtgui_number_sink_1, '0']
 - [blocks_complex_to_mag_0, '0', qtgui_time_sink_x_1, '0']
-- [digital_binary_slicer_fb_0, '0', blocks_file_sink_0, '0']
 - [low_pass_filter_0, '0', blocks_complex_to_float_0, '0']
 - [low_pass_filter_0, '0', blocks_complex_to_mag_0, '0']
-- [low_pass_filter_0, '0', qtgui_freq_sink_x_0, '0']
+- [low_pass_filter_0, '0', blocks_file_sink_0, '0']
 - [low_pass_filter_0, '0', qtgui_time_sink_x_0, '0']
-- [low_pass_filter_0, '0', qtgui_waterfall_sink_x_0, '0']
 - [osmosdr_source_0, '0', low_pass_filter_0, '0']
+- [osmosdr_source_0, '0', qtgui_freq_sink_x_0, '0']
+- [osmosdr_source_0, '0', qtgui_waterfall_sink_x_0, '0']
 
 metadata:
   file_format: 1
