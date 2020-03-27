@@ -5,12 +5,12 @@ options:
     cmake_opt: ''
     comment: ''
     copyright: ''
-    description: ''
+    description: The goal is to acquire NFC communications and record them to a file.
     gen_cmake: 'On'
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: NFC_test
+    id: NFC_acquisition
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -21,7 +21,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: NFC Test
+    title: NFC Acquisition
     window_size: ''
   states:
     bus_sink: false
@@ -32,6 +32,21 @@ options:
     state: enabled
 
 blocks:
+- name: filepath
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    gui_hint: 4,1,1,1
+    label: File path
+    type: string
+    value: /dev/null
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 80]
+    rotation: 0
+    state: true
 - name: frequency
   id: variable
   parameters:
@@ -110,7 +125,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: ./nfc.bin
+    file: filepath
     type: complex
     unbuffered: 'False'
     vlen: '1'
@@ -118,7 +133,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [780, 473]
+    coordinate: [700, 357]
     rotation: 0
     state: enabled
 - name: digital_binary_slicer_fb_0

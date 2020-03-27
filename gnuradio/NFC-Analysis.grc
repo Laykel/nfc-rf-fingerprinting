@@ -5,12 +5,13 @@ options:
     cmake_opt: ''
     comment: ''
     copyright: ''
-    description: ''
+    description: Takes as input a recorded NFC communication and visualizes the signal
+      through different graphs
     gen_cmake: 'On'
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: NFC_Read
+    id: NFC_analysis
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -21,7 +22,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: Read NFC
+    title: NFC Analysis
     window_size: ''
   states:
     bus_sink: false
@@ -32,21 +33,118 @@ options:
     state: enabled
 
 blocks:
-- name: frequency
-  id: variable_qtgui_entry
+- name: boost
+  id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: 0,1,1,1
     label: ''
-    type: real
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: '6'
+    step: '1'
+    stop: '40'
+    value: '10'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [608, 12]
+    rotation: 0
+    state: true
+- name: cutoff
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,0,1,1
+    label: ''
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: samp_rate/1000
+    step: '1000'
+    stop: samp_rate/100
+    value: samp_rate/400
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [371, 12]
+    rotation: 0
+    state: true
+- name: filepath
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: 4,1,1,1
+    label: File path
+    label0: '"/home/luc/HEIG/TB/data/nfc-2.0-2.bin"'
+    label1: ' "/dev/null"'
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '0'
+    option1: ''
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '["/home/luc/HEIG/TB/data/nfc-2.0-2.bin",  "/dev/null", "/home/luc/HEIG/TB/data/nfc-2.0-1.bin"]'
+    orient: Qt.QVBoxLayout
+    type: string
+    value: ''
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [252, 488]
+    rotation: 0
+    state: disabled
+- name: filepath
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: 4,1,1,1
+    label: File path
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: listdir("/home/luc/HEIG/TB/data")
+    num_opts: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[path.abspath(x) for x in listdir("/home/luc/HEIG/TB/data")]'
+    orient: Qt.QVBoxLayout
+    type: string
+    value: '0'
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [418, 488]
+    rotation: 0
+    state: disabled
+- name: frequency
+  id: variable
+  parameters:
+    comment: ''
     value: 13.56e6
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [280, 12]
+    coordinate: [272, 12]
     rotation: 0
-    state: true
+    state: enabled
 - name: samp_rate
   id: variable
   parameters:
@@ -59,31 +157,43 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
-- name: band_pass_filter_0
-  id: band_pass_filter
+- name: transition
+  id: variable_qtgui_range
   parameters:
-    affinity: ''
-    alias: ''
-    beta: '6.76'
     comment: ''
-    decim: '1'
-    gain: '1'
-    high_cutoff_freq: 200e3
-    interp: '1'
-    low_cutoff_freq: 100e3
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    samp_rate: samp_rate
-    type: fir_filter_ccf
-    width: 50e3
-    win: firdes.WIN_HAMMING
+    gui_hint: 1,0,1,1
+    label: ''
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: samp_rate/1000
+    step: '1000'
+    stop: samp_rate/100
+    value: samp_rate/200
+    widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [241, 364]
+    coordinate: [490, 12]
     rotation: 0
     state: true
+- name: blocks_complex_to_mag_0
+  id: blocks_complex_to_mag
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [876, 418]
+    rotation: 0
+    state: enabled
 - name: blocks_file_source_0
   id: blocks_file_source
   parameters:
@@ -91,19 +201,19 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/GNURadio & GQRX/nfc-3.0-1.bin
+    file: /home/luc/HEIG/TB/data/nfc-2.0-2.bin
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
-    repeat: 'False'
+    repeat: 'True'
     type: complex
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [12, 120]
+    coordinate: [8, 134]
     rotation: 0
     state: true
 - name: blocks_multiply_const_vxx_0
@@ -112,7 +222,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: '10'
+    const: boost
     maxoutbuf: '0'
     minoutbuf: '0'
     type: complex
@@ -121,7 +231,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [82, 322]
+    coordinate: [226, 228]
     rotation: 0
     state: true
 - name: blocks_throttle_0
@@ -140,9 +250,46 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [249, 202]
+    coordinate: [597, 190]
     rotation: 0
     state: true
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: from os import listdir, path
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [136, 488]
+    rotation: 0
+    state: disabled
+- name: low_pass_filter_0
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    cutoff_freq: cutoff
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_ccf
+    width: transition
+    win: firdes.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [402, 248]
+    rotation: 0
+    state: enabled
 - name: qtgui_freq_sink_x_0
   id: qtgui_freq_sink_x
   parameters:
@@ -178,7 +325,7 @@ blocks:
     fftsize: '1024'
     freqhalf: 'True'
     grid: 'True'
-    gui_hint: ''
+    gui_hint: 4,0,2,1
     label: Relative Gain
     label1: ''
     label10: ''''''
@@ -193,7 +340,7 @@ blocks:
     legend: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
-    name: '""'
+    name: '"FFT plot"'
     nconnections: '1'
     showports: 'False'
     tr_chan: '0'
@@ -220,7 +367,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [466, 102]
+    coordinate: [876, 212]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_1
@@ -254,7 +401,7 @@ blocks:
     ctrlpanel: 'False'
     entags: 'True'
     grid: 'True'
-    gui_hint: ''
+    gui_hint: 2,1,2,1
     label1: Signal 1
     label10: Signal 10
     label2: Signal 2
@@ -276,9 +423,9 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '""'
+    name: '"I/Q time plot"'
     nconnections: '1'
-    size: '1024'
+    size: '32768'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'
@@ -310,14 +457,111 @@ blocks:
     width8: '1'
     width9: '1'
     ylabel: Amplitude
-    ymax: '1'
-    ymin: '-1'
+    ymax: '0.5'
+    ymin: '-0.5'
     yunit: '""'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [470, 204]
+    coordinate: [876, 318]
+    rotation: 0
+    state: true
+- name: qtgui_time_sink_x_1_0
+  id: qtgui_time_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: blue
+    color10: dark blue
+    color2: red
+    color3: green
+    color4: black
+    color5: cyan
+    color6: magenta
+    color7: yellow
+    color8: dark red
+    color9: dark green
+    comment: ''
+    ctrlpanel: 'False'
+    entags: 'True'
+    grid: 'True'
+    gui_hint: 4,1,2,1
+    label1: Signal 1
+    label10: Signal 10
+    label2: Signal 2
+    label3: Signal 3
+    label4: Signal 4
+    label5: Signal 5
+    label6: Signal 6
+    label7: Signal 7
+    label8: Signal 8
+    label9: Signal 9
+    legend: 'True'
+    marker1: '-1'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: '"Magnitude time plot"'
+    nconnections: '1'
+    size: '262144'
+    srate: samp_rate
+    stemplot: 'False'
+    style1: '1'
+    style10: '1'
+    style2: '1'
+    style3: '1'
+    style4: '1'
+    style5: '1'
+    style6: '1'
+    style7: '1'
+    style8: '1'
+    style9: '1'
+    tr_chan: '0'
+    tr_delay: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: float
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    ylabel: Amplitude
+    ymax: '0.5'
+    ymin: '-0.5'
+    yunit: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1099, 398]
     rotation: 0
     state: true
 - name: qtgui_waterfall_sink_x_0
@@ -352,7 +596,7 @@ blocks:
     fftsize: '1024'
     freqhalf: 'True'
     grid: 'False'
-    gui_hint: ''
+    gui_hint: 2,0,2,1
     int_max: '10'
     int_min: '-140'
     label1: ''
@@ -368,7 +612,7 @@ blocks:
     legend: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
-    name: '""'
+    name: '"Waterfall plot"'
     nconnections: '1'
     showports: 'False'
     type: complex
@@ -378,17 +622,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [470, 288]
+    coordinate: [876, 106]
     rotation: 0
     state: true
 
 connections:
-- [band_pass_filter_0, '0', blocks_throttle_0, '0']
+- [blocks_complex_to_mag_0, '0', qtgui_time_sink_x_1_0, '0']
 - [blocks_file_source_0, '0', blocks_multiply_const_vxx_0, '0']
-- [blocks_multiply_const_vxx_0, '0', band_pass_filter_0, '0']
+- [blocks_multiply_const_vxx_0, '0', low_pass_filter_0, '0']
+- [blocks_throttle_0, '0', blocks_complex_to_mag_0, '0']
 - [blocks_throttle_0, '0', qtgui_freq_sink_x_0, '0']
 - [blocks_throttle_0, '0', qtgui_time_sink_x_1, '0']
 - [blocks_throttle_0, '0', qtgui_waterfall_sink_x_0, '0']
+- [low_pass_filter_0, '0', blocks_throttle_0, '0']
 
 metadata:
   file_format: 1
