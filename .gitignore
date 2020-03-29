@@ -2,6 +2,9 @@
 *.log
 *.aux
 *.out
+*.toc
+*.lot
+*.lof
 
 # vim
 tags
