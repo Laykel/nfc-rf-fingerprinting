@@ -75,29 +75,29 @@ class NFC_analysis(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.samp_rate = samp_rate = 2e6
-        self.transition = transition = samp_rate/200
+        self.transition = transition = samp_rate/5
         self.frequency = frequency = 13.56e6
-        self.cutoff = cutoff = samp_rate/400
+        self.cutoff = cutoff = samp_rate/5
         self.boost = boost = 10
 
         ##################################################
         # Blocks
         ##################################################
-        self._transition_range = Range(samp_rate/1000, samp_rate/100, 1000, samp_rate/200, 200)
+        self._transition_range = Range(samp_rate/1000, samp_rate/4, 1000, samp_rate/5, 200)
         self._transition_win = RangeWidget(self._transition_range, self.set_transition, 'transition', "counter_slider", float)
         self.top_grid_layout.addWidget(self._transition_win, 1, 0, 1, 1)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 1):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._cutoff_range = Range(samp_rate/1000, samp_rate/100, 1000, samp_rate/400, 200)
+        self._cutoff_range = Range(samp_rate/1000, samp_rate/4, 1000, samp_rate/5, 200)
         self._cutoff_win = RangeWidget(self._cutoff_range, self.set_cutoff, 'cutoff', "counter_slider", float)
         self.top_grid_layout.addWidget(self._cutoff_win, 0, 0, 1, 1)
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 1):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._boost_range = Range(6, 40, 1, 10, 200)
+        self._boost_range = Range(1, 40, 1, 10, 200)
         self._boost_win = RangeWidget(self._boost_range, self.set_boost, 'boost', "counter_slider", float)
         self.top_grid_layout.addWidget(self._boost_win, 0, 1, 1, 1)
         for r in range(0, 1):
@@ -301,7 +301,7 @@ class NFC_analysis(gr.top_block, Qt.QWidget):
                 6.76))
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(boost)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/data/nfc-2.0-2.bin', True, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/data/nfc-3.0-1.bin', True, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_complex_to_mag_0 = blocks.complex_to_mag(1)
 
@@ -329,8 +329,8 @@ class NFC_analysis(gr.top_block, Qt.QWidget):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.set_cutoff(self.samp_rate/400)
-        self.set_transition(self.samp_rate/200)
+        self.set_cutoff(self.samp_rate/5)
+        self.set_transition(self.samp_rate/5)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
         self.low_pass_filter_0.set_taps(firdes.low_pass(1, self.samp_rate, self.cutoff, self.transition, firdes.WIN_HAMMING, 6.76))
         self.qtgui_freq_sink_x_0.set_frequency_range(self.frequency, self.samp_rate)

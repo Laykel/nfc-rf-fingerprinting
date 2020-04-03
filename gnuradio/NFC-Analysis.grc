@@ -42,7 +42,7 @@ blocks:
     min_len: '200'
     orient: Qt.Horizontal
     rangeType: float
-    start: '6'
+    start: '1'
     step: '1'
     stop: '40'
     value: '10'
@@ -51,7 +51,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [608, 12]
+    coordinate: [624, 12]
     rotation: 0
     state: true
 - name: cutoff
@@ -65,14 +65,14 @@ blocks:
     rangeType: float
     start: samp_rate/1000
     step: '1000'
-    stop: samp_rate/100
-    value: samp_rate/400
+    stop: samp_rate/4
+    value: samp_rate/5
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [371, 12]
+    coordinate: [370, 13]
     rotation: 0
     state: true
 - name: filepath
@@ -168,14 +168,14 @@ blocks:
     rangeType: float
     start: samp_rate/1000
     step: '1000'
-    stop: samp_rate/100
-    value: samp_rate/200
+    stop: samp_rate/4
+    value: samp_rate/5
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [490, 12]
+    coordinate: [497, 13]
     rotation: 0
     state: true
 - name: blocks_complex_to_mag_0
@@ -201,7 +201,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/data/nfc-2.0-2.bin
+    file: /home/luc/HEIG/TB/data/nfc-3.0-1.bin
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
