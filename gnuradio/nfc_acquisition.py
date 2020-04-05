@@ -39,7 +39,7 @@ import osmosdr
 import time
 from gnuradio import qtgui
 
-class NFC_acquisition(gr.top_block, Qt.QWidget):
+class nfc_acquisition(gr.top_block, Qt.QWidget):
 
     def __init__(self):
         gr.top_block.__init__(self, "NFC Acquisition")
@@ -62,7 +62,7 @@ class NFC_acquisition(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "NFC_acquisition")
+        self.settings = Qt.QSettings("GNU Radio", "nfc_acquisition")
 
         try:
             if StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
@@ -343,7 +343,7 @@ class NFC_acquisition(gr.top_block, Qt.QWidget):
         self.connect((self.osmosdr_source_0, 0), (self.blocks_multiply_const_vxx_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "NFC_acquisition")
+        self.settings = Qt.QSettings("GNU Radio", "nfc_acquisition")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -401,7 +401,7 @@ class NFC_acquisition(gr.top_block, Qt.QWidget):
 
 
 
-def main(top_block_cls=NFC_acquisition, options=None):
+def main(top_block_cls=nfc_acquisition, options=None):
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
         style = gr.prefs().get_string('qtgui', 'style', 'raster')

@@ -38,7 +38,7 @@ from gnuradio import eng_notation
 from gnuradio.qtgui import Range, RangeWidget
 from gnuradio import qtgui
 
-class NFC_analysis(gr.top_block, Qt.QWidget):
+class nfc_analysis(gr.top_block, Qt.QWidget):
 
     def __init__(self):
         gr.top_block.__init__(self, "NFC Analysis")
@@ -61,7 +61,7 @@ class NFC_analysis(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "NFC_analysis")
+        self.settings = Qt.QSettings("GNU Radio", "nfc_analysis")
 
         try:
             if StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
@@ -320,7 +320,7 @@ class NFC_analysis(gr.top_block, Qt.QWidget):
         self.connect((self.low_pass_filter_0, 0), (self.blocks_throttle_0, 0))
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "NFC_analysis")
+        self.settings = Qt.QSettings("GNU Radio", "nfc_analysis")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -369,7 +369,7 @@ class NFC_analysis(gr.top_block, Qt.QWidget):
 
 
 
-def main(top_block_cls=NFC_analysis, options=None):
+def main(top_block_cls=nfc_analysis, options=None):
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
         style = gr.prefs().get_string('qtgui', 'style', 'raster')
