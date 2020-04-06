@@ -76,16 +76,16 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.samp_rate = samp_rate = 2e6
-        self.transition = transition = samp_rate/200
+        self.transition = transition = samp_rate/5
         self.frequency = frequency = 13.56e6
         self.filepath = filepath = '/dev/null'
-        self.cutoff = cutoff = samp_rate/400
+        self.cutoff = cutoff = samp_rate/5
         self.boost = boost = 2
 
         ##################################################
         # Blocks
         ##################################################
-        self._transition_range = Range(samp_rate/1000, samp_rate/4, 1000, samp_rate/200, 200)
+        self._transition_range = Range(samp_rate/1000, samp_rate/4, 1000, samp_rate/5, 200)
         self._transition_win = RangeWidget(self._transition_range, self.set_transition, 'transition', "counter_slider", float)
         self.top_grid_layout.addWidget(self._transition_win, 1, 0, 1, 1)
         for r in range(1, 2):
@@ -103,7 +103,7 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(1, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._cutoff_range = Range(samp_rate/1000, samp_rate/4, 1000, samp_rate/400, 200)
+        self._cutoff_range = Range(samp_rate/1000, samp_rate/4, 1000, samp_rate/5, 200)
         self._cutoff_win = RangeWidget(self._cutoff_range, self.set_cutoff, 'cutoff', "counter_slider", float)
         self.top_grid_layout.addWidget(self._cutoff_win, 0, 0, 1, 1)
         for r in range(0, 1):
@@ -352,8 +352,8 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.set_cutoff(self.samp_rate/400)
-        self.set_transition(self.samp_rate/200)
+        self.set_cutoff(self.samp_rate/5)
+        self.set_transition(self.samp_rate/5)
         self.low_pass_filter_0_0.set_taps(firdes.low_pass(1, self.samp_rate, self.cutoff, self.transition, firdes.WIN_HAMMING, 6.76))
         self.osmosdr_source_0.set_sample_rate(self.samp_rate)
         self.qtgui_freq_sink_x_0_0.set_frequency_range(self.frequency, self.samp_rate)
