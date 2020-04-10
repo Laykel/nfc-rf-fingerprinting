@@ -78,7 +78,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
         self.transition = transition = samp_rate/5
         self.frequency = frequency = 13.56e6
         self.cutoff = cutoff = samp_rate/5
-        self.boost = boost = 10
+        self.boost = boost = 2
 
         ##################################################
         # Blocks
@@ -97,7 +97,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 1):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._boost_range = Range(1, 40, 1, 10, 200)
+        self._boost_range = Range(1, 20, 1, 2, 200)
         self._boost_win = RangeWidget(self._boost_range, self.set_boost, 'boost', "counter_slider", float)
         self.top_grid_layout.addWidget(self._boost_win, 0, 1, 1, 1)
         for r in range(0, 1):
