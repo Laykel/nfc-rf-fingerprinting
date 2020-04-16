@@ -1,0 +1,173 @@
+# Full signal, down 0.1, boost 2, 100k cutoff, 100k transition: broken
+Reader -> /00\
+Reader -> /02\
+Reader -> /01\
+Reader ->  A5  /3B\
+Reader -> /03\
+Reader -> /00\
+Reader -> /00\
+Reader -> /06\
+Reader ->  60   BF   EE  (No parity)
+Reader ->  F4  (No parity)
+Reader -> /02\
+Reader -> /05\
+Reader ->  30   00   02   A8 
+Reader -> /01\
+Reader -> /01\
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader -> /01\
+Reader -> /00\
+Reader -> /00\
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader -> /05\
+Reader -> /05\
+Reader -> /06\
+Reader -> /01\
+Reader -> /15\
+Reader -> /01\
+Reader ->  D8  /0F\
+Reader ->  B0  /00\
+Reader ->  00  /02\
+Reader ->  30   00   02   A8 
+Reader ->  B0  /00\
+Reader ->  30   00   02  /00\
+Reader ->  30   00  (FE) /15\
+Reader -> [30]
+Reader ->  B0  /00\
+Reader ->  00  /0A\
+Reader -> (50) /00\
+Reader -> (B0) /1F\
+Reader ->  30   00   02  /00\
+Reader -> /01\
+Reader ->  B0   80   FF  /00\
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  B0  /3F\
+Reader ->  7E  (No parity)
+Reader -> [30]
+Reader -> [30]
+Reader ->  B0   80   01   54 
+Reader -> /00\
+Reader -> /30\
+Reader -> /00\
+Reader -> /00\
+Reader -> (28)  A0   5F  /00\
+Reader -> /00\
+Reader -> (B0) (5F) /00\
+Reader -> [30]
+Reader ->  98   00   FD   57  (No parity)
+Reader ->  D8  /0F\
+Reader -> /00\
+Reader ->  30   00  (FE) /01\
+Reader -> [30]
+Reader -> /00\
+Reader -> [7C]
+Reader -> [30]
+Reader -> [30]
+Reader ->  B0  /00\
+Reader -> /00\
+Reader -> [30]
+Reader ->  00 
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader -> [30]
+Reader ->  00 
+Reader ->  30   00   02  /00\
+Reader -> /18\
+Reader ->  B0   80   FF  /00\
+Reader -> (B0) /1F\
+Reader -> /00\
+Reader -> [26]
+Reader ->  50  (3F) /00\
+Reader -> /0A\
+Reader ->  8A   E7  (No parity)
+Reader ->  93   70  /00\
+Reader -> /00\
+Reader ->  50   80   57  (No parity)
+Reader -> [52]
+Reader -> /00\
+Reader ->  B0  /00\
+Reader -> /00\
+Reader ->  B0  /00\
+Reader ->  21  /00\
+Reader ->  B0  /06\
+Reader ->  30   02   10  /1B\
+Reader -> /00\
+Reader -> [52]
+Reader ->  CB   38 
+Reader -> /02\
+Reader ->  50  /3F\
+Reader ->  80  /05\
+Reader -> (B0) /1F\
+Reader -> /00\
+Reader -> [30]
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader ->  58  (40) (7F) /02\
+Reader ->  B0  /00\
+Reader ->  7E  /02\
+Reader -> /10\
+Reader -> /00\
+Reader ->  00  /0A\
+Reader -> /30\
+Reader -> /00\
+Reader -> [7E]
+Reader -> (B0) /1F\
+Reader -> /00\
+Reader -> /22\
+Reader -> /01\
+Reader -> /00\
+Reader ->  C0  /01\
+Reader -> [52]
+Reader ->  CB   38   C4   02  (AD)  FA  /01\
+Reader ->  95   20 
+Reader -> /00\
+Reader ->  C0  /05\
+Reader -> /2A\
+Reader -> (8A)  E1   8C   7E  /35\
+Reader ->  60  /01\
+Reader ->  95   70   2A   37   60   80   FD  /00\
+Reader -> (B0) /1F\
+Reader ->  30  /00\
+Reader -> /00\
+Reader -> /02\
+Reader -> /18\
+Reader ->  30   02  /00\
+Reader ->  50   00  (57) /19\
+Reader ->  CB  /00\
+Reader -> (AE)  AF  /07\
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader ->  60  /02\
+Reader -> /00\
+Reader -> [30]
+Reader -> /00\
+Reader -> /05\
+Reader -> /00\
+Reader ->  30   00   02  /00\
+Reader ->  58  /00\
+Reader ->  80  /01\
+Reader ->  30   00   02   A8 
+Reader -> (B0) /1F\
+Reader ->  00  /0A\
+Reader -> /02\
+Reader -> /1F\
+Reader -> /00\
+Reader ->  D8  /07\
+Reader -> [78]
+Reader ->  30   00   02  /28\
+Reader -> (50) /00\
+Reader ->  80  /05\
+Reader -> /00\
+Reader -> /00\
+Reader ->  00  /0A\

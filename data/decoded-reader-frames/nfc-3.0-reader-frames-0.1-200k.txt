@@ -1,0 +1,463 @@
+# Full signal, down 0.1, boost 2, 200k cutoff, 200k transition
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30  /00\
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader -> [30]
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader -> [30]
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader ->  30  /00\
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  4C  /00\
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  B0  /00\
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader -> /02\
+Reader -> [4A]
+Reader ->  ED  /07\
+Reader ->  50   00   57   CD 
+Reader -> /12\
+Reader ->  ED  /07\
+Reader ->  93  /00\
+Reader ->  9B   BF   FD  /00\
+Reader ->  FD  (B5)
+Reader ->  95   20 
+Reader ->  16  (D0) /07\
+Reader -> /06\
+Reader -> (95)  87  /00\
+Reader -> (7F)  DF  /03\
+Reader -> /01\
+Reader -> /00\
+Reader -> /01\
+Reader -> [13]
+Reader -> /01\
+Reader -> /06\
+Reader -> /01\
+Reader -> /09\
+Reader -> /01\
+Reader -> [6D]
+Reader -> /03\
+Reader -> /03\
+Reader -> /09\
+Reader -> /03\
+Reader ->  B5  (No parity)
+Reader -> /0C\
+Reader -> /01\
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader -> /01\
+Reader -> /01\
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  50   00   57   CD 
+Reader -> [26]
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   20 
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   20 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  30   00   02   A8 
+Reader ->  30   04   26   EE 
+Reader ->  30   08   4A   24 
+Reader ->  30   0C   6E   62 
+Reader ->  30   02   10   8B 
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  30   00   02   A8 
+Reader ->  50   00   57   CD 
+Reader -> [26]
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   20 
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   20 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader -> [26]
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   20 
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   20 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  30   00   02   A8 
+Reader ->  30   04   26   EE 
+Reader ->  30   08   4A   24 
+Reader ->  30   08   4A   24 
+Reader ->  30   08   4A   24 
+Reader ->  30   08   4A   24 
+Reader ->  30   08   4A   24 
+Reader ->  30   08   4A   24 
+Reader ->  50   00   57   CD 
+Reader -> [26]
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   20 
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   20 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader ->  50   00   57   CD 
+Reader -> /01\
+Reader -> /0B\
+Reader -> /0C\
+Reader ->  55  /0A\
+Reader -> /00\
+Reader -> (70) /02\
+Reader ->  A8  /00\
+Reader -> /15\
+Reader ->  EC   55   A8  (No parity)
+Reader -> /00\
+Reader -> /04\
+Reader ->  58  (No parity)
+Reader ->  44  (No parity)
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader ->  FD  /01\
+Reader ->  30   00   02  /00\
+Reader -> /01\
+Reader -> (B5) /01\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> [7D]
+Reader -> /05\
+Reader -> /00\
+Reader -> /05\
+Reader -> (44) (7F)
+Reader ->  F9 
+Reader -> /00\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader ->  BB  /00\
+Reader -> /05\
+Reader ->  30   00   02   A8 
+Reader -> (E5) /16\
+Reader -> [1C]
+Reader ->  30   00   02   A8 
+Reader -> [5D]
+Reader -> /01\
+Reader -> /17\
+Reader -> /00\
+Reader -> /00\
+Reader -> /1C\
+Reader ->  30   00   E2  /03\
+Reader ->  30   00   02   A8 
+Reader -> /03\
+Reader -> /01\
+Reader ->  30   00   02   A8 
+Reader -> /05\
+Reader ->  30   00   02   A8 
+Reader ->  BB  /00\
+Reader -> /03\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> /01\
+Reader -> /00\
+Reader ->  F7  (No parity)
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader ->  30   00   E2  /03\
+Reader ->  DD  (No parity)
+Reader -> /02\
+Reader ->  30   00   02   A8 
+Reader -> (DD) /01\
+Reader ->  B5  /03\
+Reader -> /00\
+Reader -> (D4) (BB) /01\
+Reader -> /01\
+Reader ->  30   00   02   A8 
+Reader ->  EB 
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> (94) /1F\
+Reader ->  30   00   02   A8 
+Reader -> [30]
+Reader -> /00\
+Reader ->  30   7E 
+Reader -> [30]
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> /03\
+Reader -> /00\
+Reader ->  30   7E 
+Reader ->  30   00   02   A8 
+Reader -> /03\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> /03\
+Reader ->  30   D3  /03\
+Reader -> /08\
+Reader -> /03\
+Reader ->  30  /00\
+Reader ->  30   00   02   A8 
+Reader -> (ED) /02\
+Reader -> /01\
+Reader -> /00\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> /06\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> (FD)
+Reader -> /00\
+Reader ->  30   01  (No parity)
+Reader ->  30   00   02   A8 
+Reader ->  DB  /24\
+Reader -> (5D)
+Reader -> [6D]
+Reader -> /00\
+Reader ->  F9  /01\
+Reader -> /00\
+Reader -> /00\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader ->  30   00   02   A8 
+Reader -> /01\
+Reader -> /00\
+Reader -> [00]
+Reader -> /06\
+Reader ->  30   00   02  /00\
+Reader ->  30   00   02   A8 
+Reader ->  B0  /00\
+Reader -> /00\
+Reader ->  50   00   57   CD 
+Reader -> [26]
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  5D   BD  (No parity)
+Reader ->  93   20 
+Reader -> /05\
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader -> /01\
+Reader ->  95   20 
+Reader ->  95   70   2A   37  /0E\
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93  (86) /00\
+Reader -> (65) (1C) (8A)  0D  (D8) (A8) (CF)
+Reader ->  30   00   02   A8 
+Reader ->  98   02   13   F7 
+Reader -> (47)  B3 
+Reader ->  41   96  /07\
+Reader ->  30   0C   6E   62 
+Reader -> /2F\
+Reader -> /00\
+Reader ->  30   02   10   8B 
+Reader -> [00]
+Reader -> /01\
+Reader -> /03\
+Reader -> /05\
+Reader -> /0F\
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader -> /00\
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  6D  /01\
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  30   40 
+Reader ->  BB  /15\
+Reader -> /01\
+Reader -> (44) (7F)
+Reader -> [30]
+Reader ->  30   00   02   A8 
+Reader ->  30   7E 
+Reader -> /00\
+Reader ->  46   7F 
+Reader -> (FD)
+Reader -> /00\
+Reader -> /00\
+Reader ->  30   40 
+Reader ->  98   80   01   54 
+Reader ->  30  /00\
+Reader ->  98   80  (F1) /01\
+Reader ->  50   00   57   CD 
+Reader -> [26]
+Reader ->  50   80   97   66  (No parity)
+Reader -> [52]
+Reader -> /03\
+Reader -> /00\
+Reader ->  93   20 
+Reader -> [2B]
+Reader -> (A5) /2D\
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  DB  /25\
+Reader ->  95   20 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader ->  50  (7E) /00\
+Reader -> [52]
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader ->  7D 
+Reader ->  95   70   2A   37   60   80   FD   50   13 
+Reader -> /00\
+Reader -> /00\
+Reader ->  30   00   82  /03\
+Reader -> /01\
+Reader -> /00\
+Reader ->  41  /02\
+Reader ->  30   04   26   EE 
+Reader -> (FE)
+Reader ->  30   08   4A   24 
+Reader -> (50) (71)
+Reader ->  44  (No parity)
+Reader ->  50   00   57   CD 
+Reader -> [52]
+Reader ->  93   70   88   04   5A   F5   23   B5   9A 
+Reader -> /06\
+Reader ->  30   00   02   A8 
+Reader -> /03\
+Reader ->  AD  /1D\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> (44) (81)  01  /00\
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader -> /03\
+Reader -> /00\
+Reader -> /01\
+Reader ->  98   80   01   54 
+Reader ->  30   00   02   A8 
+Reader ->  F5 
+Reader -> /00\
+Reader -> /00\
+Reader ->  30   00  (F2) /03\
+Reader ->  DD  /02\
+Reader -> (FF)
+Reader -> /00\
+Reader ->  30   00   02   A8 
+Reader ->  F5  (52) /0E\
+Reader -> /00\
+Reader ->  30   00   E2  /03\
+Reader -> (50) (7F)
+Reader ->  30   00   02   A8 
+Reader -> (FD)
+Reader -> /00\

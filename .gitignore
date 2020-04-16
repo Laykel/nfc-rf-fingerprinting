@@ -1,3 +1,6 @@
+# RF recordings (too heavy)
+data/recordings/
+
 # LaTeX
 *.log
 *.aux

@@ -32,6 +32,7 @@ This project is conducted in the context of my bachelor thesis at [HEIG-VD](http
 
 This repository's folders can be described as follows:
 
+- `data` contains the _gitignored_ recordings of NFC communications, as well as decoded transmissions in different formats.
 - `gnuradio` contains the different GRC flowgraphs used in the project.
 - `notebooks` contains the notebooks used during the testing and prototyping phase of the project.
 - `report` contains the LaTeX sources and the compiled pdf of the report. It also contains the bibliography and figures used in it.
