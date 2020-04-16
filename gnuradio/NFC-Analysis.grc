@@ -201,7 +201,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/data/nfc-3.0-antenna-1.bin
+    file: /home/luc/HEIG/TB/data/3.0-antenna-probing.nfc
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'

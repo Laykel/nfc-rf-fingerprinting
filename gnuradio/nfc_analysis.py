@@ -341,7 +341,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
                 6.76))
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(boost)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/data/nfc-3.0-antenna-1.bin', True, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/data/3.0-antenna-probing.nfc', True, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_complex_to_mag_0 = blocks.complex_to_mag(1)
 
