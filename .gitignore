@@ -8,6 +8,12 @@ data/recordings/
 *.toc
 *.lot
 *.lof
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.tex.bbl
+*.tex.blg
 
 # vim
 tags

@@ -9,11 +9,15 @@
   right=15mm,
   headheight=50mm,
   top=30mm,
-  bottom=16mm,
+  bottom=18mm,
   footskip=10mm
 }
 \usepackage[utf8]{inputenc}     % UTF-8 support
 \usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[style=iso-authoryear]{biblatex} % biblatex with ISO 690
+  \addbibresource{test.bib}
+
 \usepackage{amsmath,amsfonts}   % Advanced math typesetting
 \usepackage{graphicx}
 \usepackage{listings}           % Source code formatting and highlighting
@@ -43,88 +47,39 @@
 \cfoot{}
 \rfoot{Page \textbf{\thepage} of \textbf{\pageref{LastPage}}}
 
-% First page header and footer
-\fancypagestyle{firstpage}{
-  \renewcommand{\headrulewidth}{0pt}
-  \lhead{\includegraphics[width=5cm]{figures/heig.png}}
-  \rhead{Département~: Technologies de l'information et de la communication\linebreak Filière~: Informatique et systèmes de communication\linebreak Orientation~: Informatique logicielle}
-  \renewcommand{\footrulewidth}{0pt}
-  \lfoot{}
-  \rfoot{}
-}
-
 % Document ====================================================================================================
 \begin{document}
 
-% Title page ==================================================================================================
-% (Custom in order to stay close to the given model.)
-\begin{titlepage}
-  \thispagestyle{firstpage}
-  \begin{center}
-    \vspace*{5cm}
-
-    \Huge
-    \textbf{Bachelor Thesis}
-
-    \vspace{1.5cm}
-    \LARGE
-    RF fingerprinting on NFC devices
-  \end{center}
-
-  \vspace{6cm}
-  \begin{tabbing}
-    \linespread{3}\textbf{Student:} \hspace{12em} \= Luc Wachter\\\\
-
-    \textbf{Project proposed by:} \> Joël Conus\\
-    \> Kudelski Group SA\\
-    \> 22-24, Route de Genève\\
-    \> 1033 Cheseaux-sur-Lausanne\\\\
-
-    \textbf{Teacher in charge:} \> Alberto Dassatti\\\\
-
-    \textbf{Academic year:} \> 2019-2020
-  \end{tabbing}
-
-  \vspace{3cm}
-  \begin{flushright}
-    Yverdon-les-Bains, \today
-  \end{flushright}
-\end{titlepage}
-
+% Cover page
+\include{sections/coverpage}
 \newpage
-% Document start ==============================================================================================
-\section{Specification} % Cahier des charges
+
+% Specification (cahier des charges)
+\section{Specification}
+\newpage
 
 % Contents page ===============================================================================================
-\newpage
 \renewcommand{\contentsname}{Table of contents}
 \tableofcontents
 \newpage
 
-\section{Summary} % Résumé publiable
+% Résumé publiable
+\section{Summary}
+This \cite{dirac} is a good dirac. \cite{einstein} too.
+\newpage
 
-\section{Introduction}
-\subsection{Description}
-RF fingerprinting is a technique that allows the identification of radio transmitters by extracting small imperfections in their spectrum. These imperfections are caused by tiny manufacturing differences in the devices' analog components. Using Software-Defined Radio (SDR) equipment, we can analyse this spectrum in order to extract the aforementioned differences and identify a device.
+% Introduction
+\include{sections/introduction}
+\newpage
 
-Such technique can be used on any type of radio transmission: Bluetooth, BLE, WiFi, LTE, etc. This project aims to use RF fingerprinting on NFC devices. Indeed, NFC is often used in access control and payment applications but many implementations are vulnerable to relay attacks. Spoofing the imperfections in an emitter's radio spectrum is close to impossible at the present time, since it is essentially a hardware signature. This is why a technique like the one described here would be a valuable additional security layer.
-
-The goal of this project is to determine if RF fingerprinting of NFC devices could be used as an authentication technique, in order to prevent relay attacks.
-
-\subsection{Context}
-This project is conducted in the context of my bachelor thesis at HEIG-VD.
-
-\begin{itemize}
-  \item Department: Information and communication technologies
-  \item Sector: IT and communication systems
-  \item Faculty: Software engineering
-\end{itemize}
-
+% State of the art
 \section{State of the art}
 
 \section{Conclusion}
 
 % Bibliography
+\printbibliography[heading=bibintoc, title={Bibliography}]
+\newpage
 
 % Official authentication
 
