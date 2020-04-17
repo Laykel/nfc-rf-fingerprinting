@@ -40,13 +40,21 @@ This repository's folders can be described as follows:
 
 ## How to run
 
+### The notebooks
+
 ```
 # Get the data and unzip it
-wget ...
+wget URL_DOESNT_EXIST_YET
+mkdir data/recordings
+tar xf recordings.gz -C data/recordings
+
 # Clone the repo
-git clone ...
-# Install dependencies
+git clone https://github.com/Laykel/nfc-rf-fingerprinting.git
+
+# Install dependencies (after creating a virtual env as you usually do)
+cd notebooks
 pip install -r requirements.txt
-# Run scripts / notebooks
-...
+
+# Run jupyter notebook or jupyter lab
+jupyter lab
 ```
