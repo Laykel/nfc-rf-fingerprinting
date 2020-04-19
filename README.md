@@ -25,8 +25,8 @@ This project differs in the type of devices considered and in the formulation of
 This project is conducted in the context of my bachelor thesis at [HEIG-VD](https://heig-vd.ch/en).
 
 - Department: Information and communication technologies
-- Sector: IT and communication systems
-- Faculty: Software engineering
+- Faculty: Information Technology and communication systems
+- Orientation: Software engineering
 
 ## Structure
 
