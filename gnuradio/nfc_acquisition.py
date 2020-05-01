@@ -353,7 +353,7 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_if_gain(16, 0)
         self.osmosdr_source_0.set_bb_gain(16, 0)
         self.osmosdr_source_0.set_antenna('', 0)
-        self.osmosdr_source_0.set_bandwidth(1e6, 0)
+        self.osmosdr_source_0.set_bandwidth(0, 0)
         self.low_pass_filter_0_0 = filter.fir_filter_ccf(
             1,
             firdes.low_pass(

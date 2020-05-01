@@ -295,7 +295,7 @@ blocks:
     bb_gain7: '20'
     bb_gain8: '20'
     bb_gain9: '20'
-    bw0: 2e6
+    bw0: '0'
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -809,7 +809,7 @@ blocks:
     marker9: '-1'
     name: '"Magnitude time plot"'
     nconnections: '1'
-    size: '262144'
+    size: '32768'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'

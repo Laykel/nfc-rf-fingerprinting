@@ -1,0 +1,37 @@
+\section{Scope statement}
+{\Large \textbf{Scope statement for RF fingerprinting on NFC devices (Bachelor Thesis)}}
+
+\textbf{Project purpose:}	Develop a tool to identify NFC devices by analysing the RF spectrum of their transmitted signals
+
+\textbf{Duration:}	450 hours (ends 31st July 2020)
+\\
+
+\textbf{Detailed description}
+
+RF fingerprinting is a technique that allows the identification of radio transmitters (such as IoT devices) by analysing the spectrum of their transmissions. This analysis can typically be performed using machine learning algorithms.
+
+NFC technology is often used in access control and payment applications but many implementations are vulnerable to relay attacks with research and tools that facilitate such attacks being publicly available.
+
+The goal of this project is to determine if RF fingerprinting could be used as an authentication technique against relay attacks.
+
+The main steps of this project are the following:
+
+\begin{itemize}
+  \item Build a simple lab setup with Software-Defined Radio (SDR) equipment to acquire signals between an NFC device and its reader
+  \item Acquire RF spectrum data of various NFC devices
+  \item Analyse the signals
+  \item Classify the signals of the devices by using supervised machine learning classification techniques in order to differentiate trusted devices from attacker / relay devices
+  \item Determine if this identification technique could be used as an authentication feature against relay attacks
+\end{itemize}
+
+As the receiving equipment (SDR) has an influence on the recorded signals, for this project we consider a single receiver to record the RF samples. Similarly, the lab setup should be built to provide an ideal low-noise \& low-interference environment to simplify the analysis phase.
+
+The expected deliverables are the following:
+
+\begin{itemize}
+  \item A tool able to identify NFC devices by analysing the RF spectrum of their signals, at least in an ideal environment and with a small number of devices
+  \item A detailed account of the steps taken and the setup used (as part of the report)
+  \item An analysis of the results (as part of the report)
+\end{itemize}
+
+Collaboration with other researchers in this field is wished (EPFL, ElectroSense).

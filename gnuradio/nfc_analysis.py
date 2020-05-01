@@ -74,7 +74,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 2e6
+        self.samp_rate = samp_rate = 847500
         self.transition = transition = samp_rate/5
         self.frequency = frequency = 13.56e6
         self.cutoff = cutoff = samp_rate/5

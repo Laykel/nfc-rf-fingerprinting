@@ -5,11 +5,11 @@
 \usepackage{geometry}
 \geometry{
   a4paper,
-  left=15mm,
-  right=15mm,
+  left=25mm,
+  right=25mm,
   headheight=50mm,
-  top=30mm,
-  bottom=18mm,
+  top=40mm,
+  bottom=22mm,
   footskip=10mm
 }
 \usepackage[utf8]{inputenc}     % UTF-8 support
@@ -36,16 +36,37 @@
     urlcolor=black
   }
 
+% Variables ==================================================================================================
+\newcommand{\TBtitle}{RF fingerprinting on NFC devices}
+\newcommand{\TByear}{2020}
+\newcommand{\TBacademicYears}{2019-2020}
+
+\newcommand{\TBdpt}{Information and communication technologies}
+\newcommand{\TBfiliere}{Information technology and communication systems}
+\newcommand{\TBorient}{Software engineering}
+
+\newcommand{\TBauthor}{Luc Wachter}
+\newcommand{\TBsupervisor}{Prof. Alberto Dassatti}
+\newcommand{\TBindustryContact}{Joël Conus}
+\newcommand{\TBindustryName}{Kudelski Group SA}
+
+\newcommand{\TBresumePubliable}{
+Dans ce travail... Ceci est le résumé publiable...
+}
+
 % Create horizontal rule command with 1 argument of height
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
+
+% Don't number sections
+\setcounter{secnumdepth}{0}
 
 % Header and footer things ====================================================================================
 \renewcommand{\footrulewidth}{0.4pt}
 \lhead{\includegraphics[width=5cm]{figures/heig.png}}
 \rhead{}
-\lfoot{RF fingerprinting on NFC devices}
+\lfoot{\TBtitle}
 \cfoot{}
-\rfoot{Page \textbf{\thepage} of \textbf{\pageref{LastPage}}}
+\rfoot{Page \textbf{\thepage} of \textbf{\pageref*{LastPage}}}
 
 % Document ====================================================================================================
 \begin{document}
@@ -54,18 +75,25 @@
 \include{sections/coverpage}
 \newpage
 
+% Résumé publiable ============================================================================================
+\include{sections/summary}
+\newpage
+
+% Preamble
+\include{sections/preamble}
+\newpage
+
+% Official authentication
+\include{sections/authentication}
+\newpage
+
 % Specification (cahier des charges)
-\section{Specification}
+\include{sections/scopestatement}
 \newpage
 
 % Contents page ===============================================================================================
 \renewcommand{\contentsname}{Table of contents}
 \tableofcontents
-\newpage
-
-% Résumé publiable
-\section{Summary}
-This \cite{dirac} is a good dirac. \cite{einstein} too.
 \newpage
 
 % Introduction
@@ -80,8 +108,6 @@ This \cite{dirac} is a good dirac. \cite{einstein} too.
 % Bibliography
 \printbibliography[heading=bibintoc, title={Bibliography}]
 \newpage
-
-% Official authentication
 
 % Symbols and abbreviations list
 
