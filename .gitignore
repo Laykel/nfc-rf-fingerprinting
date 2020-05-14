@@ -1,5 +1,5 @@
 # RF recordings (too heavy)
-data/recordings/
+data/raw/
 .idea/
 
 # LaTeX
