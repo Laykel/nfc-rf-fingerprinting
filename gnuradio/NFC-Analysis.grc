@@ -201,7 +201,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/recordings/3.0-antenna-1.nfc
+    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/recordings/SDR#/14-31-28_13560000Hz.txt
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'

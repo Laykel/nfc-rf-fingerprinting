@@ -1,5 +1,6 @@
 # RF recordings (too heavy)
 data/recordings/
+.idea/
 
 # LaTeX
 *.log

@@ -209,7 +209,7 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
         for c in range(1, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_time_sink_x_1_0_0 = qtgui.time_sink_f(
-            262144, #size
+            32768, #size
             samp_rate, #samp_rate
             "Magnitude time plot", #name
             1 #number of inputs
@@ -344,7 +344,7 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
         self._qtgui_const_sink_x_0_win = sip.wrapinstance(self.qtgui_const_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_const_sink_x_0_win)
         self.osmosdr_source_0 = osmosdr.source(
-            args="numchan=" + str(1) + " " + "soapy=0,driver=lime"
+            args="numchan=" + str(1) + " " + 'airspyhf=0'
         )
         self.osmosdr_source_0.set_sample_rate(samp_rate)
         self.osmosdr_source_0.set_center_freq(frequency, 0)
