@@ -4,7 +4,7 @@ from scipy import signal
 from matplotlib import pyplot as plt
 import os
 
-PATH = "../../data/recordings/"
+PATH = "../../data/recordings"
 
 SAMP_RATE = int(2e6)
 NFFT = 1024
@@ -51,7 +51,7 @@ def signal_magnitude(data, output):
 
 
 def main():
-    files = [file for file in os.listdir(PATH) if file.endswith(".nfc") and "taoglas" in file]
+    files = [file for file in os.listdir(PATH) if file.endswith(".nfc")]
     files.sort()
 
     print("Files to generate visualizations for:")
