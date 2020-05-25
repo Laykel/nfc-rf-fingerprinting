@@ -1,5 +1,7 @@
 # RF recordings (too heavy)
 data/raw/
+data/cut-signals/
+scripts/preprocess/figs/
 .idea/
 
 # LaTeX
