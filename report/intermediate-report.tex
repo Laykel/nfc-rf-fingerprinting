@@ -56,15 +56,11 @@
 \newcommand{\TBindustryContact}{Joël Conus}
 \newcommand{\TBindustryName}{Kudelski Group SA}
 
-\newcommand{\TBresumePubliable}{
-Dans ce travail... $\rightarrow$ Ceci est le résumé publiable...
-}
-
 % Create horizontal rule command with 1 argument of height
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
 
 % Don't number sections
-\setcounter{secnumdepth}{0}
+% \setcounter{secnumdepth}{0}
 
 % Header and footer things ====================================================================================
 \renewcommand{\footrulewidth}{0.4pt}
@@ -81,19 +77,8 @@ Dans ce travail... $\rightarrow$ Ceci est le résumé publiable...
 \include{sections/coverpage}
 \newpage
 
-% Résumé publiable ============================================================================================
-\include{sections/summary}
-\newpage
-
-% Preamble
-\include{sections/preamble}
-\newpage
-
-% Official authentication
-\include{sections/authentication}
-\newpage
-
 % Specification (cahier des charges)
+\pagenumbering{arabic}
 \include{sections/scopestatement}
 \newpage
 
@@ -107,7 +92,30 @@ Dans ce travail... $\rightarrow$ Ceci est le résumé publiable...
 \newpage
 
 % State of the art
-\section{State of the art}
+\include{sections/stateoftheart}
+\newpage
+
+\section{Dataset creation}
+
+\subsection{Initial setup}
+
+\subsection{Upgraded setup}
+
+\subsection{Inventory of devices}
+
+The content of the tags is harmonized to ensure the algorithm won't use the content as a feature to identify devices.
+
+MEGA TABLE
+
+\subsection{Dataset description}
+
+\section{Model conception}
+
+\subsection{Model architecture}
+
+Decision on the metaparameters...
+
+\subsection{...}
 
 \section{Conclusion}
 

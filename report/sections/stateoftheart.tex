@@ -1,0 +1,62 @@
+\section{State of the art}
+
+\subsection{Taxonomy}
+
+It is certainly useful to start with a review of the different ways to categorize the features and algorithms used by researchers in the field. A good categorization of parameters allows us to define our needs precisely. It makes it easier to select the important things to consider.
+
+\subsubsection{Taxonomy for features} \label{features_tax}
+
+The features we select must allow us to identify a precise device among potentially very similar devices. We need what \textcite{delgado_passive_2020} describe as a Physical Unclonable Function (PUF). PUFs are physical distortions that are unique to a specific system. They are another way of talking about fingerprints.
+
+\textcite{xu_device_2015} propose three ways to categorize radio signal features:
+
+\begin{itemize}
+  \item based on the specificity of the feature (from vendor specific to device specific),
+  \item based on the layers (PHY, MAC, Network and higher),
+  \item and based on the acquisition method (passive or active).
+\end{itemize}
+
+Whether we end up with a system that is able to identify many devices uniquely, or one that only tries to separate a specific device from the others, we will need device specific accuracy. We don't want to make relay attacks impossible only if the attacker doesn't use a device from the same vendor as the victim's device.
+
+Moreover, features from the MAC and higher layers typically require in depth knowledge of the protocols in play. Not only that, but they also tend to be less specific than we would like (either vendor specific or depending on the type of device). This indicates we should probably focus on the physical (PHY) layer features, which rely on imperfections in the manufacturing process of the devices.
+
+\subsubsection{Taxonomy for fingerprinting algorithms}
+
+\textcite{riyaz_deep_2018} provide a visual categorization of fingerprinting approaches. To summarize it, they first separate supervised from unsupervised learning. They then further categorize supervised approaches between similarity-based and classification techniques. \textbf{MAKE A SCHEMA?}
+
+\textbf{Include taxonomy from} \textcite{xu_device_2015}
+
+Because of the nature of our problem, a supervised classification approach seems most appropriate. Indeed, we can assume that we have access to the legitimate device, and to a population of illegitimate devices. This means we can label the gathered data and use it to train, for example, a Convolutional Neural Network (CNN). \textbf{WEAK}
+
+Going the unsupervised route would imply a radically different approach. This is because unsupervised systems cannot by themselves discriminate a legitimate device from an illegitimate one. They don't have that information, since they work with unlabeled data. With this said, a system conceived like that would still be able to detect attempts of impersonation by keeping a dictionary of fingerprints and linked identifiers.
+
+\subsection{Acquisition}
+
+Not certain this is useful.
+
+\subsection{Features selection}
+
+In section \ref{features_tax} we discussed the different types of features that exist in radio signal data. We concluded that the features we are most interested in are from the physical layer.
+
+transient phase
+
+\subsection{Machine learning}
+
+\subsubsection{Comparing approaches}
+
+Several articles have compared the performance of different machine learning approaches.
+
+...
+
+\subsubsection{Neural network architecture}
+
+...
+
+
+What about \parencite[pre][page 2]{youssef_machine_2017}?
+
+I love \footcite[pre][post]{stankowicz_complex_2019}.
+
+
+- **Waveform domain techniques** [11], [14], [22], [24], [25] consider time and frequency representation as the basic blocks while **modulation domain techniques** [6] represent signals in terms of I/Q samples.
+- Waveform domain techniques are more flexible but more complex. Modulation domain techniques are better structured and well-behaved but require knowledge of the respective modulation scheme.
