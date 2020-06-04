@@ -32,6 +32,48 @@ options:
     state: enabled
 
 blocks:
+- name: manchester_offset
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: -300e-3
+    step: 100e-4
+    stop: 100e-3
+    value: '0'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [280, 12]
+    rotation: 0
+    state: true
+- name: miller_offset
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: -300e-3
+    step: 100e-4
+    stop: 100e-3
+    value: -160e-3
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [404, 12]
+    rotation: 0
+    state: true
 - name: samp_rate
   id: variable
   parameters:
@@ -50,7 +92,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: '-0.1'
+    const: miller_offset
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -68,7 +110,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: '-0.2'
+    const: manchester_offset
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -77,9 +119,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [876, 66]
+    coordinate: [882, 90]
     rotation: 0
-    state: true
+    state: enabled
 - name: blocks_complex_to_mag_0
   id: blocks_complex_to_mag
   parameters:
@@ -103,7 +145,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /home/luc/Desktop/TB-BinarySliced/miller.bin
+    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/cut-signals/tag3-grc-test.bin
     type: byte
     unbuffered: 'True'
     vlen: '1'
@@ -111,9 +153,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1279, 273]
+    coordinate: [1281, 271]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: blocks_file_sink_0_0
   id: blocks_file_sink
   parameters:
@@ -139,7 +181,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/airspyhf+/test-tag3.nfc
+    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/airspyhf+/tag1-2M-13.562M-0-16-16.nfc
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -202,7 +244,7 @@ blocks:
     bus_structure: null
     coordinate: [1112, 292]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: low_pass_filter_0
   id: low_pass_filter
   parameters:
@@ -218,15 +260,15 @@ blocks:
     minoutbuf: '0'
     samp_rate: samp_rate
     type: fir_filter_ccf
-    width: '4003'
+    width: 400e3
     win: firdes.WIN_HAMMING
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [459, 128]
+    coordinate: [455, 204]
     rotation: 0
-    state: true
+    state: disabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -282,7 +324,7 @@ blocks:
     marker9: '-1'
     name: '""'
     nconnections: '2'
-    size: '8192'
+    size: '120000'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'
@@ -321,7 +363,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1114, 141]
+    coordinate: [1104, 151]
     rotation: 0
     state: true
 
@@ -333,6 +375,7 @@ connections:
 - [blocks_complex_to_mag_0, '0', blocks_add_const_vxx_0, '0']
 - [blocks_complex_to_mag_0, '0', blocks_add_const_vxx_0_0, '0']
 - [blocks_file_source_0, '0', blocks_throttle_0, '0']
+- [blocks_throttle_0, '0', blocks_complex_to_mag_0, '0']
 - [blocks_throttle_0, '0', low_pass_filter_0, '0']
 - [digital_binary_slicer_fb_0, '0', blocks_file_sink_0_0, '0']
 - [digital_binary_slicer_fb_0_0, '0', blocks_file_sink_0, '0']
