@@ -74,11 +74,11 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 2e6
+        self.samp_rate = samp_rate = 2e5
         self.transition = transition = samp_rate/5
         self.frequency = frequency = 13.56e6
         self.cutoff = cutoff = samp_rate/5
-        self.boost = boost = 2
+        self.boost = boost = 1
 
         ##################################################
         # Blocks
@@ -97,7 +97,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 1):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._boost_range = Range(1, 20, 1, 2, 200)
+        self._boost_range = Range(1, 20, 1, 1, 200)
         self._boost_win = RangeWidget(self._boost_range, self.set_boost, 'boost', "counter_slider", float)
         self.top_grid_layout.addWidget(self._boost_win, 0, 1, 1, 1)
         for r in range(0, 1):
@@ -341,7 +341,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
                 6.76))
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(boost)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/recordings/SDR#/14-31-28_13560000Hz.txt', True, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-13.558M-0-16-16.nfc', True, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_complex_to_mag_0 = blocks.complex_to_mag(1)
 

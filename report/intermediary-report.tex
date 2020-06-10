@@ -21,7 +21,7 @@
   maxcitenames=1,
   minbibnames=3,
   maxbibnames=3
-]{biblatex} % biblatex with ISO 690
+]{biblatex} % biblatex with ISO 690, 3 names cited in bib and 1 in citations
   \addbibresource{rfml-fingerprinting.bib}
 
 \usepackage{amsmath,amsfonts}   % Advanced math typesetting
@@ -95,19 +95,9 @@
 \include{sections/stateoftheart}
 \newpage
 
-\section{Dataset creation}
-
-\subsection{Initial setup}
-
-\subsection{Upgraded setup}
-
-\subsection{Inventory of devices}
-
-The content of the tags is harmonized to ensure the algorithm won't use the content as a feature to identify devices.
-
-MEGA TABLE
-
-\subsection{Dataset description}
+% Dataset creation
+\include{sections/dataset}
+\newpage
 
 \section{Model conception}
 
@@ -116,8 +106,11 @@ MEGA TABLE
 Decision on the metaparameters...
 
 \subsection{...}
+\newpage
 
 \section{Conclusion}
+Good
+\newpage
 
 % Bibliography
 \printbibliography[heading=bibintoc, title={Bibliography}]
@@ -127,6 +120,7 @@ Decision on the metaparameters...
 
 % Figures list
 \listoffigures
+\newpage
 
 \listoftables
 

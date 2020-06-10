@@ -45,7 +45,7 @@ blocks:
     start: '1'
     step: '1'
     stop: '20'
-    value: '2'
+    value: '1'
     widget: counter_slider
   states:
     bus_sink: false
@@ -201,7 +201,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/recordings/SDR#/14-31-28_13560000Hz.txt
+    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-13.558M-0-16-16.nfc
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
