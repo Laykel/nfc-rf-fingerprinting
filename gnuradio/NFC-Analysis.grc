@@ -250,7 +250,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [625, 208]
+    coordinate: [626, 207]
     rotation: 0
     state: true
 - name: import_0

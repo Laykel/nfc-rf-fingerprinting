@@ -12,7 +12,7 @@
   bottom=22mm,
   footskip=10mm
 }
-\usepackage[utf8]{inputenc}     % UTF-8 support
+\usepackage[utf8]{inputenc} % UTF-8 support
 \usepackage[english]{babel}
 \usepackage{csquotes}
 \usepackage[
@@ -23,6 +23,7 @@
   maxbibnames=3
 ]{biblatex} % biblatex with ISO 690, 3 names cited in bib and 1 in citations
   \addbibresource{rfml-fingerprinting.bib}
+  \addbibresource{other-resources.bib}
 
 \usepackage{amsmath,amsfonts}   % Advanced math typesetting
 \usepackage{graphicx}
@@ -33,7 +34,7 @@
 \usepackage{fancyhdr}           % Create headers and footers
   \pagestyle{fancy}
 
-\usepackage{hyperref}           % Table of contents with clickable links
+\usepackage[breaklinks=true]{hyperref} % Table of contents with clickable links
   \hypersetup{
     colorlinks,
     citecolor=black,
@@ -87,6 +88,13 @@
 \tableofcontents
 \newpage
 
+% Figures list
+\listoffigures
+
+\listoftables
+
+% Symbols and abbreviations list
+
 % Introduction
 \include{sections/introduction}
 \newpage
@@ -103,9 +111,6 @@
 
 \subsection{Model architecture}
 
-Decision on the metaparameters...
-
-\subsection{...}
 \newpage
 
 \section{Conclusion}
@@ -115,13 +120,6 @@ Good
 % Bibliography
 \printbibliography[heading=bibintoc, title={Bibliography}]
 \newpage
-
-% Symbols and abbreviations list
-
-% Figures list
-\listoffigures
-
-\listoftables
 
 % Annexes
 
