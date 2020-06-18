@@ -22,8 +22,8 @@
   minbibnames=3,
   maxbibnames=3
 ]{biblatex} % biblatex with ISO 690, 3 names cited in bib and 1 in citations
-  \addbibresource{rfml-fingerprinting.bib}
-  \addbibresource{other-resources.bib}
+\addbibresource{rfml-fingerprinting.bib}
+\addbibresource{other-resources.bib}
 
 \usepackage{amsmath,amsfonts}   % Advanced math typesetting
 \usepackage{graphicx}
@@ -32,16 +32,16 @@
 \usepackage[en-GB]{datetime2}   % Date and time macros
 \usepackage[parfill]{parskip}   % No indent at start of new line
 \usepackage{fancyhdr}           % Create headers and footers
-  \pagestyle{fancy}
+\pagestyle{fancy}
 
 \usepackage[breaklinks=true]{hyperref} % Table of contents with clickable links
-  \hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=blue
-  }
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=blue
+}
 
 % Variables ==================================================================================================
 \newcommand{\TBtitle}{RF fingerprinting on NFC devices}
@@ -99,6 +99,10 @@
 \include{sections/introduction}
 \newpage
 
+% Necessary concepts
+\include{sections/concepts}
+\newpage
+
 % State of the art
 \include{sections/stateoftheart}
 \newpage
@@ -111,10 +115,11 @@
 
 \subsection{Model architecture}
 
+\subsection{Experiences}
+
 \newpage
 
 \section{Conclusion}
-Good
 \newpage
 
 % Bibliography

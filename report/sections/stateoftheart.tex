@@ -1,4 +1,4 @@
-\section{State of the art}
+\section{State of the art} \label{sota}
 
 \subsection{Taxonomy}
 
@@ -46,9 +46,7 @@ In this age of deep learning though, research seems to be more interested in cla
 
 The vast majority of the research considered for this project uses USRP systems to record transmissions as raw I/Q signals. The number of devices can be anywhere from 5 to 500 (but most often less than 20). They all use data acquired from WiFi (802.11) or Zigbee (802.15.4) devices. \cite{riyaz_deep_2018, oyedare_estimating_2019, youssef_machine_2017, morin_transmitter_2019, sankhe_no_2019, nguyen_device_2011}
 
-WiFi and Zigbee both use Quadrature Phase Shift Keying (QPSK) modulation schemes. They differ from NFC's modulation scheme: On-Off Keying (OOK) which is a form of Amplitude Shift Keying (ASK). (Except for NFC type B, which uses BPSK in target to initiator mode.)
-
-Some, like \textcite{sankhe_no_2019}, also describe how they add artificially induced impairments to simulated signals with MatLab.
+Some, like \textcite{sankhe_no_2019}, also describe how they add artificially induced impairments to simulated signals with MatLab. This is something we could also do, but it is secondary. The focus is on the creation of a robust dataset of real world transmissions between an NFC reader and tags.
 
 % -------------------------------------------------------------------------------------------------------------
 \subsection{Features}
@@ -57,7 +55,7 @@ Some, like \textcite{sankhe_no_2019}, also describe how they add artificially in
 
 Even if we don't plan to manually select and extract the features that will form the fingerprints of our devices, it is useful to learn about them. It will allow us to make sure they are present for the algorithm to extract and also allow us to design preprocessing methods that magnify the features.
 
-Whether we end up with a system that is able to identify many devices uniquely, or one that only tries to separate a specific device from the others, we will need device specific accuracy. We don't want to make relay attacks impossible only if the attacker doesn't use a device from the same vendor as the victim's device. This is why in \autoref{features_tax}, we concluded that the features we are most interested in are from the physical layer.
+Whether we end up with a system that is able to identify many devices uniquely, or one that only tries to separate a specific device from the others, we will need device specific accuracy. We don't want to make relay attacks impossible only if the attacker doesn't use a device from the same vendor as the victim's device. This is why in section \ref{features_tax}, we concluded that the features we are most interested in are from the physical layer.
 
 Because of their nature, these features should be appropriate no matter the protocol used. The following list is composed of features described by \textcite{riyaz_deep_2018} and also used in other works.
 
@@ -72,14 +70,14 @@ Because of their nature, these features should be appropriate no matter the prot
 
 It is clear that preprocessing the data appropriately can greatly increase the accuracy of a model and reduce its complexity.
 
-The first question to ask is how should the data be partitioned, in order to be fed to the learning algorithm. This question will be discussed in \autoref{input-layer} since it is identical to choosing the input of our model.
+The first question to ask is how should the data be partitioned, in order to be fed to the learning algorithm. This question will be discussed in section \ref{input-layer} since it is identical to choosing the input of our model.
 
 Several works mention wavelet transforms (either discrete or continuous) as effective means to amplify the characteristic features of a wireless device \cite{xu_device_2015, oyedare_estimating_2019, youssef_machine_2017}. They report increased accuracy and scalability, and reduced complexity. It is certainly worth it to explore this preprocessing method.
 
 % -------------------------------------------------------------------------------------------------------------
 \subsection{Machine learning applied to radio frequency}
 
-\subsubsection{Challenges}
+\subsubsection{Challenges} \label{challenges}
 
 \textcite{riyaz_deep_2018} highlight some of the challenges faced when working on RFML problems. They are reformulated in the three first items of the list below. The next items are additions.
 
@@ -91,30 +89,49 @@ Several works mention wavelet transforms (either discrete or continuous) as effe
   \item Achieving a demonstrably scalable system.
 \end{enumerate}
 
-Great insight in \autoref{itm:chall1} is given by \textcite{youssef_machine_2017}. Indeed, they compare the performance of models trained with different input segment sizes. We delve deeper into this matter as well as \autoref{itm:chall2} in \autoref{nn-architecture}.
+Great insight into item \ref{itm:chall1} is given by \textcite{youssef_machine_2017}. Indeed, they compare the performance of models trained with different input segment sizes. We delve deeper into this matter as well as item \ref{itm:chall2} in section \ref{nn-architecture}.
 
 Item \ref{itm:chall3} is the core matter of the first part of our project. Indeed a considerable portion of our work consists in the elaboration of a dataset of NFC transmissions for different PICC devices.
 
 \subsubsection{Supervised or unsupervised}
 
-In this project, we are more interested in exploring supervised techniques. This is why most of the literature considered here researches supervised systems.
+The aim of this project is to explore supervised learning techniques. This is why most of the literature considered here studies supervised systems. Also, in general, it seems works that use supervised methods are a lot more abundant than their unsupervised counterparts. This could be because of the popularity of models such as convolutional neural networks, and their apparent adaptability to the problem of RF fingerprinting.
 
-The paragraph about unsupervised systems in \autoref{algo-taxo} describes the work done by \textcite{nguyen_device_2011} very well. They use a Nonparametric Bayesian model to cluster devices based on their fingerprints. This technique allows them to discriminate between an unknown number of devices that the model never encountered before. They show good results with four devices using two features strictly from the PHY layer.
+Despite this, we can see that unsupervised learning techniques are also showing promising results. An example of this is the work of \textcite{nguyen_device_2011}. The paragraph about unsupervised systems in section \ref{algo-taxo} describes the basics of their system pretty well. They use a Nonparametric Bayesian model to detect the number of devices and then cluster them based on their fingerprints. This technique allows them to discriminate between an unknown number of devices that the model never encountered before. They show good results with four devices using two features strictly from the PHY layer.
+
+While this work is interesting, it uses pre-engineered features. We were unable to find research on deep unsupervised learning techniques (such as deep belief networks) for the problem. Such a solution could be an interesting topic for another project.
 
 \subsubsection{Comparing supervised approaches}
 
-Several articles have compared the performance of different machine learning approaches.
+Several articles have compared the performance of different machine learning approaches. In the next paragraphs we discuss the findings of two of them.
 
-\textcite{riyaz_deep_2018} compared their convolutional neural network with the techniques of Support Vector Machine (SVM) and logistic regression. They report substantially higher performance using their CNN (up to 60-70\% better accuracy). Their results, although limited in the number of devices (they only classify five), also seem to show that CNNs are more scalable than the other methods. Indeed, increasing the number of classes caused a significant drop in the performance of the other algorithms, but not for the CNN.
+\textcite{riyaz_deep_2018} compared their convolutional neural network with the techniques of Support Vector Machine (SVM) and logistic regression. They report substantially higher performance using their CNN (up to 60-70\% better accuracy). Their results, although limited in the number of devices (they only classify up to five), also seem to show that CNNs are more scalable than the other methods. Indeed, increasing the number of classes caused a significant drop in the performance of the other algorithms, but not for the CNN.
 
-\textcite{youssef_machine_2017} compare the performance of four supervised algorithms: SVM, Deep Neural Networks, CNN and Accelerated Levenberg-Marquardt Multi-Stage Training (A-LM MST). The latter is an advanced classification technique that uses the ...
+\textcite{youssef_machine_2017} compare the performance of four supervised algorithms: SVM, Deep Neural Networks, CNN and Accelerated Levenberg-Marquardt Multi-Stage Training (A-LM MST). The latter is an advanced classification technique that makes training deep neural networks less resource heavy by using a hierarchy of smaller Multi-Layer Perceptrons (MLP) rather than one big MLP. They use data collected from 12 WiFi transmitters.
 
+Their results show impressive performance for their MST, especially when provided with very little data. Their CNN model is close second, although it performed significantly worse with very little data. Then comes the DNN with pretty good results and then only the SVM.
 
-CNNs - good shift invariance thanks to pooling layer?
+These results can guide us in our choices of experimentation. They show that SVM algorithms, while capable to some extent, are not appropriate for this specific problem. They also show CNNs are very promising, more scalable and more adaptable than "simple" DNNs. The MST solution is very interesting, but reducing the computational complexity is not our primary concern and the improvement doesn't seem that substantial.
 
 % -------------------------------------------------------------------------------------------------------------
 \subsection{Neural network architectures} \label{nn-architecture}
 
+Studying the various architectures employed in previous works can help us define what works and what direction to take for our own experiences. This is what we will do in this section.
+
 \subsubsection{Input format} \label{input-layer}
 
-Partition length \cite{youssef_machine_2017}
+In section \ref{challenges}, we noted that one of the challenges we face is to find the optimal partition length for the input of our model. To give an element of answer, \textcite{youssef_machine_2017} don't only compare the performance of 4 different models, they also do it with five different partition sizes (32, 64, 128, 256 and 512). They find their DNN architecture handles short segments better than long ones, while their CNN gets progressively more performant as the segments get larger.
+
+Input format...
+
+\subsubsection{Hidden layers}
+
+Once the input is decided, the rest of the architecture is still in question...
+
+Complex networks
+
+output: noise, legitimate, other
+
+incremental learning
+
+CNNs - good shift invariance thanks to pooling layer?
