@@ -8,7 +8,7 @@
 # Title: NFC Analysis
 # Author: luc
 # Description: Takes as input a recorded NFC communication and visualizes the signal through different graphs
-# GNU Radio version: 3.8.0.0
+# GNU Radio version: 3.8.1.0
 
 from distutils.version import StrictVersion
 
@@ -36,6 +36,7 @@ from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
 from gnuradio.qtgui import Range, RangeWidget
+
 from gnuradio import qtgui
 
 class nfc_analysis(gr.top_block, Qt.QWidget):
@@ -74,7 +75,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 2e5
+        self.samp_rate = samp_rate = 2e6
         self.transition = transition = samp_rate/5
         self.frequency = frequency = 13.56e6
         self.cutoff = cutoff = samp_rate/5
@@ -341,7 +342,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
                 6.76))
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(boost)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-13.558M-0-16-16.nfc', True, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/archives/taoglas-antenna/3.0-taoglas-1.nfc', True, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_complex_to_mag_0 = blocks.complex_to_mag(1)
 
@@ -359,6 +360,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_throttle_0, 0), (self.qtgui_time_sink_x_1, 0))
         self.connect((self.blocks_throttle_0, 0), (self.qtgui_waterfall_sink_x_0, 0))
         self.connect((self.low_pass_filter_0, 0), (self.blocks_throttle_0, 0))
+
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "nfc_analysis")
@@ -410,6 +412,8 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
 
 
 
+
+
 def main(top_block_cls=nfc_analysis, options=None):
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
@@ -418,7 +422,9 @@ def main(top_block_cls=nfc_analysis, options=None):
     qapp = Qt.QApplication(sys.argv)
 
     tb = top_block_cls()
+
     tb.start()
+
     tb.show()
 
     def sig_handler(sig=None, frame=None):
@@ -434,9 +440,9 @@ def main(top_block_cls=nfc_analysis, options=None):
     def quitting():
         tb.stop()
         tb.wait()
+
     qapp.aboutToQuit.connect(quitting)
     qapp.exec_()
-
 
 if __name__ == '__main__':
     main()

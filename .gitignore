@@ -15,6 +15,14 @@ scripts/preprocess/figs/
 *.bbl
 *.bcf
 *.blg
+*.glg
+*.glo
+*.gls
+*.ist
+*.xdy
+*.alg
+*.acr
+*.acn
 *.run.xml
 *.tex.bbl
 *.tex.blg

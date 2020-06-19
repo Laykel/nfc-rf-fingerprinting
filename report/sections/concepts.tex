@@ -1,6 +1,6 @@
 \section{Necessary concepts}
 
-Before analysing the problem and the existing works on the matter and before describing the hardware used and the data captured, it is worth explaining some of the concepts behind SDR and NFC. We will only discuss the elements needed to understand this document, and will refer the reader to other works for details. Readers that are acquainted to software-defined radio and NFC can skip this section.
+Before analysing the problem and the existing works on the topic and before describing the hardware used and the data captured, it is worth explaining some of the concepts behind SDR and NFC. We will only discuss the elements needed to understand this document, and will refer the reader to other works for details. Readers that are acquainted to software-defined radio and NFC's characteristics can skip this section and continue at section \ref{sota}.
 
 \subsection{Software-defined radio}
 
@@ -12,12 +12,12 @@ These analog components are combined in SDR hardware available to buy. Popular e
 
 \begin{figure}[htp!]
   \centering
-  \includegraphics[scale=0.55]{figures/concepts_IQ-signal.png}
-  \caption{In-phase and quadrature signals}
+  \includegraphics[scale=0.5]{figures/concepts_IQ-signal.png}
+  \caption{In-phase and quadrature components of a signal}
   \label{fig:iq-signal}
 \end{figure}
 
-To finish this introduction to SDR, we will describe the representation of the data. Figure \ref{fig:iq-signal} shows a graph of the samples returned by the SDR pipeline as dots. As can be seen, the signal is represented using two components. The "quadrature" component is shifted by 90 degrees in relation to the "in-phase" component. Every sample can be represented by a complex number where the real part adds to the in-phase component and the imaginary part adds to the quadrature component. Such a representation allows us to get a lot more information from the signal. \cite{kuisma_iq, ossmann_software}
+To finish this introduction to SDR, we will describe the representation of the data. Figure \ref{fig:iq-signal} shows a graph of the samples returned by the SDR pipeline as dots. As can be seen, the signal is represented using two components. The "quadrature" component is phase shifted by 90 degrees in relation to the "in-phase" component. Every sample can be represented by a complex number where the real part adds to the in-phase component and the imaginary part adds to the quadrature component. Such a representation allows us to get a lot more information from the signal. \cite{kuisma_iq, ossmann_software}
 
 Here, the X axis represents the sample number (starting at 0) rather than a time value. The link between the sample number and the time elapsed is the sampling rate ($F_s$), expressed in number of samples per second (S/s). For example, considering a sampling rate of 3MS/s, figure \ref{fig:iq-signal} shows a signal over 10ms: $\dfrac{30000[S]}{3000000[S/s]} = 0.01[s]$.
 
@@ -25,8 +25,8 @@ In this document, we will often use the magnitudes representation of a signal. S
 
 \begin{figure}[htp!]
   \centering
-  \includegraphics[scale=0.55]{figures/concepts_magnitudes.png}
-  \caption{Signal represented as magnitudes}
+  \includegraphics[scale=0.5]{figures/concepts_magnitudes.png}
+  \caption{A signal represented as the magnitudes of its samples}
   \label{fig:mag}
 \end{figure}
 
@@ -39,6 +39,6 @@ NFC is the name for a group of communication protocols designed for small distan
 
 Operating at a frequency of 13.56MHz, NFC is well in the High Frequency (HF) range of 3 to 30MHz. This is substantially lower than most communication protocols like WiFi (2.4GHz or 5GHz), Bluetooth (2.4GHz) or ZigBee (868MHz, 915MHz or 2.4GHz).
 
-Also in contrast to these other protocols, NFC's modulation scheme is On-Off Keying (OOK) which is a form of Amplitude Shift Keying (ASK). (Except for NFC type B, which uses BPSK in target to initiator mode.)
+Also in contrast to these other protocols, NFC's modulation scheme is On-Off Keying (OOK) which is a form of Amplitude Shift Keying (ASK). (Except for NFC type B, which uses Binary Phase Shift Keying (BPSK) in target to initiator mode.)
 
-Because it is designed to work only in close proximity, NFC uses inductive coupling between devices to transmit information. In simple terms, this means the reader can only send a signal as far as its generated magnetic field goes. The passive tag responds by modulating the same magnetic field. It also means that interferences from radio devices operating in the same frequency range practically don't affect an NFC communication. \cite{wiki_near-field_2020}
+Because it is designed to work only in close proximity, NFC uses inductive coupling between devices to transmit information. In simple terms, this means the reader can only send a signal as far as its generated magnetic field goes. The passive tag responds by modulating the same magnetic field. It also means that far-field interferences from radio devices operating in the same frequency range practically don't affect an NFC communication. \cite{wiki_near-field_2020}

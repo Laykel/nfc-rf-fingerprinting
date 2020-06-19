@@ -2,7 +2,7 @@
 
 \subsection{Taxonomy}
 
-It is certainly useful to start with a review of the different ways to categorize the features and algorithms used by researchers in the field of radio frequency fingerprinting. More specifically, we'll focus on Radio Frequency Machine Learning (RFML) research, though other fingerprinting techniques exist that don't involve machine learning. The goal is to define our needs precisely and select the important things to consider.
+It is certainly useful to start with a review of the different ways to categorize the features and algorithms used by researchers in the field of radio frequency fingerprinting. More specifically, we'll focus on Radio Frequency Machine Learning (RFML) research, though other fingerprinting techniques exist that don't involve machine learning. The goal is to define our needs precisely and select the important factors to consider.
 
 \subsubsection{Taxonomy for features} \label{features_tax}
 
@@ -70,7 +70,7 @@ Because of their nature, these features should be appropriate no matter the prot
 
 It is clear that preprocessing the data appropriately can greatly increase the accuracy of a model and reduce its complexity.
 
-The first question to ask is how should the data be partitioned, in order to be fed to the learning algorithm. This question will be discussed in section \ref{input-layer} since it is identical to choosing the input of our model.
+The first question to ask is how should the data be partitioned, in order to be fed to the learning algorithm. This question will be discussed in section \ref{nn-architecture} since it is identical to choosing the input of our model.
 
 Several works mention wavelet transforms (either discrete or continuous) as effective means to amplify the characteristic features of a wireless device \cite{xu_device_2015, oyedare_estimating_2019, youssef_machine_2017}. They report increased accuracy and scalability, and reduced complexity. It is certainly worth it to explore this preprocessing method.
 
@@ -79,7 +79,7 @@ Several works mention wavelet transforms (either discrete or continuous) as effe
 
 \subsubsection{Challenges} \label{challenges}
 
-\textcite{riyaz_deep_2018} highlight some of the challenges faced when working on RFML problems. They are reformulated in the three first items of the list below. The next items are additions.
+\textcite{riyaz_deep_2018} highlight some of the challenges faced when working on RFML problems. They are reformulated in the three first items of the list below. The next items are personal additions.
 
 \begin{enumerate}
   \item \label{itm:chall1} Finding the optimal partition length to feed the learning algorithm.
@@ -105,7 +105,7 @@ While this work is interesting, it uses pre-engineered features. We were unable 
 
 Several articles have compared the performance of different machine learning approaches. In the next paragraphs we discuss the findings of two of them.
 
-\textcite{riyaz_deep_2018} compared their convolutional neural network with the techniques of Support Vector Machine (SVM) and logistic regression. They report substantially higher performance using their CNN (up to 60-70\% better accuracy). Their results, although limited in the number of devices (they only classify up to five), also seem to show that CNNs are more scalable than the other methods. Indeed, increasing the number of classes caused a significant drop in the performance of the other algorithms, but not for the CNN.
+\textcite{riyaz_deep_2018} compared their Convolutional Neural Network (CNN) with the techniques of Support Vector Machine (SVM) and logistic regression. They report substantially higher performance using their CNN (up to 60-70\% better accuracy). Their results, although limited in the number of devices (they only classify up to five), also seem to show that CNNs are more scalable than the other methods. Indeed, increasing the number of classes caused a significant drop in the performance of the other algorithms, but not for the CNN.
 
 \textcite{youssef_machine_2017} compare the performance of four supervised algorithms: SVM, Deep Neural Networks, CNN and Accelerated Levenberg-Marquardt Multi-Stage Training (A-LM MST). The latter is an advanced classification technique that makes training deep neural networks less resource heavy by using a hierarchy of smaller Multi-Layer Perceptrons (MLP) rather than one big MLP. They use data collected from 12 WiFi transmitters.
 
@@ -113,25 +113,12 @@ Their results show impressive performance for their MST, especially when provide
 
 These results can guide us in our choices of experimentation. They show that SVM algorithms, while capable to some extent, are not appropriate for this specific problem. They also show CNNs are very promising, more scalable and more adaptable than "simple" DNNs. The MST solution is very interesting, but reducing the computational complexity is not our primary concern and the improvement doesn't seem that substantial.
 
-% -------------------------------------------------------------------------------------------------------------
-\subsection{Neural network architectures} \label{nn-architecture}
-
-Studying the various architectures employed in previous works can help us define what works and what direction to take for our own experiences. This is what we will do in this section.
-
-\subsubsection{Input format} \label{input-layer}
+\subsubsection{Neural network architectures} \label{nn-architecture}
 
 In section \ref{challenges}, we noted that one of the challenges we face is to find the optimal partition length for the input of our model. To give an element of answer, \textcite{youssef_machine_2017} don't only compare the performance of 4 different models, they also do it with five different partition sizes (32, 64, 128, 256 and 512). They find their DNN architecture handles short segments better than long ones, while their CNN gets progressively more performant as the segments get larger.
 
-Input format...
+\textcite{stankowicz_complex_2019} compare different kinds of formats for their inputs: two real valued series (one for the I component and one for the Q component), one complex valued series and one complex valued series with a spectrogram added as additional information. Their results are not the clearest, but they seem to show better performance when using a single series of complex values as input. They also show better performance in general for models that use complex valued weights. This is an interesting argument that we could explore.
 
-\subsubsection{Hidden layers}
+Another of the challenges previously noted is finding the optimal architecture for a neural network in the context of RF fingerprinting. Studying the various architectures employed in previous works can help us define what is effective and what direction to take for our own experiences. We won't describe specific architectures in this section, but will reference elements from them when conceiving our experiments.
 
-Once the input is decided, the rest of the architecture is still in question...
-
-Complex networks
-
-output: noise, legitimate, other
-
-incremental learning
-
-CNNs - good shift invariance thanks to pooling layer?
+In general, the works cited throughout this section train their models to output the ID of a specific device. In this project, we would like to try training our model to simply discriminate between a legitimate device and the others. Elements like incremental learning (the ability to train the model again with more devices without starting from zero) and shift invariance (the ability not to care about the position of values in the input) are also important to take into consideration.

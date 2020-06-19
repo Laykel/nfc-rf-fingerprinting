@@ -201,7 +201,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-13.558M-0-16-16.nfc
+    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/archives/taoglas-antenna/3.0-taoglas-1.nfc
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'

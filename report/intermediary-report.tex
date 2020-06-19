@@ -43,6 +43,30 @@
   urlcolor=blue
 }
 
+\usepackage{glossaries}
+\makeglossaries
+\renewcommand{\glsgroupskip}{}
+
+\newacronym{nfc}{NFC}{Near-Field Communication}
+\newacronym{rf}{RF}{Radio Frequency}
+\newacronym{hf}{HF}{High Frequency}
+\newacronym{pcd}{PCD}{Proximity Coupling Device}
+\newacronym{picc}{PICC}{Proximity Inductive Coupling Card}
+\newacronym{puf}{PUF}{Physical Unclonable Function}
+\newacronym{ook}{OOK}{On-Off Keying}
+\newacronym{ask}{ASK}{Amplitude Shift Keying}
+\newacronym{sdr}{SDR}{Software-Defined Radio}
+\newacronym{adc}{ADC}{Analog-to-Digital Converter}
+\newacronym{dac}{DAC}{Digital-to-Analog Converter}
+\newacronym{grc}{GRC}{GNU Radio Companion}
+\newacronym{rfml}{RFML}{Radio Frequency Machine Learning}
+\newacronym{cnn}{CNN}{Convolutional Neural Network}
+\newacronym{dnn}{DNN}{Deep Neural Network}
+\newacronym{mlp}{MLP}{Multi-Layer Perceptron}
+\newacronym{phy}{PHY}{Physical layer}
+
+\glsaddall
+
 % Variables ==================================================================================================
 \newcommand{\TBtitle}{RF fingerprinting on NFC devices}
 \newcommand{\TByear}{2020}
@@ -71,6 +95,8 @@
 \cfoot{}
 \rfoot{Page \textbf{\thepage} of \textbf{\pageref*{LastPage}}}
 
+\newenvironment{monospace}{\ttfamily}{\par}
+
 % Document ====================================================================================================
 \begin{document}
 
@@ -93,6 +119,7 @@
 
 \listoftables
 
+\printglossary[type=\acronymtype, nonumberlist, title=List of acronyms]
 % Symbols and abbreviations list
 
 % Introduction
@@ -111,15 +138,7 @@
 \include{sections/dataset}
 \newpage
 
-\section{Model conception}
-
-\subsection{Model architecture}
-
-\subsection{Experiences}
-
-\newpage
-
-\section{Conclusion}
+\include{sections/conclusion}
 \newpage
 
 % Bibliography
