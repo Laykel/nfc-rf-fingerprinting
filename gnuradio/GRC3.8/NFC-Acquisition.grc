@@ -1,6 +1,6 @@
 options:
   parameters:
-    author: luc
+    author: Luc Wachter
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''

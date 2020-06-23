@@ -1,6 +1,6 @@
 options:
   parameters:
-    author: luc
+    author: Luc Wachter
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -21,7 +21,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: binary-slice-test
+    title: Binary slice test
     window_size: ''
   states:
     bus_sink: false
@@ -65,7 +65,7 @@ blocks:
     start: -300e-3
     step: 100e-4
     stop: 100e-3
-    value: -160e-3
+    value: -100e-3
     widget: counter_slider
   states:
     bus_sink: false
@@ -181,7 +181,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/airspyhf+/tag1-2M-13.562M-0-16-16.nfc
+    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-1.nfc
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -245,30 +245,6 @@ blocks:
     coordinate: [1112, 292]
     rotation: 0
     state: enabled
-- name: low_pass_filter_0
-  id: low_pass_filter
-  parameters:
-    affinity: ''
-    alias: ''
-    beta: '6.76'
-    comment: ''
-    cutoff_freq: 40e3
-    decim: '1'
-    gain: '1'
-    interp: '1'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    samp_rate: samp_rate
-    type: fir_filter_ccf
-    width: 400e3
-    win: firdes.WIN_HAMMING
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [455, 204]
-    rotation: 0
-    state: disabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -376,10 +352,8 @@ connections:
 - [blocks_complex_to_mag_0, '0', blocks_add_const_vxx_0_0, '0']
 - [blocks_file_source_0, '0', blocks_throttle_0, '0']
 - [blocks_throttle_0, '0', blocks_complex_to_mag_0, '0']
-- [blocks_throttle_0, '0', low_pass_filter_0, '0']
 - [digital_binary_slicer_fb_0, '0', blocks_file_sink_0_0, '0']
 - [digital_binary_slicer_fb_0_0, '0', blocks_file_sink_0, '0']
-- [low_pass_filter_0, '0', blocks_complex_to_mag_0, '0']
 
 metadata:
   file_format: 1

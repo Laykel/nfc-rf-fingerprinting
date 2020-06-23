@@ -5,9 +5,9 @@
 # SPDX-License-Identifier: GPL-3.0
 #
 # GNU Radio Python Flow Graph
-# Title: binary-slice-test
-# Author: luc
-# GNU Radio version: 3.8.0.0
+# Title: Binary slice test
+# Author: Luc Wachter
+# GNU Radio version: 3.8.1.0
 
 from distutils.version import StrictVersion
 
@@ -35,14 +35,15 @@ from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
 from gnuradio.qtgui import Range, RangeWidget
+
 from gnuradio import qtgui
 
 class binary_slice_test(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "binary-slice-test")
+        gr.top_block.__init__(self, "Binary slice test")
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("binary-slice-test")
+        self.setWindowTitle("Binary slice test")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -74,13 +75,13 @@ class binary_slice_test(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.samp_rate = samp_rate = 2e6
-        self.miller_offset = miller_offset = -160e-3
+        self.miller_offset = miller_offset = -100e-3
         self.manchester_offset = manchester_offset = 0
 
         ##################################################
         # Blocks
         ##################################################
-        self._miller_offset_range = Range(-300e-3, 100e-3, 100e-4, -160e-3, 200)
+        self._miller_offset_range = Range(-300e-3, 100e-3, 100e-4, -100e-3, 200)
         self._miller_offset_win = RangeWidget(self._miller_offset_range, self.set_miller_offset, 'miller_offset', "counter_slider", float)
         self.top_grid_layout.addWidget(self._miller_offset_win)
         self._manchester_offset_range = Range(-300e-3, 100e-3, 100e-4, 0, 200)
@@ -135,7 +136,7 @@ class binary_slice_test(gr.top_block, Qt.QWidget):
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win)
         self.digital_binary_slicer_fb_0_0 = digital.binary_slicer_fb()
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/airspyhf+/tag1-2M-13.562M-0-16-16.nfc', True, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-1.nfc', True, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/cut-signals/tag3-grc-test.bin', False)
         self.blocks_file_sink_0.set_unbuffered(True)
@@ -156,6 +157,7 @@ class binary_slice_test(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_file_source_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.blocks_throttle_0, 0), (self.blocks_complex_to_mag_0, 0))
         self.connect((self.digital_binary_slicer_fb_0_0, 0), (self.blocks_file_sink_0, 0))
+
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "binary_slice_test")
@@ -186,6 +188,8 @@ class binary_slice_test(gr.top_block, Qt.QWidget):
 
 
 
+
+
 def main(top_block_cls=binary_slice_test, options=None):
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
@@ -194,7 +198,9 @@ def main(top_block_cls=binary_slice_test, options=None):
     qapp = Qt.QApplication(sys.argv)
 
     tb = top_block_cls()
+
     tb.start()
+
     tb.show()
 
     def sig_handler(sig=None, frame=None):
@@ -210,9 +216,9 @@ def main(top_block_cls=binary_slice_test, options=None):
     def quitting():
         tb.stop()
         tb.wait()
+
     qapp.aboutToQuit.connect(quitting)
     qapp.exec_()
-
 
 if __name__ == '__main__':
     main()

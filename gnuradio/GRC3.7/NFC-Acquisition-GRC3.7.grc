@@ -6,7 +6,7 @@
     <key>options</key>
     <param>
       <key>author</key>
-      <value></value>
+      <value>Luc Wachter</value>
     </param>
     <param>
       <key>window_size</key>
@@ -46,7 +46,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>top_block</value>
+      <value>nfc_acquisition_37</value>
     </param>
     <param>
       <key>max_nouts</key>
@@ -82,7 +82,7 @@
     </param>
     <param>
       <key>title</key>
-      <value></value>
+      <value>NFC Acquisition GRC3.7</value>
     </param>
     <param>
       <key>placement</key>
@@ -97,15 +97,15 @@
     </param>
     <param>
       <key>value</key>
-      <value>13.562e6</value>
+      <value>13.56e6</value>
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 316)</value>
+      <value>(8, 340)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -230,7 +230,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(840, 308)</value>
+      <value>(840, 348)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -277,7 +277,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(504, 548)</value>
+      <value>(504, 588)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -324,7 +324,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(440, 312)</value>
+      <value>(440, 352)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -367,7 +367,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(336, 552)</value>
+      <value>(336, 592)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -418,7 +418,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(832, 572)</value>
+      <value>(832, 612)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -461,15 +461,15 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>1</value>
+      <value>0</value>
     </param>
     <param>
       <key>file</key>
-      <value>C:\Users\Luc\Desktop\tag1-2M-13.558M-0-16-16-2.nfc</value>
+      <value>C:\Users\Luc\Desktop\tag1-2M-2s.nfc</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(408, 436)</value>
+      <value>(408, 476)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -512,7 +512,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(664, 592)</value>
+      <value>(664, 632)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -543,7 +543,7 @@
     </param>
     <param>
       <key>bb_gain0</key>
-      <value>16</value>
+      <value>20</value>
     </param>
     <param>
       <key>bw0</key>
@@ -567,7 +567,7 @@
     </param>
     <param>
       <key>if_gain0</key>
-      <value>16</value>
+      <value>20</value>
     </param>
     <param>
       <key>iq_balance_mode0</key>
@@ -575,7 +575,7 @@
     </param>
     <param>
       <key>gain0</key>
-      <value>0</value>
+      <value>20</value>
     </param>
     <param>
       <key>ant10</key>
@@ -1835,7 +1835,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(112, 72)</value>
+      <value>(112, 112)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1986,7 +1986,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 52)</value>
+      <value>(472, 92)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2273,7 +2273,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(664, 492)</value>
+      <value>(664, 532)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2640,7 +2640,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 212)</value>
+      <value>(472, 252)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3007,7 +3007,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 132)</value>
+      <value>(472, 172)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3222,7 +3222,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(640, 284)</value>
+      <value>(640, 324)</value>
     </param>
     <param>
       <key>_rotation</key>
