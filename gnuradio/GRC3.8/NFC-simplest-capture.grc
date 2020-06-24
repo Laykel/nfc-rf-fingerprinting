@@ -8,7 +8,7 @@ options:
     description: ''
     gen_cmake: 'On'
     gen_linking: dynamic
-    generate_options: qt_gui
+    generate_options: no_gui
     hier_block_src_path: '.:'
     id: simplest_capture
     max_nouts: '0'
@@ -18,7 +18,7 @@ options:
     realtime_scheduling: ''
     run: 'True'
     run_command: '{python} -u {filename}'
-    run_options: prompt
+    run_options: run
     sizing_mode: fixed
     thread_safe_setters: ''
     title: Simplest Capture
@@ -41,7 +41,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [208, 10]
+    rotation: 0
+    state: enabled
+- name: seconds
+  id: variable
+  parameters:
+    comment: ''
+    value: '5'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [302, 10]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_0
@@ -59,9 +71,27 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [388, 191]
+    coordinate: [646, 209]
     rotation: 0
     state: enabled
+- name: blocks_head_0
+  id: blocks_head
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: int(seconds * samp_rate)
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [417, 225]
+    rotation: 0
+    state: true
 - name: osmosdr_source_0
   id: osmosdr_source
   parameters:
@@ -416,12 +446,13 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [77, 114]
+    coordinate: [83, 136]
     rotation: 0
     state: enabled
 
 connections:
-- [osmosdr_source_0, '0', blocks_file_sink_0, '0']
+- [blocks_head_0, '0', blocks_file_sink_0, '0']
+- [osmosdr_source_0, '0', blocks_head_0, '0']
 
 metadata:
   file_format: 1
