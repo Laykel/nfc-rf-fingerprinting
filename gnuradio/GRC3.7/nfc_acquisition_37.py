@@ -18,15 +18,11 @@ if __name__ == '__main__':
             print "Warning: failed to XInitThreads()"
 
 from PyQt4 import Qt
-from gnuradio import audio
-from gnuradio import blocks
 from gnuradio import eng_notation
-from gnuradio import filter
 from gnuradio import gr
 from gnuradio import qtgui
 from gnuradio.eng_option import eng_option
 from gnuradio.filter import firdes
-from gnuradio.qtgui import Range, RangeWidget
 from optparse import OptionParser
 import osmosdr
 import sip
@@ -65,21 +61,13 @@ class nfc_acquisition_37(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 2e6
+        self.seconds = seconds = 5
+        self.samp_rate = samp_rate = 768e3
         self.frequency = frequency = 13.56e6
 
         ##################################################
         # Blocks
         ##################################################
-        self._frequency_range = Range(13.30e6, 13.80e6, 2e3, 13.56e6, 200)
-        self._frequency_win = RangeWidget(self._frequency_range, self.set_frequency, "frequency", "counter_slider", float)
-        self.top_grid_layout.addWidget(self._frequency_win)
-        self.rational_resampler_xxx_0 = filter.rational_resampler_fff(
-                interpolation=1,
-                decimation=41,
-                taps=None,
-                fractional_bw=None,
-        )
         self.qtgui_waterfall_sink_x_0 = qtgui.waterfall_sink_c(
         	1024, #size
         	firdes.WIN_BLACKMAN_hARRIS, #wintype
@@ -223,25 +211,26 @@ class nfc_acquisition_37(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_antenna('', 0)
         self.osmosdr_source_0.set_bandwidth(0, 0)
 
-        self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
-        self.audio_sink_0 = audio.sink(48000, '', True)
 
 
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_complex_to_float_0, 0), (self.rational_resampler_xxx_0, 0))
-        self.connect((self.osmosdr_source_0, 0), (self.blocks_complex_to_float_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.qtgui_freq_sink_x_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.qtgui_time_sink_x_1, 0))
         self.connect((self.osmosdr_source_0, 0), (self.qtgui_waterfall_sink_x_0, 0))
-        self.connect((self.rational_resampler_xxx_0, 0), (self.audio_sink_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "nfc_acquisition_37")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
+
+    def get_seconds(self):
+        return self.seconds
+
+    def set_seconds(self, seconds):
+        self.seconds = seconds
 
     def get_samp_rate(self):
         return self.samp_rate
