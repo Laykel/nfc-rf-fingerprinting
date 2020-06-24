@@ -1,26 +1,32 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Based on a GNU Radio Python Flow Graph
-# Author: Luc Wachter
-# GNU Radio version: 3.8.1.0
-
 import os
 import time
-import signal
 import osmosdr
 from argparse import ArgumentParser
 from gnuradio import blocks
 from gnuradio import gr
 
+"""
+Uses the osmosdr sink block to read the output of an AirspyHF+ device, reads a specified amount of samples
+(time in seconds * sample rate) and writes the output in a specified file.
 
-class simplest_capture(gr.top_block):
+Based on a GNU Radio Python Flow Graph
+Requires GNU Radio version: 3.7.x or 3.8.x
+Author: Luc Wachter
+"""
+
+SAMP_RATE = 768e3
+
+
+class SimplestCapture(gr.top_block):
     def __init__(self, capture_length, output):
         gr.top_block.__init__(self, "Simplest Capture")
 
         # Variables
         seconds = capture_length
-        samp_rate = 768e3
+        samp_rate = SAMP_RATE
 
         # Blocks
         source = osmosdr.source(
@@ -48,13 +54,13 @@ class simplest_capture(gr.top_block):
 def main():
     parser = ArgumentParser(description="GNURadio-based capture script using airspyhf+")
     parser.add_argument("--time", help="The capture length in seconds", default=5, type=int)
-    parser.add_argument("--path", help="The path to the output file relative to the script's location")
+    parser.add_argument("path", help="The path to the output file relative to the script's location")
 
     args = parser.parse_args()
     SECONDS = args.time
     PATH = os.path.join(os.getcwd(), args.path)
 
-    tb = simplest_capture(SECONDS, PATH)
+    tb = SimplestCapture(SECONDS, PATH)
     tb.start()
     time.sleep(SECONDS + 2)
     tb.stop()
