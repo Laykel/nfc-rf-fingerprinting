@@ -1,5 +1,6 @@
 # RF recordings (too heavy)
 data/raw/
+data/cut-signals/
 data/archives/
 scripts/preprocess/figs/
 .idea/

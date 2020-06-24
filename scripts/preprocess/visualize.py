@@ -4,15 +4,16 @@ from scipy import signal
 from matplotlib import pyplot as plt
 import os
 
-PATH = "../../data/recordings"
+PATH = "../../data/raw"
 
-SAMP_RATE = int(2e6)
+SAMP_RATE = int(768e3)
 NFFT = 1024
 
 
 def find_first_interesting_spot(data):
     """Return the index of the first significant part of the signal"""
     median_vector = signal.medfilt(data)
+    print(signal.find_peaks(data, 0.6))
     return np.argmax(data > np.mean(median_vector))
 
 
@@ -51,7 +52,7 @@ def signal_magnitude(data, output):
 
 
 def main():
-    files = [file for file in os.listdir(PATH) if file.endswith(".nfc")]
+    files = [file for file in os.listdir(PATH)]
     files.sort()
 
     print("Files to generate visualizations for:")
@@ -63,11 +64,11 @@ def main():
         start = find_first_interesting_spot(np.abs(data))
         end = start + int(SAMP_RATE / 2)
 
-        print(file[:-4], "start:", start)
+        print(file[:-4], "start:", start, "end:", end)
 
-        signal_ivsq(data[start:end], "figs/IQ-{}".format(file[:-4]))
-        signal_magnitude(data[start:end], "figs/MAG-{}".format(file[:-4]))
-        signal_psd(data[start:end], SAMP_RATE, NFFT, "figs/PSD-{}".format(file[:-4]))
+        # signal_ivsq(data[start:end], "figs/IQ/{}".format(file[:-4]))
+        signal_magnitude(data[start:end], "figs/magnitudes/{}".format(file[:-4]))
+        # signal_psd(data[start:end], SAMP_RATE, NFFT, "figs/PSD/{}".format(file[:-4]))
 
 
 if __name__ == "__main__":
