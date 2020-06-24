@@ -5,6 +5,19 @@ data/archives/
 scripts/preprocess/figs/
 .idea/
 
+# vim
+tags
+
+# Jupyter notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+profile_default/
+ipython_config.py
+
+# Created by https://www.gitignore.io/api/python
+# Edit at https://www.gitignore.io/?templates=python
+
 # LaTeX
 *.log
 *.aux
@@ -26,19 +39,6 @@ scripts/preprocess/figs/
 *.run.xml
 *.tex.bbl
 *.tex.blg
-
-# vim
-tags
-
-# Jupyter notebooks
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
-
-profile_default/
-ipython_config.py
-
-# Created by https://www.gitignore.io/api/python
-# Edit at https://www.gitignore.io/?templates=python
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

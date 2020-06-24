@@ -21,8 +21,9 @@
   maxcitenames=1,
   minbibnames=3,
   maxbibnames=3
-]{biblatex} % biblatex with ISO 690
-  \addbibresource{rfml-fingerprinting.bib}
+]{biblatex} % biblatex with ISO 690, 3 names cited in bib and 1 in citations
+\addbibresource{rfml-fingerprinting.bib}
+\addbibresource{other-resources.bib}
 
 \usepackage{amsmath,amsfonts}   % Advanced math typesetting
 \usepackage{graphicx}
@@ -31,16 +32,41 @@
 \usepackage[en-GB]{datetime2}   % Date and time macros
 \usepackage[parfill]{parskip}   % No indent at start of new line
 \usepackage{fancyhdr}           % Create headers and footers
-  \pagestyle{fancy}
+\pagestyle{fancy}
 
-\usepackage{hyperref}           % Table of contents with clickable links
-  \hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=blue
-  }
+\usepackage[breaklinks=true]{hyperref} % Table of contents with clickable links
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=blue
+}
+
+% Glossary ==================================================================================================
+\usepackage{glossaries}
+\makeglossaries
+\renewcommand{\glsgroupskip}{}
+
+\newacronym{nfc}{NFC}{Near-Field Communication}
+\newacronym{rf}{RF}{Radio Frequency}
+\newacronym{hf}{HF}{High Frequency}
+\newacronym{pcd}{PCD}{Proximity Coupling Device}
+\newacronym{picc}{PICC}{Proximity Inductive Coupling Card}
+\newacronym{puf}{PUF}{Physical Unclonable Function}
+\newacronym{ook}{OOK}{On-Off Keying}
+\newacronym{ask}{ASK}{Amplitude Shift Keying}
+\newacronym{sdr}{SDR}{Software-Defined Radio}
+\newacronym{adc}{ADC}{Analog-to-Digital Converter}
+\newacronym{dac}{DAC}{Digital-to-Analog Converter}
+\newacronym{grc}{GRC}{GNU Radio Companion}
+\newacronym{rfml}{RFML}{Radio Frequency Machine Learning}
+\newacronym{cnn}{CNN}{Convolutional Neural Network}
+\newacronym{dnn}{DNN}{Deep Neural Network}
+\newacronym{mlp}{MLP}{Multi-Layer Perceptron}
+\newacronym{phy}{PHY}{Physical layer}
+
+\glsaddall
 
 % Variables ==================================================================================================
 \newcommand{\TBtitle}{RF fingerprinting on NFC devices}
@@ -52,7 +78,7 @@
 \newcommand{\TBorient}{Software engineering}
 
 \newcommand{\TBauthor}{Luc Wachter}
-\newcommand{\TBsupervisor}{Prof. Alberto Dassatti}
+\newcommand{\TBsupervisor}{Alberto Dassatti}
 \newcommand{\TBindustryContact}{Joël Conus}
 \newcommand{\TBindustryName}{Kudelski Group SA}
 
@@ -64,7 +90,7 @@ Dans ce travail... $\rightarrow$ Ceci est le résumé publiable...
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
 
 % Don't number sections
-\setcounter{secnumdepth}{0}
+%\setcounter{secnumdepth}{0}
 
 % Header and footer things ====================================================================================
 \renewcommand{\footrulewidth}{0.4pt}
@@ -74,27 +100,29 @@ Dans ce travail... $\rightarrow$ Ceci est le résumé publiable...
 \cfoot{}
 \rfoot{Page \textbf{\thepage} of \textbf{\pageref*{LastPage}}}
 
+\newenvironment{monospace}{\ttfamily}{\par}
+
 % Document ====================================================================================================
 \begin{document}
 
 % Cover page
-\include{sections/coverpage}
+\include{fin-sections/coverpage}
 \newpage
 
 % Résumé publiable ============================================================================================
-\include{sections/summary}
+\include{fin-sections/summary}
 \newpage
 
 % Preamble
-\include{sections/preamble}
+\include{fin-sections/preamble}
 \newpage
 
 % Official authentication
-\include{sections/authentication}
+\include{fin-sections/authentication}
 \newpage
 
 % Specification (cahier des charges)
-\include{sections/scopestatement}
+\include{int-sections/scopestatement}
 \newpage
 
 % Contents page ===============================================================================================
@@ -102,25 +130,36 @@ Dans ce travail... $\rightarrow$ Ceci est le résumé publiable...
 \tableofcontents
 \newpage
 
-% Introduction
-\include{sections/introduction}
-\newpage
-
-% State of the art
-\section{State of the art}
-
-\section{Conclusion}
-
-% Bibliography
-\printbibliography[heading=bibintoc, title={Bibliography}]
-\newpage
-
-% Symbols and abbreviations list
-
 % Figures list
 \listoffigures
 
 \listoftables
+
+% Symbols and abbreviations list
+\printglossary[type=\acronymtype, nonumberlist, title=List of acronyms]
+
+% Introduction
+\include{fin-sections/introduction}
+\newpage
+
+% Necessary concepts
+\include{int-sections/concepts}
+\newpage
+
+% State of the art
+\include{int-sections/stateoftheart}
+\newpage
+
+% Dataset creation
+\include{fin-sections/dataset}
+\newpage
+
+\include{fin-sections/conclusion}
+\newpage
+
+% Bibliography
+\printbibliography[heading=bibintoc, title={Bibliography}]
+\newpage
 
 % Annexes
 
