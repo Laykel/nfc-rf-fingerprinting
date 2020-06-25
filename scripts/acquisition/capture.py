@@ -17,22 +17,19 @@ Requires GNU Radio version: 3.7.x or 3.8.x
 Author: Luc Wachter
 """
 
-SAMP_RATE = 768e3
-
 
 class SimplestCapture(gr.top_block):
-    def __init__(self, capture_length, output):
+    def __init__(self, capture_length, sample_rate, output):
         gr.top_block.__init__(self, "Simplest Capture")
 
         # Variables
         seconds = capture_length
-        samp_rate = SAMP_RATE
 
         # Blocks
         source = osmosdr.source(
             args="numchan=" + str(1) + " " + 'airspyhf=0'
         )
-        source.set_sample_rate(samp_rate)
+        source.set_sample_rate(sample_rate)
         source.set_center_freq(13.56e6, 0)
         source.set_freq_corr(0, 0)
         source.set_gain(16, 0)
@@ -41,7 +38,7 @@ class SimplestCapture(gr.top_block):
         source.set_antenna('', 0)
         source.set_bandwidth(0, 0)
 
-        head = blocks.head(gr.sizeof_gr_complex*1, int(seconds * samp_rate))
+        head = blocks.head(gr.sizeof_gr_complex*1, int(seconds * sample_rate))
 
         sink = blocks.file_sink(gr.sizeof_gr_complex*1, output, False)
         sink.set_unbuffered(False)
@@ -54,13 +51,16 @@ class SimplestCapture(gr.top_block):
 def main():
     parser = ArgumentParser(description="GNURadio-based capture script using airspyhf+")
     parser.add_argument("--time", help="The capture length in seconds", default=5, type=int)
+    parser.add_argument("--samplerate", help="The (theoretical) number of to capture samples per second",
+                        default=768000, type=int)
     parser.add_argument("path", help="The path to the output file relative to the script's location")
 
     args = parser.parse_args()
     SECONDS = args.time
+    SAMPLE_RATE = args.samplerate
     PATH = os.path.join(os.getcwd(), args.path)
 
-    tb = SimplestCapture(SECONDS, PATH)
+    tb = SimplestCapture(SECONDS, SAMPLE_RATE, PATH)
     tb.start()
     time.sleep(SECONDS + 2)
     tb.stop()
