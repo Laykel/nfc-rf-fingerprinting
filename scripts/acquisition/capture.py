@@ -32,12 +32,13 @@ class SimplestCapture(gr.top_block):
         source.set_gain(16, 0)
         source.set_if_gain(16, 0)
         source.set_bb_gain(16, 0)
-        source.set_antenna('', 0)
+        source.set_antenna('RX', 0)
         source.set_bandwidth(0, 0)
+        # print(source.get_antennas())
 
-        head = blocks.head(gr.sizeof_gr_complex * 1, int(capture_length * sample_rate))
+        head = blocks.head(gr.sizeof_gr_complex, int(capture_length * sample_rate))
 
-        sink = blocks.file_sink(gr.sizeof_gr_complex * 1, output, False)
+        sink = blocks.file_sink(gr.sizeof_gr_complex, output, False)
         sink.set_unbuffered(False)
 
         # Connections
@@ -50,7 +51,7 @@ def main():
     parser = ArgumentParser(description="GNURadio-based capture script using airspyhf+")
 
     parser.add_argument("path", help="The path to the output file relative to the script's location")
-    parser.add_argument("--time", help="The capture length in seconds", default=5, type=int)
+    parser.add_argument("--time", help="The capture length in seconds", default=3, type=int)
     parser.add_argument("--samplerate", help="The (theoretical) number of to capture samples per second",
                         default=768000, type=int)
     parser.add_argument("--freq", help="The center frequency (in Hertz)", default=int(13.56e6), type=int)

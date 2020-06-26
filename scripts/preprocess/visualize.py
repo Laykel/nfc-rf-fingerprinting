@@ -4,7 +4,7 @@ from scipy import signal
 from matplotlib import pyplot as plt
 import os
 
-PATH = "../../data/raw"
+PATH = "../../data/dataset/1"
 
 SAMP_RATE = int(768e3)
 NFFT = 1024
