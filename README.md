@@ -2,7 +2,7 @@
 
 ## Description
 
-See the project's [report](report/bt-report.pdf) for a precise account of every step (includes the specification).
+See the project's [report](report/final-report.pdf) for a precise account of every step.
 
 ### Abstract
 
@@ -32,23 +32,18 @@ This project is conducted in the context of my bachelor thesis at [HEIG-VD](http
 
 This repository's folders can be described as follows:
 
-- `data` contains the _gitignored_ recordings of NFC communications, as well as decoded transmissions in different formats.
+- `data` contains decoding tests as well as the `dataset` folder, which contains the data captured for the project (stored using [Git LFS](https://git-lfs.github.com/)). See [the dataset readme](data/dataset/README.md).
 - `gnuradio` contains the different GRC flowgraphs used in the project.
-- `notebooks` contains the notebooks used during the testing and prototyping phase of the project.
+- `notebooks` contains the notebooks used during the analysis and prototyping phase of the project.
 - `report` contains the LaTeX sources and the compiled pdf of the report. It also contains the bibliography and figures used in it.
-- `scripts` contains the final programs used to pre-process the signals, train the model, test it, and _deploy it?_ .
+- `scripts` contains the final programs used to acquire and pre-process the signals, train the model, test it, and _deploy it?_ .
 
 ## How to run
 
 ### The notebooks
 
 ```
-# Get the data and unzip it
-wget URL_DOESNT_EXIST_YET
-mkdir data/recordings
-tar xf recordings.gz -C data/recordings
-
-# Clone the repo
+# Clone the repo (warning, also downloads the datasets)
 git clone https://github.com/Laykel/nfc-rf-fingerprinting.git
 
 # Install dependencies (after creating a virtual env as you usually do)
@@ -57,4 +52,15 @@ pip install -r requirements.txt
 
 # Run jupyter notebook or jupyter lab
 jupyter lab
+```
+
+### The acquisition script
+
+This program is a very simple script based on a GNU Radio generated script. You do need GNU Radio installed (version 3.7 or higher) and a functioning python setup.
+
+More importantly, the program uses the `osmocom source` block to try to connect to an Airspy HF+ device. You will probably need to adapt the source block to your hardware (see what GNU Radio Companion generates).
+
+```
+cd scripts/acquisition
+python capture.py your_filename.bin --time 4 --samplerate 500000 --freq 13560000
 ```
