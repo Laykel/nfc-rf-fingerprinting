@@ -78,7 +78,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: 2e6
+    value: 768e3
   states:
     bus_sink: false
     bus_source: false
@@ -145,7 +145,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/cut-signals/tag3-grc-test.bin
+    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/archives/cut-signals/test-grc.nfc
     type: byte
     unbuffered: 'True'
     vlen: '1'
@@ -181,7 +181,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-1.nfc
+    file: /home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/dataset/1/tag5-1.nfc
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'

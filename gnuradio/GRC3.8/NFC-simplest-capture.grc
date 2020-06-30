@@ -36,7 +36,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: 768e3
+    value: 2e6
   states:
     bus_sink: false
     bus_source: false
@@ -48,7 +48,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '5'
+    value: '3'
   states:
     bus_sink: false
     bus_source: false
@@ -129,7 +129,7 @@ blocks:
     ant7: ''
     ant8: ''
     ant9: ''
-    args: airspyhf=0
+    args: driver=lime,soapy=0
     bb_gain0: '16'
     bb_gain1: '20'
     bb_gain10: '20'

@@ -30,13 +30,13 @@ class simplest_capture(gr.top_block):
         # Variables
         ##################################################
         self.seconds = seconds = 5
-        self.samp_rate = samp_rate = 768e3
+        self.samp_rate = samp_rate = 2e6
 
         ##################################################
         # Blocks
         ##################################################
         self.osmosdr_source_0 = osmosdr.source(
-            args="numchan=" + str(1) + " " + 'airspyhf=0'
+            args="numchan=" + str(1) + " " + 'driver=lime,soapy=0'
         )
         self.osmosdr_source_0.set_sample_rate(samp_rate)
         self.osmosdr_source_0.set_center_freq(13.56e6, 0)

@@ -74,7 +74,7 @@ class binary_slice_test(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 2e6
+        self.samp_rate = samp_rate = 768e3
         self.miller_offset = miller_offset = -100e-3
         self.manchester_offset = manchester_offset = 0
 
@@ -136,9 +136,9 @@ class binary_slice_test(gr.top_block, Qt.QWidget):
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win)
         self.digital_binary_slicer_fb_0_0 = digital.binary_slicer_fb()
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-1.nfc', True, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/dataset/1/tag5-1.nfc', True, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/cut-signals/tag3-grc-test.bin', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/archives/cut-signals/test-grc.nfc', False)
         self.blocks_file_sink_0.set_unbuffered(True)
         self.blocks_complex_to_mag_0 = blocks.complex_to_mag(1)
         self.blocks_add_const_vxx_0_0 = blocks.add_const_ff(manchester_offset)
