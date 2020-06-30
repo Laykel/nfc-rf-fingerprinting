@@ -1,0 +1,52 @@
+# Datasets description
+
+We have produced a number of data collections comprising recordings of NFC transmissions between an active reader (smartphone) and a number of passive tags.
+
+The transmissions are stored in binary format (raw bytes) with each 4 bytes representing a (32b) floating-point number. As the samples are represented as complex numbers (see report), the numbers are interleaved: the first float is the real part of the sample and the second is the imaginary part. They can easily be read as a list of complex numbers in python (with numpy) using the following line.
+
+```py
+signal = np.fromfile("path/to/file.nfc", dtype=scipy.complex64)
+```
+
+Each of the subfolders contains a set of recordings, which we describe below.
+
+## NFC tags inventory
+
+| Name | NFC Type | Standard     | Chip              | Writable | Storage | Bit rate           |
+|:-----|:---------|:-------------|:------------------|:---------|:--------|:-------------------|
+| tag1 | NFC-A    | ISO 14443-3A | NTAG213           | Yes      | 137B    | 106kb/s            |
+| tag2 | NFC-A    | ISO 14443-3A | NTAG213           | Yes      | 137B    | 106kb/s            |
+| tag3 | NFC-A    | ISO 14443-3A | NTAG213           | Yes      | 137B    | 106kb/s            |
+| tag4 | NFC-A    | ISO 14443-3A | NTAG213           | Yes      | 137B    | 106kb/s            |
+| tag5 | NFC-A    | ISO 14443-3A | NTAG213           | Yes      | 137B    | 106kb/s            |
+| tag6 | NFC-A    | ISO 14443-3A | Mifare Classic 1k | Yes      | 716B    | 106kb/s            |
+| tag7 | NFC-A    | ISO 14443-3A | Mifare Classic 1k | Yes      | 716B    | 106kb/s            |
+| tag8 | NFC-A    | ISO 14443-4  | Mifare Classic 4k | No       | ~4kB    | 106kb/s            |
+| tag9 | FeliCa   | JIS 6319-4   | RC-S967           | No       | 208B    | 212kb/s or 424kb/s |
+
+## General parameters for the acquisition
+
+We use an Airspy HF+ SDR device with an NFC antenna for all our captures.
+
+- Number of samples per seconds: 768'000
+- Center frequency: 13.56 MHz
+
+For more details on the setup, please refer to the report.
+
+## Dataset 1
+
+This dataset was built while trying to introduce as little variability as possible. The positions of the tags and reader was kept as similar as possible between recordings. Each recording was made using `scripts/acquisition/capture.py` with `--time 3`.
+
+- 3 recordings of each of the 9 tags
+- Length of a recording: 3 seconds
+- Number of samples per recording: 3 * 768'000 = 2'304'000 samples
+- (Content of tags 1 through 7: 36B of the 'A' character.)
+
+## Dataset 9
+
+This dataset is numbered 9 and will probably not be used, because the tags' responses are very weak. We keep it as it might serve in a future experiment. Each recording was made using `scripts/acquisition/capture.py` with `--time 5`.
+
+- 2 recordings of each of the 9 tags
+- Length of a recording: 5 seconds
+- Number of samples per recording: 5 * 768'000 = 3'840'000 samples
+- (Content of tags 1 through 7: 36B of the 'A' character.)
