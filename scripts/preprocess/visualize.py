@@ -1,20 +1,20 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import scipy
 from scipy import signal
 from matplotlib import pyplot as plt
 import os
 
+"""
+This script contains experiments for finding interesting parts in our signals and generating visualisations
+"""
+
 PATH = "../../data/dataset/1"
 
 SAMP_RATE = int(768e3)
 NFFT = 1024
-
-
-def find_first_interesting_spot(data):
-    """Return the index of the first significant part of the signal"""
-    median_vector = signal.medfilt(data)
-    print(signal.find_peaks(data, 0.6))
-    return np.argmax(data > np.mean(median_vector))
 
 
 def signal_psd(data, samp_rate, nfft, output):
@@ -39,11 +39,13 @@ def signal_ivsq(data, output):
     plt.close()
 
 
-def signal_magnitude(data, output):
+def signal_magnitude(data, peak, output):
     """Save a plot of the samples' magnitudes in the `output` file"""
     plt.figure(figsize=(30, 10))
 
     plt.plot(np.abs(data), 'b.')
+
+    plt.xticks(range(0, 4500, 500), range(peak - 2500, peak + 2001, 500))
     plt.xlabel("Samples")
     plt.ylabel("Magnitude")
 
@@ -60,14 +62,15 @@ def main():
 
     for file in files:
         data = np.fromfile(os.path.join(PATH, file), dtype=scipy.complex64)
+        mags = np.abs(data)
 
-        start = find_first_interesting_spot(np.abs(data))
-        end = start + int(SAMP_RATE / 2)
-
+        # Find peak in signal
+        peak = signal.find_peaks(mags[2000:], 0.277)[0][0] + 2000
+        start, end = peak - 2000, peak + 2000
         print(file[:-4], "start:", start, "end:", end)
 
         # signal_ivsq(data[start:end], "figs/IQ/{}".format(file[:-4]))
-        signal_magnitude(data[start:end], "figs/magnitudes/{}".format(file[:-4]))
+        signal_magnitude(data[start:end], peak, "figs/magnitudes/{}".format(file[:-4]))
         # signal_psd(data[start:end], SAMP_RATE, NFFT, "figs/PSD/{}".format(file[:-4]))
 
 
