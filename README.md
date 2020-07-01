@@ -36,7 +36,7 @@ This repository's folders can be described as follows:
 - `gnuradio` contains the different GRC flowgraphs used in the project.
 - `notebooks` contains the notebooks used during the analysis and prototyping phase of the project.
 - `report` contains the LaTeX sources and the compiled pdf of the report. It also contains the bibliography and figures used in it.
-- `scripts` contains the final programs used to acquire and pre-process the signals, train the model, test it, and _deploy it?_ .
+- `nfc_rfml` contains the final programs used to acquire and pre-process the signals, train the model, test it, and _deploy it?_ .
 
 ## How to run
 
