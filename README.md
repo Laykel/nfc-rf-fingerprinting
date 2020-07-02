@@ -61,6 +61,6 @@ This program is a very simple script based on a GNU Radio generated script. You 
 More importantly, the program uses the `osmocom source` block to try to connect to an Airspy HF+ device. You will probably need to adapt the source block to your hardware (see what GNU Radio Companion generates).
 
 ```
-cd scripts/acquisition
+cd nfc_rfml/acquisition
 python capture.py your_filename.bin --time 4 --samplerate 500000 --freq 13560000
 ```
