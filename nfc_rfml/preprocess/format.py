@@ -4,13 +4,10 @@
 import os
 import numpy as np
 import scipy
-from sklearn.model_selection import train_test_split
 
 """
 This module provides functions to load I/Q signals datasets in memory, formatting them as necessary for learning.
 """
-
-PATH = "../../data/dataset/1"
 
 # TODO Function to return metadata
 # The IDs of tags of a given model
@@ -20,7 +17,7 @@ FELICA = (9,)
 
 
 def partition(lst, n):
-    """Generate as many n-sized segments as possible from lst
+    """Generate as many n-sized segments as possible from lst (the last segment may be smaller)
     :param lst: The list to partition
     :param n: The partition size
     :return: A list of partitions of size n
@@ -29,50 +26,69 @@ def partition(lst, n):
         yield lst[i:i + n]
 
 
-def read_dataset(path, files, segments_size=256):
+def segments_2d(segments):
+    """Store the segments in simple arrays with the real parts first and then the imaginary parts.
+    :param segments: A list of data segments with complex values
+    :return: A list of arrays with all the real parts followed by the imaginary parts
+    """
+    return [np.append(np.real(lst), [np.imag(lst)]) for lst in list(segments)]
+
+
+def segments_3d(segments):
+    """Store the segments in 2d arrays with one dimension for the real parts and one for the imaginary parts.
+    :param segments: A list of data segments with complex values
+    :return: A list of two-dimensional arrays with each a list for real parts and a list for imaginary parts
+    """
+    return [np.vstack((np.real(lst), np.imag(lst))) for lst in list(segments)]
+
+
+def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
     """
     Sort and read the given files as complex numbers and partition them in smaller segments.
-    Then, separate the real and imaginary parts of these segments' elements in two float-valued arrays.
-    Finally, store each of those two-dimensional arrays in an array and build a labels list using the filename.
+    Then, format these segments using a a given function and store them in a list of training/testing data.
+    Finally, build a list of labels using the filename.
 
     :param path: The path to the folder where the data files are stored
     :param files: The file names of the files to be considered
     :param segments_size: The wanted size for the data segments
+    :param format_segments: The function with which to format the signal segments
     :return: A couple of numpy arrays in the form (formatted data, labels)
     """
     files.sort()
 
-    training = []
-    labels = []
+    X = []  # The training/testing data
+    labels = []  # The associated labels
 
     for file in files:
         # Read each capture
         signal = np.fromfile(os.path.join(path, file), dtype=scipy.complex64)
 
         # Partition the signals in segments of 256 samples
-        segments = partition(signal, segments_size)
-        # Store these segments in a two-dimensional array
-        # (one dimension for the real parts and one for the imaginary parts)
-        training.extend([np.vstack((np.real(lst), np.imag(lst))) for lst in list(segments)])
+        segments = list(partition(signal, segments_size))
+        # Format segments and add them to the collection of training/testing data
+        X.extend(format_segments(segments))
 
-        labels.extend([file[3]] * 9000)  # TODO Calculate value of label through function
+        labels.extend([file[3]] * len(segments))  # TODO Calculate value of label through function
 
-    return np.array(training), np.array(labels)
+    return np.array(X), np.array(labels)
 
 
-def main():
+def read_metadata(path):
+    # TODO
+    pass
+
+
+def _test():
+    PATH = "../../data/dataset/1"
     # Get only the first recording for each tag
     files = [file for file in os.listdir(PATH) if file.endswith(".nfc") and "-1" in file]
-    X, y = read_dataset(PATH, files)
 
+    X, y = read_dataset(PATH, files)
     print(X.shape, y.shape)
 
-    # TODO Maybe don't train_test_split in this module
-    # TODO Think about validation data
-    # Split data into train and test data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-    print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
+    X, y = read_dataset(PATH, files, segments_size=512, format_segments=segments_2d)
+    print(X.shape, y.shape)
 
 
 if __name__ == "__main__":
-    main()
+    _test()
