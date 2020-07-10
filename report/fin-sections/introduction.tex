@@ -1,0 +1,27 @@
+\section{Introduction}
+
+\subsection{Project description}
+
+Small imperfections in the electromagnetic emissions of radio transmitters make it possible to identify them based only on the way they transmit. This is called Radio Frequency (RF) fingerprinting and it is possible thanks to tiny manufacturing imperfections in the devices' analog components. Using Software-Defined Radio (SDR) equipment, we can analyse this spectrum in order to extract the aforementioned differences and identify a device.
+
+Such techniques can be used on any type of radio transmission: Bluetooth, Bluetooth Low Energy (BLE), WiFi, LTE (part of 4G mobile networks), etc. This project aims to use RF fingerprinting on NFC devices. Indeed, NFC is often used in access control and payment applications but many implementations are vulnerable to relay attacks. Spoofing the imperfections in an emitter's radio spectrum is close to impossible at the present time, since it is essentially a hardware signature. This is why a technique like the one described here would be a valuable additional security layer.
+
+The goal of this project is to determine whether applying machine learning techniques to the problem of RF fingerprinting NFC devices could be used as an authentication technique, in order to prevent relay attacks. The first step to achieve this goal is to produce a dataset of raw NFC transmissions using SDR. Indeed, to our knowledge, there exists no available dataset of raw NFC captures.
+
+\subsection{Context}
+
+This project is conducted in the context of a bachelor thesis at HEIG-VD, the largest branch of the "University of Applied Sciences Western Switzerland" (HES-SO).
+
+\begin{itemize}
+  \item Department: Information and communication technologies
+  \item Faculty: Information technology and communication systems
+  \item Orientation: Software engineering
+\end{itemize}
+
+It was proposed by Mr Joël Conus of \TBindustryName.
+
+\subsection{Document description}
+
+As this project is largely of exploratory nature, the report is of prime importance. It highlights the steps taken during the project, the experiments and the results. It will be structured as follows.
+
+We will first introduce important concepts for the understanding of this document. Then, we will study previous works in the field in order to better define our problem and to discern the obstacles we might face. After this analysis phase, we will tackle the first practical part of the project: designing an acquisition setup for the data and building our dataset. Finally, said dataset will be used to train machine learning models, whose performance we will discuss in the last part of this document.

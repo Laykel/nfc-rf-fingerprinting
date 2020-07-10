@@ -1,0 +1,48 @@
+% First page header and footer
+\fancypagestyle{firstpage}{
+  \renewcommand{\headrulewidth}{0pt}
+  \lhead{\includegraphics[width=5cm]{figures/heig.png}}
+  \rhead{Department: \TBdpt\linebreak Faculty: \TBfiliere\linebreak Orientation: \TBorient}
+  \renewcommand{\footrulewidth}{0pt}
+  \lfoot{}
+  \rfoot{}
+}
+
+% Title page ==================================================================================================
+% (Custom in order to stay close to the given model.)
+\begin{titlepage}
+  \thispagestyle{firstpage}
+  \begin{center}
+    \vspace*{3cm}
+
+    \Huge
+    \textbf{Bachelor Thesis}
+
+    \vspace{1cm}
+    \Huge
+    \TBtitle
+
+    \vspace{0.2cm}
+    \Large
+    \textbf{Not confidential}
+  \end{center}
+
+  \vspace{7cm}
+  \begin{tabbing}
+    \linespread{3}\textbf{Student:} \hspace{12em} \= \TBauthor\\\\
+
+    \textbf{Project proposed by:} \> \TBindustryContact\\
+    \> \TBindustryName\\
+    \> 22-24, Route de Genève\\
+    \> 1033 Cheseaux-sur-Lausanne\\\\
+
+    \textbf{Teacher in charge:} \> \TBsupervisor\\\\
+
+    \textbf{Academic year:} \> \TBacademicYears
+  \end{tabbing}
+
+  \vspace{2cm}
+  \begin{flushright}
+    Yverdon-les-Bains, \today
+  \end{flushright}
+\end{titlepage}
