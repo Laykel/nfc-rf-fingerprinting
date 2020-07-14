@@ -4,4 +4,4 @@
 from nfc_rfml import app
 
 if __name__ == '__main__':
-    app.run()
+    app.main()
