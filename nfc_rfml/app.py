@@ -7,7 +7,8 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 from time import time
 from preprocess.format import read_dataset, split_data
-from learn import categorize_chips, rfmlcnn
+from learn import categorize_chips
+from learn.models import rfmlcnn
 
 """
 This module is the entry point for the nfc-rfml project.
@@ -27,15 +28,14 @@ def cnn_test():
     files = [file for file in os.listdir(PATH)
              if ("tag1" in file or "tag2" in file)]
     print(files)
-    X, y = read_dataset(PATH, files, segments_size=256)
+    X, y = read_dataset(PATH, files, segments_size=512)
 
     # Split data into train, validation and test data
     (X_train, y_train), (X_val, y_val), (X_test, y_test) = split_data(X, y, 0.7, 0.2, 0.1)
 
     # Build model and output its structure
-    model = rfmlcnn.RFMLCNN(nb_outputs=2, input_shape=(None, 2, 256, 1))
+    model = rfmlcnn.RFMLCNN(nb_outputs=2, input_shape=(None,) + X_train.shape[1:])
     model.summary()
-    exit()
 
     # Configure model
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
@@ -45,9 +45,10 @@ def cnn_test():
     print(history.history)
 
     # Evaluate model with test set
-    # TODO put that in an evalute module
+    # TODO put that in an evaluate module
     y_pred = model.predict(X_test)
     y_pred = np.argmax(y_pred, axis=1)
+    y_test = np.argmax(y_test, axis=1)
 
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
