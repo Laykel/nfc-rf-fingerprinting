@@ -2,7 +2,7 @@
 
 ## Description
 
-See the project's [report](report/final-report.pdf) for a precise account of every step.
+(See the project's [report](report/final-report.pdf) for a precise account of every step.)
 
 ### Abstract
 
@@ -34,16 +34,17 @@ This repository's folders can be described as follows:
 
 - `data` contains decoding tests as well as the `dataset` folder, which contains the data captured for the project (stored using [Git LFS](https://git-lfs.github.com/)). See [the dataset readme](data/dataset/README.md).
 - `gnuradio` contains the different GRC flowgraphs used in the project.
+- `nfc_rfml` contains the final programs used to acquire and pre-process the signals, train the model, test it, and _deploy it?_ .
 - `notebooks` contains the notebooks used during the analysis and prototyping phase of the project.
 - `report` contains the LaTeX sources and the compiled pdf of the report. It also contains the bibliography and figures used in it.
-- `nfc_rfml` contains the final programs used to acquire and pre-process the signals, train the model, test it, and _deploy it?_ .
 
 ## How to run
 
 ### The notebooks
 
 ```
-# Clone the repo (warning, also downloads the datasets)
+# Clone the repo
+# TODO see if this also downloads the datasets (depends on git lfs)
 git clone https://github.com/Laykel/nfc-rf-fingerprinting.git
 
 # Install dependencies (after creating a virtual env as you usually do)
