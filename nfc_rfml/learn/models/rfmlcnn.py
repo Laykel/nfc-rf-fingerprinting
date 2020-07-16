@@ -1,12 +1,12 @@
 from tensorflow.keras import Model
 from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Input
 
-"""
-youssef
-"""
-
 
 class RFMLCNN(Model):
+    """
+    youssef
+    """
+
     def __init__(self, nb_outputs, input_shape):
         super(RFMLCNN, self).__init__()
         self.shape = input_shape

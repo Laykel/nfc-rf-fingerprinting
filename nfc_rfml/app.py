@@ -25,8 +25,7 @@ def chip_type1():
 
 
 def cnn_test():
-    files = [file for file in os.listdir(PATH)
-             if ("tag1" in file or "tag2" in file)]
+    files = [file for file in os.listdir(PATH) if ".nfc" in file]
     print(files)
     X, y = read_dataset(PATH, files, segments_size=512)
 
@@ -34,7 +33,8 @@ def cnn_test():
     (X_train, y_train), (X_val, y_val), (X_test, y_test) = split_data(X, y, 0.7, 0.2, 0.1)
 
     # Build model and output its structure
-    model = rfmlcnn.RFMLCNN(nb_outputs=2, input_shape=(None,) + X_train.shape[1:])
+    shape = (None,) + X_train.shape[1:]
+    model = rfmlcnn.RFMLCNN(nb_outputs=9, input_shape=shape)
     model.summary()
 
     # Configure model
