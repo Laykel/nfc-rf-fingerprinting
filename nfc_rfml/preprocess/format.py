@@ -11,12 +11,6 @@ from tensorflow.keras.utils import to_categorical
 This module provides functions to load I/Q signals datasets in memory, formatting them as necessary for learning.
 """
 
-# TODO Function to return metadata
-# The IDs of tags of a given model
-NTAG213 = (1, 2, 3, 4, 5)
-MIFARE = (6, 7, 8)
-FELICA = (9,)
-
 
 def partition(lst, n):
     """Generate as many n-sized segments as possible from lst (the last segment may be smaller).
@@ -82,7 +76,8 @@ def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
 
 def split_data(X, y, train_ratio, validation_ratio, test_ratio):
     """
-    Split the data and the labels in given portions of training, validation and testing data.
+    Split the data and the labels in given portions of training, validation and testing data. Also converts the labels
+    to categorical data.
 
     :param X: Data to split in portions defined in the ratio parameters
     :param y: Labels to split in the same manner as the data
