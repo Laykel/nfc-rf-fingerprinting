@@ -40,6 +40,7 @@ def chip_type_cnn():
     X, y = read_dataset(PATH, files, segments_size=512)
 
     for i, v in enumerate(y):
+        v = int(v)
         if v in NTAG213:
             y[i] = 0
         elif v in MIFARE:
@@ -47,7 +48,7 @@ def chip_type_cnn():
         elif v in FELICA:
             y[i] = 2
 
-    build_cnn(X, y, 10)
+    build_cnn(X, y, epochs=10)
 
 
 def identify_tag():
@@ -88,3 +89,5 @@ def build_cnn(X, y, epochs):
 
 if __name__ == '__main__':
     chip_type_cnn()
+
+    identify_tag()
