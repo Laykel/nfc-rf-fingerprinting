@@ -47,6 +47,9 @@ def build_cnn(X, y, epochs):
     y_pred = np.argmax(y_pred, axis=1)
     y_test = np.argmax(y_test, axis=1)
 
+    unique, counts = np.unique(y, return_counts=True)
+    print("Amount of data for each class:", dict(zip(unique, counts)))
+    print("Shape of test data:", y_test.shape)
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
 

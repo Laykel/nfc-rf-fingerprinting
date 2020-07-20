@@ -32,7 +32,8 @@ def svm_experiment():
 
 def chip_type_cnn():
     # TODO Balance the amount of data between chip types?
-    files = [file for file in os.listdir(PATH) if ".nfc" in file]
+    files = [file for file in os.listdir(PATH) if ".nfc" in file
+             if "tag9" in file or "tag1" in file or "tag6" in file]
     X, y = read_dataset(PATH, files, segments_size=512)
 
     for i, v in enumerate(y):
@@ -43,14 +44,14 @@ def chip_type_cnn():
         elif v in FELICA:
             y[i] = 2
 
-    build_cnn(X, y, epochs=10)
+    build_cnn(X, y, epochs=20)
 
 
 def identify_tag():
     files = [file for file in os.listdir(PATH) if ".nfc" in file]
     X, y = read_dataset(PATH, files, segments_size=512)
 
-    build_cnn(X, y, 10)
+    build_cnn(X, y, epochs=30)
 
 
 if __name__ == '__main__':
