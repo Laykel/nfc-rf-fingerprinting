@@ -34,11 +34,25 @@ This repository's folders can be described as follows:
 
 - `data` contains decoding tests as well as the `dataset` folder, which contains the data captured for the project (stored using [Git LFS](https://git-lfs.github.com/)). See [the dataset readme](data/dataset/README.md).
 - `gnuradio` contains the different GRC flowgraphs used in the project.
-- `nfc_rfml` contains the final programs used to acquire and pre-process the signals, train the model, test it, and _deploy it?_ .
+- `nfc_rfml` contains the source code used to pre-process the signals, train the model, and test its performance.
 - `notebooks` contains the notebooks used during the analysis and prototyping phase of the project.
 - `report` contains the LaTeX sources and the compiled pdf of the report. It also contains the bibliography and figures used in it.
+- `scripts` contains small programs like the acquisition script.
 
 ## How to run
+
+### The project
+
+### The acquisition script
+
+This program is a very simple script based on a GNU Radio generated script. You do need GNU Radio installed (version 3.7 or higher) and a functioning python setup.
+
+More importantly, the program uses the `osmocom source` block to try to connect to an Airspy HF+ device. You will probably need to adapt the source block to your hardware (see what GNU Radio Companion generates).
+
+```
+cd scripts
+python capture.py your_filename.bin --time 4 --samplerate 500000 --freq 13560000
+```
 
 ### The notebooks
 
@@ -53,15 +67,4 @@ pip install -r requirements.txt
 
 # Run jupyter notebook or jupyter lab
 jupyter lab
-```
-
-### The acquisition script
-
-This program is a very simple script based on a GNU Radio generated script. You do need GNU Radio installed (version 3.7 or higher) and a functioning python setup.
-
-More importantly, the program uses the `osmocom source` block to try to connect to an Airspy HF+ device. You will probably need to adapt the source block to your hardware (see what GNU Radio Companion generates).
-
-```
-cd nfc_rfml/acquisition
-python capture.py your_filename.bin --time 4 --samplerate 500000 --freq 13560000
 ```

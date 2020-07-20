@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 import numpy as np
 import scipy
 from scipy import signal
 from matplotlib import pyplot as plt
-import os
 
 """
-This script contains experiments for finding interesting parts in our signals and generating visualisations
+This script contains experiments for finding interesting parts in our signals and generating visualizations
 """
 
-PATH = "../../data/dataset/1"
+PATH = "../data/dataset/1"
 
 SAMP_RATE = int(768e3)
 NFFT = 1024
