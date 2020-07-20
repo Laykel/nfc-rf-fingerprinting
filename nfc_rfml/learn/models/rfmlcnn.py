@@ -1,5 +1,5 @@
 from tensorflow.keras import Model
-from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Input
+from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Input, Dropout
 
 
 class RFMLCNN(Model):
@@ -18,15 +18,21 @@ class RFMLCNN(Model):
         self.flat = Flatten()
         self.dense = Dense(128, activation="relu")
         self.out = Dense(nb_outputs, activation="sigmoid")
+        self.dropout = Dropout(0.5)
 
         self.build(self.shape)
 
     def call(self, inputs, training=False):
-        # TODO dropout in case of training
         x = self.conv1(inputs)
         x = self.pool1(x)
+        if training:
+            x = self.dropout(x, training=training)
+
         x = self.conv2(x)
         x = self.pool2(x)
+        if training:
+            x = self.dropout(x, training=training)
+
         x = self.flat(x)
         x = self.dense(x)
         return self.out(x)
