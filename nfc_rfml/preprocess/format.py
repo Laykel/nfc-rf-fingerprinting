@@ -69,7 +69,7 @@ def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
         # Format segments and add them to the collection of training/testing data
         X.extend(format_segments(segments))
 
-        labels.extend([file[3]] * len(segments))  # TODO Calculate value of label through function
+        labels.extend([int(file[3])] * len(segments))  # TODO Calculate value of label through function
 
     return np.array(X), np.array(labels)
 

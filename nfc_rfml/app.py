@@ -40,7 +40,6 @@ def chip_type_cnn():
     X, y = read_dataset(PATH, files, segments_size=512)
 
     for i, v in enumerate(y):
-        v = int(v)
         if v in NTAG213:
             y[i] = 0
         elif v in MIFARE:
@@ -78,6 +77,7 @@ def build_cnn(X, y, epochs):
     # Evaluate model with test set
     # TODO put that in an evaluate module
     y_pred = model.predict(X_test)
+    print(y_pred)
     y_pred = np.argmax(y_pred, axis=1)
     y_test = np.argmax(y_test, axis=1)
 
