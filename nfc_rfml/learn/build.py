@@ -24,22 +24,31 @@ def build_cnn(X, y, epochs):
     # Configure model
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
-    # Train model and adjust with validation set
-    history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=epochs)
-    print(history.history)
+    # Make sure the training stops when the performance stops getting better
+    # and save the best model to disk
+    callbacks = [EarlyStopping(monitor='val_loss', patience=3),
+                 ModelCheckpoint(filepath='test.tf', monitor='val_loss', save_best_only=True)]
+
     # TODO Cross validation?
+    # Train model and adjust with validation set
+    history = model.fit(X_train, y_train,
+                        epochs=epochs,
+                        callbacks=callbacks,
+                        validation_data=(X_val, y_val))
+    print("History:", history.history)
+
+    # -------------------------------------------------------------------------------------------
+    # TODO put that in an evaluate module
+
+    model.load_weights("test.tf")
 
     # Evaluate model with test set
-    # TODO put that in an evaluate module
     y_pred = model.predict(X_test)
-    print(y_pred)
     y_pred = np.argmax(y_pred, axis=1)
     y_test = np.argmax(y_test, axis=1)
 
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
-
-    # TODO model.save()
 
 
 def build_svm(X, y):
