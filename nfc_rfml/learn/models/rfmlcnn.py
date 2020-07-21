@@ -37,10 +37,10 @@ class RFMLCNN(Model):
         x = self.dense(x)
         return self.out(x)
 
-    def summary(self):
+    def summary(self, **kwargs):
         """
         Override summary method in order to first build a model.
         This allows the output shapes to be correctly shown.
         """
         x = Input(shape=self.shape[1:])
-        Model(inputs=[x], outputs=self.call(x)).summary()
+        Model(inputs=[x], outputs=self.call(x)).summary(**kwargs)

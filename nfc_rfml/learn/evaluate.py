@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
+from sklearn.metrics import classification_report, confusion_matrix
 
 
 def write_stats(volume, conf_mat, report, model_structure, output_dir):
@@ -82,6 +83,32 @@ def plot_history(history, output_dir):
     ax.legend(['train', 'test'], loc='upper left')
     fig.savefig(f"{output_dir}/loss_history.png", bbox_inches='tight')
     plt.close(fig)
+
+
+def evaluate_model(model, history, y, X_test, y_test, output_dir):
+    # Evaluate model with test set
+    y_pred = model.predict(X_test)
+    y_pred = np.argmax(y_pred, axis=1)
+    y_test = np.argmax(y_test, axis=1)
+
+    # Count the amount of data for each class
+    unique, counts = np.unique(y, return_counts=True)
+    amounts = dict(zip(unique, counts))
+
+    # Get confusion matrix as well as the performance report
+    labels = sorted(list(set(y_test)))
+    conf_mat = confusion_matrix(y_test, y_pred, labels=labels)
+    report = classification_report(y_test, y_pred)
+
+    # Read the model's summary
+    structure = []
+    model.summary(print_fn=lambda x: structure.append(x))
+    model_structure = "\n".join(structure)
+
+    write_stats(amounts, conf_mat, report, model_structure, output_dir)
+
+    plot_confusion_matrix(conf_mat, labels, output_dir)
+    plot_history(history, output_dir)
 
 
 def _test():

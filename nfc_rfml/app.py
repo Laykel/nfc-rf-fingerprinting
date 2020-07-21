@@ -36,7 +36,7 @@ def chip_type_cnn():
 
     labels_as_chip_type(y)
 
-    build_cnn(X, y, epochs=20)
+    build_cnn(X, y, epochs=2)
 
 
 def identify_tag():

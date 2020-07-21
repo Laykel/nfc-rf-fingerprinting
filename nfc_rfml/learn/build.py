@@ -1,7 +1,6 @@
 import os
 from datetime import datetime
 
-import numpy as np
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
@@ -9,7 +8,7 @@ from sklearn.svm import SVC
 
 from preprocess.format import split_data
 from learn.models import rfmlcnn
-from learn.evaluate import plot_confusion_matrix, plot_history, write_stats
+from learn.evaluate import evaluate_model
 
 """
 ...
@@ -43,36 +42,13 @@ def build_cnn(X, y, epochs):
                         epochs=epochs,
                         callbacks=callbacks,
                         validation_data=(X_val, y_val))
-    print("History:", history.history)
 
     # -------------------------------------------------------------------------------------------
     # TODO put that in an evaluate module
 
     model.load_weights(model_path)
 
-    # Evaluate model with test set
-    y_pred = model.predict(X_test)
-    y_pred = np.argmax(y_pred, axis=1)
-    y_test = np.argmax(y_test, axis=1)
-
-    # Count the amount of data for each class
-    unique, counts = np.unique(y, return_counts=True)
-    amounts = dict(zip(unique, counts))
-
-    # Get confusion matrix as well as the performance report
-    labels = sorted(list(set(y_test)))
-    conf_mat = confusion_matrix(y_test, y_pred, labels=labels)
-    report = classification_report(y_test, y_pred)
-
-    # Read the model's summary
-    structure = []
-    model.summary(print_fn=lambda x: structure.append(x))
-    model_structure = "\n".join(structure)
-
-    write_stats(amounts, conf_mat, report, model_structure)
-
-    plot_confusion_matrix(conf_mat, labels, model_dir)
-    plot_history(history, model_dir)
+    evaluate_model(model, history, y, X_test, y_test, model_dir)
 
 
 def build_svm(X, y):
