@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os
 import numpy as np
+import scipy.signal as sig
 from scipy import complex64
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
@@ -10,6 +8,27 @@ from tensorflow.keras.utils import to_categorical
 """
 This module provides functions to load I/Q signals datasets in memory, formatting them as necessary for learning.
 """
+
+# TODO Function to return metadata
+# The IDs of tags of a given model
+NTAG213 = (1, 2, 3, 4, 5)
+MIFARE = (6, 7, 8)
+FELICA = (9,)
+
+
+def labels_as_chip_type(y):
+    """
+    TODO
+    :param y:
+    :return:
+    """
+    for i, v in enumerate(y):
+        if v in NTAG213:
+            y[i] = 0
+        elif v in MIFARE:
+            y[i] = 1
+        elif v in FELICA:
+            y[i] = 2
 
 
 def partition(lst, n):
@@ -38,9 +57,10 @@ def segments_3d(segments):
     return [np.vstack((np.real(lst), np.imag(lst))) for lst in list(segments)]
 
 
-def read_metadata(path):
-    # TODO
-    pass
+def segments_peaks(segments):
+    # TODO Clean up
+    kept = segments
+    return []
 
 
 def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
@@ -120,6 +140,10 @@ def _test():
 
     train, validate, test = split_data(X, y, 0.7, 0.2, 0.1)
     print(train[0].shape, validate[0].shape, test[0].shape)
+
+    print(y)
+    labels_as_chip_type(y)
+    print(y)
 
 
 if __name__ == "__main__":

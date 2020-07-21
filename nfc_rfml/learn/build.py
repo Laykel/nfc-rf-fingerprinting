@@ -1,3 +1,6 @@
+import os
+from datetime import datetime
+
 import numpy as np
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.metrics import classification_report, confusion_matrix
@@ -6,6 +9,7 @@ from sklearn.svm import SVC
 
 from preprocess.format import split_data
 from learn.models import rfmlcnn
+from learn.evaluate import plot_confusion_matrix, plot_history, write_stats
 
 """
 ...
@@ -19,15 +23,19 @@ def build_cnn(X, y, epochs):
     # Build model and output its structure
     shape = (None,) + X_train.shape[1:]
     model = rfmlcnn.RFMLCNN(nb_outputs=len(set(y)), input_shape=shape)
-    model.summary()
 
     # Configure model
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
+    model_dir = f"saved_models/{datetime.now()}"
+    os.makedirs(model_dir)
+    model_path = f"{model_dir}/model.tf"
+
+    # TODO Don't stop early for final plots
     # Make sure the training stops when the performance stops getting better
     # and save the best model to disk
-    callbacks = [EarlyStopping(monitor='val_loss', patience=3),
-                 ModelCheckpoint(filepath='test.tf', monitor='val_loss', save_best_only=True)]
+    callbacks = [EarlyStopping(monitor="val_loss", patience=3),
+                 ModelCheckpoint(filepath=model_path, monitor="val_loss", save_best_only=True)]
 
     # TODO Cross validation?
     # Train model and adjust with validation set
@@ -40,20 +48,31 @@ def build_cnn(X, y, epochs):
     # -------------------------------------------------------------------------------------------
     # TODO put that in an evaluate module
 
-    model.load_weights("test.tf")
+    model.load_weights(model_path)
 
     # Evaluate model with test set
     y_pred = model.predict(X_test)
     y_pred = np.argmax(y_pred, axis=1)
     y_test = np.argmax(y_test, axis=1)
 
+    # Count the amount of data for each class
     unique, counts = np.unique(y, return_counts=True)
-    print("Amount of data for each class:", dict(zip(unique, counts)))
-    print("Shape of test data:", y_test.shape)
+    amounts = dict(zip(unique, counts))
+
+    # Get confusion matrix as well as the performance report
     labels = sorted(list(set(y_test)))
-    print("Labels:", labels)
-    print(confusion_matrix(y_test, y_pred, labels=labels))
-    print(classification_report(y_test, y_pred))
+    conf_mat = confusion_matrix(y_test, y_pred, labels=labels)
+    report = classification_report(y_test, y_pred)
+
+    # Read the model's summary
+    structure = []
+    model.summary(print_fn=lambda x: structure.append(x))
+    model_structure = "\n".join(structure)
+
+    write_stats(amounts, conf_mat, report, model_structure)
+
+    plot_confusion_matrix(conf_mat, labels, model_dir)
+    plot_history(history, model_dir)
 
 
 def build_svm(X, y):
