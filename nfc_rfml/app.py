@@ -21,9 +21,17 @@ FELICA = (9,)
 
 
 def svm_experiment():
-    files = [file for file in os.listdir(PATH)
-             if ("tag1" in file or "tag2" in file)]
-    X, y = read_dataset(PATH, files, segments_size=256, format_segments=segments_2d)
+    files = [file for file in os.listdir(PATH) if ".nfc" in file
+             if "tag9" in file or "tag1" in file or "tag6" in file]
+    X, y = read_dataset(PATH, files, segments_size=512, format_segments=segments_2d)
+
+    for i, v in enumerate(y):
+        if v in NTAG213:
+            y[i] = 0
+        elif v in MIFARE:
+            y[i] = 1
+        elif v in FELICA:
+            y[i] = 2
 
     start = time()
     build_svm(X, y)
@@ -32,6 +40,8 @@ def svm_experiment():
 
 def chip_type_cnn():
     # TODO Balance the amount of data between chip types?
+    # files = [file for file in os.listdir(PATH) if ".nfc" in file
+    #          if "tag9" not in file and "tag4" not in file and "tag5" not in file]
     files = [file for file in os.listdir(PATH) if ".nfc" in file
              if "tag9" in file or "tag1" in file or "tag6" in file]
     X, y = read_dataset(PATH, files, segments_size=512)
@@ -48,11 +58,12 @@ def chip_type_cnn():
 
 
 def identify_tag():
-    files = [file for file in os.listdir(PATH) if ".nfc" in file]
+    files = [file for file in os.listdir(PATH) if ".nfc" in file
+             if "tag9" not in file]
     X, y = read_dataset(PATH, files, segments_size=512)
 
     build_cnn(X, y, epochs=30)
 
 
 if __name__ == '__main__':
-    chip_type_cnn()
+    svm_experiment()

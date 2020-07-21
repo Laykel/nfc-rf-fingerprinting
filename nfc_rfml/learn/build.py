@@ -50,7 +50,9 @@ def build_cnn(X, y, epochs):
     unique, counts = np.unique(y, return_counts=True)
     print("Amount of data for each class:", dict(zip(unique, counts)))
     print("Shape of test data:", y_test.shape)
-    print(confusion_matrix(y_test, y_pred))
+    labels = sorted(list(set(y_test)))
+    print("Labels:", labels)
+    print(confusion_matrix(y_test, y_pred, labels=labels))
     print(classification_report(y_test, y_pred))
 
 
