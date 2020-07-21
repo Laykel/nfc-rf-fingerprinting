@@ -1,8 +1,8 @@
 # RF old recordings (too heavy)
 data/archives/
 
-# Images
-nfc_rfml/preprocess/figs/
+# Saved model weights
+nfc_rfml/saved_models/
 
 # Pycharm
 .idea/

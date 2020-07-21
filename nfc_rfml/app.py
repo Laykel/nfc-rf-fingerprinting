@@ -3,7 +3,7 @@
 
 import os
 from time import time
-from preprocess.format import read_dataset, segments_2d
+from preprocess.format import read_dataset, labels_as_chip_type, segments_2d
 from learn.build import build_svm, build_cnn
 
 """
@@ -13,25 +13,13 @@ It contains the definition of each experiment performed for NFC Radio Frequency 
 
 PATH = "../data/dataset/1"
 
-# TODO Function to return metadata
-# The IDs of tags of a given model
-NTAG213 = (1, 2, 3, 4, 5)
-MIFARE = (6, 7, 8)
-FELICA = (9,)
-
 
 def svm_experiment():
     files = [file for file in os.listdir(PATH) if ".nfc" in file
              if "tag9" in file or "tag1" in file or "tag6" in file]
     X, y = read_dataset(PATH, files, segments_size=512, format_segments=segments_2d)
 
-    for i, v in enumerate(y):
-        if v in NTAG213:
-            y[i] = 0
-        elif v in MIFARE:
-            y[i] = 1
-        elif v in FELICA:
-            y[i] = 2
+    labels_as_chip_type(y)
 
     start = time()
     build_svm(X, y)
@@ -46,13 +34,7 @@ def chip_type_cnn():
              if "tag9" in file or "tag1" in file or "tag6" in file]
     X, y = read_dataset(PATH, files, segments_size=512)
 
-    for i, v in enumerate(y):
-        if v in NTAG213:
-            y[i] = 0
-        elif v in MIFARE:
-            y[i] = 1
-        elif v in FELICA:
-            y[i] = 2
+    labels_as_chip_type(y)
 
     build_cnn(X, y, epochs=20)
 
@@ -66,4 +48,4 @@ def identify_tag():
 
 
 if __name__ == '__main__':
-    svm_experiment()
+    chip_type_cnn()
