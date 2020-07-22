@@ -26,9 +26,9 @@ def build_cnn(X, y, epochs):
     # Configure model
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
-    model_dir = f"saved_models/{datetime.now()}"
+    model_dir = os.path.join("saved_models", str(datetime.now()))
     os.makedirs(model_dir)
-    model_path = f"{model_dir}/model.tf"
+    model_path = os.path.join(model_dir, "model.tf")
 
     # TODO Don't stop early for final plots
     # Make sure the training stops when the performance stops getting better
