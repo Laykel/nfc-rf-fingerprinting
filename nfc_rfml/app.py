@@ -36,7 +36,7 @@ def chip_type_cnn():
 
     labels_as_chip_type(y)
 
-    build_cnn(X, y, epochs=2)
+    build_cnn(X, y, epochs=100)
 
 
 def identify_tag():
@@ -44,7 +44,7 @@ def identify_tag():
              if "tag9" not in file]
     X, y = read_dataset(PATH, files, segments_size=512)
 
-    build_cnn(X, y, epochs=30)
+    build_cnn(X, y, epochs=100)
 
 
 if __name__ == '__main__':

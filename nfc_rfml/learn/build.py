@@ -33,19 +33,18 @@ def build_cnn(X, y, epochs):
     # TODO Don't stop early for final plots
     # Make sure the training stops when the performance stops getting better
     # and save the best model to disk
-    callbacks = [EarlyStopping(monitor="val_loss", patience=3),
+    callbacks = [EarlyStopping(monitor="val_loss", patience=5),
                  ModelCheckpoint(filepath=model_path, monitor="val_loss", save_best_only=True)]
 
-    # TODO Cross validation?
+    # TODO Test batch size
     # Train model and adjust with validation set
     history = model.fit(X_train, y_train,
                         epochs=epochs,
+                        # batch_size=200,
                         callbacks=callbacks,
                         validation_data=(X_val, y_val))
 
-    # -------------------------------------------------------------------------------------------
-    # TODO put that in an evaluate module
-
+    # Get the best model's parameters
     model.load_weights(model_path)
 
     evaluate_model(model, history, y, X_test, y_test, model_dir)
