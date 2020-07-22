@@ -5,10 +5,11 @@ from matplotlib import cm
 from sklearn.metrics import classification_report, confusion_matrix
 
 
-def write_stats(volume, conf_mat, report, model_structure, output_dir):
+def write_stats(volume, segments_size, conf_mat, report, model_structure, output_dir):
     """
 
     :param volume:
+    :param segments_size:
     :param conf_mat:
     :param report:
     :param model_structure:
@@ -17,7 +18,8 @@ def write_stats(volume, conf_mat, report, model_structure, output_dir):
     """
     amounts = f"Amount of samples for each class:\n{volume}"
     with open(output_dir / "stats.txt", "w") as file:
-        file.write(f"{amounts}\n\n{model_structure}\n\n{report}\n\nConfusion matrix:\n{conf_mat}")
+        file.write((f"{amounts}\nSegments size: {segments_size}\n\n{model_structure}\n\n"
+                    f"{report}\n\nConfusion matrix:\n{conf_mat}"))
 
 
 def plot_confusion_matrix(conf_mat, labels, output_dir):
@@ -30,7 +32,7 @@ def plot_confusion_matrix(conf_mat, labels, output_dir):
     """
     conf_mat = conf_mat.astype(int)
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(10, 10))
     conf_mat_image = ax.matshow(conf_mat, interpolation='nearest', cmap=cm.jet)
 
     for i in range(conf_mat.shape[0]):
@@ -38,18 +40,18 @@ def plot_confusion_matrix(conf_mat, labels, output_dir):
             ax.annotate(str(conf_mat[i, j]), xy=(j, i),
                         horizontalalignment='center',
                         verticalalignment='center',
-                        fontsize=12,
+                        fontsize=14,
                         color="darkgrey",
                         weight="bold")
 
     ax.set_xticks(np.arange(conf_mat.shape[0]))
-    ax.set_xticklabels([labels[lst] for lst in range(conf_mat.shape[0])], rotation='horizontal')
+    ax.set_xticklabels([labels[lst] for lst in range(conf_mat.shape[0])], rotation='horizontal', fontsize=14)
     ax.set_yticks(np.arange(conf_mat.shape[1]))
-    ax.set_yticklabels([labels[lst] for lst in range(conf_mat.shape[1])])
+    ax.set_yticklabels([labels[lst] for lst in range(conf_mat.shape[1])], fontsize=14)
 
-    ax.set_xlabel('Predicted label')
+    ax.set_xlabel('Predicted label', fontsize=16, labelpad=15)
     ax.xaxis.set_label_position('top')
-    ax.set_ylabel('Target label')
+    ax.set_ylabel('Target label', fontsize=16, labelpad=15)
 
     fig.colorbar(conf_mat_image, orientation='vertical', pad=0.05)
     fig.savefig(output_dir / "conf_mat.png", bbox_inches='tight')
@@ -64,7 +66,7 @@ def plot_history(history, output_dir):
     :return:
     """
     # Plot accuracy history
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(12, 7))
     ax.plot(history.history['accuracy'])
     ax.plot(history.history['val_accuracy'])
     ax.set_title('Model accuracy')
@@ -75,7 +77,7 @@ def plot_history(history, output_dir):
     plt.close(fig)
 
     # Plot loss history
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(12, 7))
     ax.plot(history.history['loss'])
     ax.plot(history.history['val_loss'])
     ax.set_title('model loss')
@@ -106,7 +108,7 @@ def evaluate_model(model, history, y, X_test, y_test, output_dir):
     model.summary(print_fn=lambda x: structure.append(x))
     model_structure = "\n".join(structure)
 
-    write_stats(amounts, conf_mat, report, model_structure, output_dir)
+    write_stats(amounts, len(y_test[0]), conf_mat, report, model_structure, output_dir)
 
     plot_confusion_matrix(conf_mat, labels, output_dir)
     plot_history(history, output_dir)
@@ -131,7 +133,9 @@ def _test():
     hist = History(history)
     plot_history(hist, Path('.'))
 
-    write_stats({0: 10000, 1: 12000, 2: 9000}, cm, "rade\nasjdaiodj\nsadsd", "dasdasd\ndsad\ndsad", Path('.'))
+    write_stats({0: 10000, 1: 12000, 2: 9000}, 512, cm,
+                "rade\nasjdaiodj\nsadsd", "dasdasd\ndsad\ndsad",
+                Path('.'))
 
 
 if __name__ == "__main__":
