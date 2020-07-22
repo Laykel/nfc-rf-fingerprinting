@@ -27,7 +27,9 @@ def build_cnn(X, y, epochs):
     # Configure model
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
-    model_dir = Path(f"saved_models/{datetime.now()}")
+    # Setup the folder structure
+    dt = datetime.now().strftime("%Y-%m-%d %Hh%M")
+    model_dir = Path(f"saved_models/{dt}")
     os.makedirs(model_dir)
     model_path = model_dir / "model.tf"
 
