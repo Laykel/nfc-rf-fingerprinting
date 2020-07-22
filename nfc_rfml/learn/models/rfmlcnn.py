@@ -17,7 +17,7 @@ class RFMLCNN(Model):
         self.pool2 = MaxPooling2D(pool_size=(1, 2))
         self.flat = Flatten()
         self.dense = Dense(128, activation="relu")
-        self.out = Dense(nb_outputs, activation="sigmoid")
+        self.out = Dense(nb_outputs, activation="softmax")
         self.dropout = Dropout(0.5)
 
         self.build(self.shape)
