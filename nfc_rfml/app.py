@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+from pathlib import Path
 from time import time
 from preprocess.format import read_dataset, labels_as_chip_type, segments_2d
 from learn.build import build_svm, build_cnn
@@ -11,7 +12,8 @@ This module is the entry point for the nfc-rfml project.
 It contains the definition of each experiment performed for NFC Radio Frequency Machine Learning purposes.
 """
 
-PATH = "../data/dataset/1"
+# TODO Make more platform-independent
+PATH = Path("../data/dataset/1")
 
 
 def svm_experiment():

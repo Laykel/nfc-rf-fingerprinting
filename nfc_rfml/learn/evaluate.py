@@ -1,3 +1,4 @@
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
@@ -15,7 +16,7 @@ def write_stats(volume, conf_mat, report, model_structure, output_dir):
     :return:
     """
     amounts = f"Amount of samples for each class:\n{volume}"
-    with open(f"{output_dir}/stats.txt", "w") as file:
+    with open(output_dir / "stats.txt", "w") as file:
         file.write(f"{amounts}\n\n{model_structure}\n\n{report}\n\nConfusion matrix:\n{conf_mat}")
 
 
@@ -51,7 +52,7 @@ def plot_confusion_matrix(conf_mat, labels, output_dir):
     ax.set_ylabel('Target label')
 
     fig.colorbar(conf_mat_image, orientation='vertical', pad=0.05)
-    fig.savefig(f"{output_dir}/conf_mat.png", bbox_inches='tight')
+    fig.savefig(output_dir / "conf_mat.png", bbox_inches='tight')
     plt.close(fig)
 
 
@@ -70,7 +71,7 @@ def plot_history(history, output_dir):
     ax.set_ylabel('accuracy')
     ax.set_xlabel('epoch')
     ax.legend(['train', 'test'], loc='upper left')
-    fig.savefig(f"{output_dir}/acc_history.png", bbox_inches='tight')
+    fig.savefig(output_dir / "acc_history.png", bbox_inches='tight')
     plt.close(fig)
 
     # Plot loss history
@@ -81,7 +82,7 @@ def plot_history(history, output_dir):
     ax.set_ylabel('loss')
     ax.set_xlabel('epoch')
     ax.legend(['train', 'test'], loc='upper left')
-    fig.savefig(f"{output_dir}/loss_history.png", bbox_inches='tight')
+    fig.savefig(output_dir / "loss_history.png", bbox_inches='tight')
     plt.close(fig)
 
 
@@ -113,7 +114,7 @@ def evaluate_model(model, history, y, X_test, y_test, output_dir):
 
 def _test():
     cm = np.array([[0, 1], [2, 1]])
-    plot_confusion_matrix(cm, ["cat", "dog"], ".")
+    plot_confusion_matrix(cm, ["cat", "dog"], Path('.'))
 
     class History:
         def __init__(self, history):
@@ -128,9 +129,9 @@ def _test():
         'val_accuracy': [0.64308643, 0.6577778, 0.65197533, 0.657037, 0.6569136]
     }
     hist = History(history)
-    plot_history(hist, ".")
+    plot_history(hist, Path('.'))
 
-    write_stats({0: 10000, 1: 12000, 2: 9000}, cm, "rade\nasjdaiodj\nsadsd", "dasdasd\ndsad\ndsad", ".")
+    write_stats({0: 10000, 1: 12000, 2: 9000}, cm, "rade\nasjdaiodj\nsadsd", "dasdasd\ndsad\ndsad", Path('.'))
 
 
 if __name__ == "__main__":
