@@ -16,6 +16,27 @@ It contains the definition of each experiment performed for NFC Radio Frequency 
 PATH = Path("../data/dataset/1")
 
 
+def identify_tag():
+    files = [file for file in os.listdir(PATH) if ".nfc" in file
+             if "tag9" not in file]
+    X, y = read_dataset(PATH, files, segments_size=512)
+
+    build_cnn(X, y, epochs=100)
+
+
+def chip_type_cnn():
+    # TODO Balance the amount of data between chip types?
+    # files = [file for file in os.listdir(PATH) if ".nfc" in file
+    #          if "tag9" not in file and "tag4" not in file and "tag5" not in file]
+    files = [file for file in os.listdir(PATH) if ".nfc" in file
+             if "tag9" in file or "tag1" in file or "tag6" in file]
+    X, y = read_dataset(PATH, files, segments_size=256)
+
+    labels_as_chip_type(y)
+
+    build_cnn(X, y, epochs=100)
+
+
 def svm_experiment():
     files = [file for file in os.listdir(PATH) if ".nfc" in file
              if "tag9" in file or "tag1" in file or "tag6" in file]
@@ -26,27 +47,6 @@ def svm_experiment():
     start = time()
     build_svm(X, y)
     print("\nExecution time: %s [s]" % (time() - start))
-
-
-def chip_type_cnn():
-    # TODO Balance the amount of data between chip types?
-    # files = [file for file in os.listdir(PATH) if ".nfc" in file
-    #          if "tag9" not in file and "tag4" not in file and "tag5" not in file]
-    files = [file for file in os.listdir(PATH) if ".nfc" in file
-             if "tag9" in file or "tag1" in file or "tag6" in file]
-    X, y = read_dataset(PATH, files, segments_size=512)
-
-    labels_as_chip_type(y)
-
-    build_cnn(X, y, epochs=100)
-
-
-def identify_tag():
-    files = [file for file in os.listdir(PATH) if ".nfc" in file
-             if "tag9" not in file]
-    X, y = read_dataset(PATH, files, segments_size=512)
-
-    build_cnn(X, y, epochs=100)
 
 
 if __name__ == '__main__':

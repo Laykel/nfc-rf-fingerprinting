@@ -31,7 +31,7 @@ def build_cnn(X, y, epochs):
     dt = datetime.now().strftime("%Y-%m-%d %Hh%M")
     model_dir = Path(f"saved_models/{dt}")
     os.makedirs(model_dir)
-    model_path = model_dir / "model.tf"
+    model_path = str(model_dir / "model.tf")
 
     # TODO Don't stop early for final plots
     # Make sure the training stops when the performance stops getting better
@@ -39,11 +39,10 @@ def build_cnn(X, y, epochs):
     callbacks = [EarlyStopping(monitor="val_loss", patience=5),
                  ModelCheckpoint(filepath=model_path, monitor="val_loss", save_best_only=True)]
 
-    # TODO Test batch size
     # Train model and adjust with validation set
     history = model.fit(X_train, y_train,
                         epochs=epochs,
-                        # batch_size=200,
+                        batch_size=500,
                         callbacks=callbacks,
                         validation_data=(X_val, y_val))
 
