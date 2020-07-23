@@ -18,7 +18,7 @@ FELICA = (9,)
 
 def labels_as_chip_type(y):
     """
-    TODO
+    TODO use numpy
     :param y:
     :return:
     """
@@ -35,7 +35,7 @@ def partition(lst, n):
     """Generate as many n-sized segments as possible from lst (the last segment may be smaller).
     :param lst: The list to partition
     :param n: The partition size
-    :return: A list of partitions of size n
+    :return: A generator of partitions of size n
     """
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
@@ -44,22 +44,39 @@ def partition(lst, n):
 def segments_2d(segments):
     """Store the segments in simple arrays with the real parts first and then the imaginary parts.
     :param segments: A list of data segments with complex values
-    :return: A list of arrays with all the real parts followed by the imaginary parts
+    :return: A list of arrays with all the real parts followed by all the imaginary parts
     """
-    return [np.append(np.real(lst), [np.imag(lst)]) for lst in list(segments)]
+    return [np.append(np.real(lst), [np.imag(lst)]) for lst in segments]
 
 
 def segments_3d(segments):
     """Store the segments in 2d arrays with one dimension for the real parts and one for the imaginary parts.
     :param segments: A list of data segments with complex values
-    :return: A list of two-dimensional arrays with each a list for real parts and a list for imaginary parts
+    :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
     """
-    return [np.vstack((np.real(lst), np.imag(lst))) for lst in list(segments)]
+    # return [np.vstack((np.real(lst), np.imag(lst))) for lst in segments]
+    return list(zip(np.real(segments), np.imag(segments)))
+
+
+def segments_normalize(segments):
+    """
+    Normalize in the range [-1,1]
+    :param segments:
+    :return:
+    """
+    # TODO clean up
+    real = np.real(segments)
+    imag = np.imag(segments)
+    max_val = abs(max(max(real.max(), imag.max()),
+                      min(real.min(), imag.min()),
+                      key=abs))
+
+    return list(zip(real / max_val, imag / max_val))
 
 
 def segments_peaks(segments):
-    # TODO Clean up
-    kept = segments
+    # TODO Finish and clean up
+    kept = sig.find_peaks(-segments[0], height=-0.2)
     return []
 
 
