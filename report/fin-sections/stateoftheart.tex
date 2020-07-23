@@ -48,6 +48,18 @@ The vast majority of the research considered for this project uses USRP systems 
 
 Some, like \textcite{sankhe_no_2019}, also describe how they add artificially induced impairments to simulated signals with MatLab. This is something we could also do, but it is secondary. The focus is on the creation of a robust dataset of real world transmissions between an NFC reader and tags.
 
+Although it isn't specified as such in any of the considered articles, we can deduce that in order for the dataset to be robust, it needs to answer some basic criteria. The following list assumes the dataset will be used to train a machine learning model to discriminate between passive tags.
+
+\begin{itemize}
+  \item It should contain recordings of both very similar and very different devices.
+  \item The data transmitted should not be a discriminating factor.
+  \item The number of devices should be high enough to analyse the scalability of the solution.
+  \item Only one reader should be used to initiate a communication.
+  \item Only one SDR should be used to capture the data.
+  \item The capture's parameters should be constant across captures.
+  \item At the same time, some variability in the signal's amplitude and phase may help the solution to be more general.
+\end{itemize}
+
 % -------------------------------------------------------------------------------------------------------------
 \subsection{Features}
 

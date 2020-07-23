@@ -27,10 +27,10 @@ The Airspy HF+, as its name suggests, is built for HF (the frequency range in wh
   \begin{tabular}{|l|l|l|l|}
     \hline
     \textbf{Name}         & \textbf{Frequency range}                                                       & \textbf{Bandwidth}                                           & \textbf{Transmitter?} \\ \hline
-    \textbf{LimeSDR Mini} & 10MHz - 3.5GHz                                                                 & Up to 30.72 MHz                                                                  & Yes                        \\ \hline
+    \textbf{LimeSDR Mini} & 10MHz - 3.5GHz                                                                 & Up to 30.72MHz                                                                  & Yes                        \\ \hline
     \textbf{Airspy HF+}   & \begin{tabular}[c]{@{}l@{}}HF: 9kHz - 31MHz\\ VHF: 60MHZ - 260MHZ\end{tabular} & \begin{tabular}[c]{@{}l@{}}768kHz, 384kHz, 192kHz,\\ 96kHz or 48kHz\end{tabular} & No                         \\ \hline
   \end{tabular}
-  \caption{Theoretical characteristics of mentionned SDRs}
+  \caption{Theoretical characteristics of mentioned SDRs}
   \label{tab:pcd-inventory}
 \end{table}
 
@@ -41,6 +41,36 @@ As described in section \ref{nfc}, NFC uses inductive coupling rather than the m
 The antenna should be placed at least 15mm away from metallic objects, for they interfere with the magnetic field used for the communication.
 
 As can be seen in figure \ref{fig:radio-setup}, the adapter between the SDR and the antenna is homemade using spare connectors and copper wires. The risk of interferences because of this rather unsophisticated adapter is noted, but doesn't seem to be significant later in the work.
+
+\subsection{Software used}
+
+\subsubsection{Acquisition}
+
+We used GNU Radio Companion (GRC)\footnote{\url{https://wiki.gnuradio.org/index.php/Main_Page}} for all of our data captures. It is a very versatile tool, allowing us to define software pipelines using a block interface to create flow graphs. As it compiles to python, the idea is to use it as a base for acquisition and processing scripts.
+
+Figure \ref{fig:grc-graph} shows a simple flow graph used to read a previously recorded signal and to experiment with parameters like a low-pass filter.
+
+\begin{figure}[htp!]
+  \centering
+  \includegraphics[scale=0.45]{figures/data_grc-flow-graph-example.png}
+  \caption{Example of a GNU Radio Companion flow graph}
+  \label{fig:grc-graph}
+\end{figure}
+
+The format used by GRC's file writer is simple. It writes raw bytes into a file, alternating between the real part and the imaginary part of the sample. Both parts are written as 32 bits floating-point numbers.
+
+\subsubsection{Tag manipulation}
+
+On the reader (an Android smartphone), we used the NFC Tools\footnote{\url{https://www.wakdev.com/en/apps/nfc-tools.html}} application to get information about the tags and manipulate their content. The tool makes use of Android's NFC capacity and of the smartphone's hardware to communicate with passive tags.
+
+Figure \ref{fig:nfc-tools} shows the screen of the application after reading the details of an NFC tag.
+
+\begin{figure}[htp!]
+  \centering
+  \includegraphics[scale=0.2]{figures/data_NFC-Tools.png}
+  \caption{NFC Tools application reading the details of a tag}
+  \label{fig:nfc-tools}
+\end{figure}
 
 % -------------------------------------------------------------------------------------------------------------
 \newpage
@@ -77,8 +107,8 @@ On the other hand, the list of tags and their technical details can be found in 
     \textbf{tag6} & NFC-A             & ISO 14443-3A      & Mifare Classic 1k & Yes               & 716B             & 106kb/s         \\ \hline
     \textbf{tag7} & NFC-A             & ISO 14443-3A      & Mifare Classic 1k & Yes               & 716B             & 106kb/s         \\ \hline \hline
     \textbf{tag8} & NFC-A             & ISO 14443-4       & Mifare Classic 4k & No                & \~4kB            & 106kb/s         \\ \hline
-    \textbf{tag9} & FeliCa            & JIS 6319-4        & RC-S967           & No                & 208B             & 212kb/s         \\
-                  &                   &                   &                   &                   &                  & 424kb/s         \\ \hline
+    \textbf{tag9} & NFC-F             & JIS 6319-4        & RC-S967           & No                & 208B             & 212kb/s         \\
+                  & (FeliCa)          &                   &                   &                   &                  & 424kb/s         \\ \hline
   \end{tabular}
   \caption{Inventory of PICC devices}
   \label{tab:picc-inventory}
@@ -93,41 +123,20 @@ On the PICCs that are marked writable, the content is harmonized to ensure the a
   \label{fig:tags}
 \end{figure}
 
-\subsubsection{Software used}
+\subsection{Acquisition script} \label{script}
 
-\textbf{EXPAND A LITTLE, TALK ABOUT SYSTEM?}
+...
 
-We used GNU Radio Companion (GRC)\footnote{\url{https://wiki.gnuradio.org/index.php/Main_Page}} for all of our experiments. It is a very versatile tool, allowing us to define software pipelines using a block interface to create flow graphs. As it compiles to python, the idea is to use it as a base for acquisition and processing scripts.
-
-The format used by GRC's file writer is simple. It writes raw bytes into a file, alternating between the real part and the imaginary part of the sample. Both parts are written as 32 bits floating-point numbers.
-
-On the reader (an Android smartphone), we use the NFC Tools\footnote{\url{https://www.wakdev.com/en/apps/nfc-tools.html}} app to get information about the tags and manipulate their content.
+Simple, no sync, ...
 
 % -------------------------------------------------------------------------------------------------------------
 \subsection{Dataset description}
 
-\subsubsection{Requirements}
-
-In order for the dataset to be robust, it needs to answer some basic criteria. The following list assumes the dataset will be used to train a machine learning model to discriminate between passive tags.
-
-\begin{itemize}
-  \item It should contain recordings of both very similar and very different devices.
-  \item The data transmitted should not be a discriminating factor.
-  \item The number of devices should be high enough to analyse scalability and generalization.
-  \item Only one reader should be used to initiate a communication.
-  \item Only one SDR should be used to capture the data.
-  \item The capture's parameters should be constant across captures.
-\end{itemize}
-
-If some of those items are not met, the model trained using this data could use the content of the tags or the capture's parameters to categorize the data. It may also be unable to generalize when unknown tags appear.
-
-\textbf{VARIABILITY IS ALSO IMPORTANT}
-
 \subsubsection{First dataset}
 
-\textbf{DESCRIPTION FROM README}
+In our first attempt at building a dataset, we tried to make things simple. We recorded three communications between the reader and each of the nine tags. This was so we could compare the signals and their features between different tags but also between different captures of the same tag.
 
-This dataset was built while trying to introduce as little variability as possible. The positions of the tags and reader was kept as similar as possible between recordings. Each recording was made using `scripts/acquisition/capture.py` with `--time 3`.
+As the list below shows, the captures each stopped after a fixed amount of samples were received. We used the script described in section \ref{script} to simplify the process and minimize variability.
 
 \begin{itemize}
   \item 3 recordings of each of the 9 tags
@@ -136,25 +145,7 @@ This dataset was built while trying to introduce as little variability as possib
   \item (Content of tags 1 through 7: 36B of the 'A' character.)
 \end{itemize}
 
-\subsubsection{Visualization of the signal}
-
-A typical NFC communication, captured using the hardware described above, is represented in figure \ref{fig:nfc-full}. We can observe that before the reader is brought to the tag, the line is almost flat at zero. This shows a very low noise level. Then, there is a sudden surge of amplitude in the signal as the reader generates the magnetic field required for the communication. This part, referred to as the "transient portion" of the signal by \textcite{xu_device_2015} (although they talk about WiFi), might be very characteristic of the device. Then, the amplitude decreases and regular request/responses start.
-
-\begin{figure}[htp!]
-  \centering
-  \includegraphics[scale=0.5]{figures/data_whole-transmission.png}
-  \caption{NFC communication represented as magnitudes}
-  \label{fig:nfc-full}
-\end{figure}
-
-In figure \ref{fig:nfc-single}, we take a closer look at one of the request/responses of the previous figure. We can clearly see a first transmission followed by a pause and then a second transmission, with smaller amplitude. This is how NFC communications work, with a request sent by the reader device followed by the tag's response through modulation of the reader's magnetic field.
-
-\begin{figure}[htp!]
-  \centering
-  \includegraphics[scale=0.5]{figures/data_single-request-response.png}
-  \caption{NFC single request/response represented as magnitudes}
-  \label{fig:nfc-single}
-\end{figure}
+\textbf{MAYBE PUT GRAPHS ONLY FOR MORE ADVANCED DATASETS THAT DONT EXIST YET?}
 
 % -------------------------------------------------------------------------------------------------------------
 \subsection{Validating the dataset} \label{validation}

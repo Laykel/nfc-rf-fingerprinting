@@ -42,3 +42,21 @@ Operating at a frequency of 13.56MHz, NFC is well in the High Frequency (HF) ran
 Also in contrast to these other protocols, NFC's modulation scheme is On-Off Keying (OOK) which is a form of Amplitude Shift Keying (ASK). (Except for NFC type B, which uses Binary Phase Shift Keying (BPSK) in target to initiator mode.)
 
 Because it is designed to work only in close proximity, NFC uses inductive coupling between devices to transmit information. In simple terms, this means the reader can only send a signal as far as its generated magnetic field goes. The passive tag responds by modulating the same magnetic field. It also means that far-field interferences from radio devices operating in the same frequency range practically don't affect an NFC communication. \cite{wiki_near-field_2020}
+
+If we capture a typical NFC communication using SDR hardware and represent it as magnitudes, we'll see something like figure \ref{fig:nfc-full}. We can observe that before the reader is brought to the tag, the line is almost flat at zero. This shows a very low noise level. Then, there is a sudden surge of amplitude in the signal as the reader generates the magnetic field required for the communication. This part, referred to as the "transient portion" of the signal by \textcite{xu_device_2015} (although they talk about WiFi), might be very characteristic of the device. Then, the amplitude decreases and regular request/responses start.
+
+\begin{figure}[htp!]
+  \centering
+  \includegraphics[scale=0.5]{figures/data_whole-transmission.png}
+  \caption{NFC communication represented as magnitudes}
+  \label{fig:nfc-full}
+\end{figure}
+
+In figure \ref{fig:nfc-single}, we take a closer look at one of the request/responses of the previous figure. We can clearly see a first transmission followed by a pause and then a second transmission, with smaller amplitude. This is how NFC communications work, with a request sent by the reader device followed by the tag's response through modulation of the reader's magnetic field.
+
+\begin{figure}[htp!]
+  \centering
+  \includegraphics[scale=0.5]{figures/data_single-request-response.png}
+  \caption{NFC single request/response represented as magnitudes}
+  \label{fig:nfc-single}
+\end{figure}
