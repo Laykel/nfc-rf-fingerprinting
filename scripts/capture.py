@@ -52,7 +52,7 @@ def main():
 
     parser.add_argument("path", help="The path to the output file relative to the script's location")
     parser.add_argument("--time", help="The capture length in seconds", default=3, type=int)
-    parser.add_argument("--samplerate", help="The (theoretical) number of to capture samples per second",
+    parser.add_argument("--samplerate", help="The number of samples to capture per second",
                         default=768000, type=int)
     parser.add_argument("--freq", help="The center frequency (in Hertz)", default=int(13.56e6), type=int)
 

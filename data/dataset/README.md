@@ -5,6 +5,7 @@ We have produced a number of data collections comprising recordings of NFC trans
 The transmissions are stored in binary format (raw bytes) with each 4 bytes representing a (32b) floating-point number. As the samples are represented as complex numbers (see report), the numbers are interleaved: the first float is the real part of the sample and the second is the imaginary part. They can easily be read as a list of complex numbers in python (with numpy) using the following line.
 
 ```py
+import numpy as np
 signal = np.fromfile("path/to/file.nfc", dtype=scipy.complex64)
 ```
 
@@ -35,7 +36,7 @@ For more details on the setup, please refer to the report.
 
 ## Dataset 1
 
-This dataset was built while trying to introduce as little variability as possible. The positions of the tags and reader was kept as similar as possible between recordings. Each recording was made using `scripts/acquisition/capture.py` with `--time 3`.
+This dataset was built while trying to introduce as little variability as possible. The positions of the tags and reader was kept as similar as possible between recordings. Each recording was made using `scripts/capture.py` with `--time 3`.
 
 - 3 recordings of each of the 9 tags
 - Length of a recording: 3 seconds
@@ -44,7 +45,7 @@ This dataset was built while trying to introduce as little variability as possib
 
 ## Dataset 9
 
-This dataset is numbered 9 and will probably not be used, because the tags' responses are very weak. We keep it as it might serve in a future experiment. Each recording was made using `scripts/acquisition/capture.py` with `--time 5`.
+This dataset is numbered 9 and will probably not be used, because the tags' responses are very weak. We keep it as it might serve in a future experiment. Each recording was made using `scripts/capture.py` with `--time 5`.
 
 - 2 recordings of each of the 9 tags
 - Length of a recording: 5 seconds
