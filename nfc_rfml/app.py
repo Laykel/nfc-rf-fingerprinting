@@ -4,7 +4,7 @@
 import os
 from pathlib import Path
 from time import time
-from preprocess.format import read_dataset, labels_as_chip_type, segments_2d, segments_normalize
+from preprocess.format import read_dataset, labels_as_chip_type, segments_2d, segments_normalize, segments_peaks
 from learn.build import build_svm, build_cnn
 
 """
@@ -27,7 +27,7 @@ def among_ntag():
     files = [file for file in os.listdir(PATH) if ".nfc" in file
              if "tag1" in file or "tag2" in file or "tag3" in file
              or "tag4" in file or "tag5" in file]
-    X, y = read_dataset(PATH, files, segments_size=512)
+    X, y = read_dataset(PATH, files, segments_size=512, format_segments=segments_peaks)
 
     build_cnn(X, y, epochs=100)
 
@@ -42,12 +42,12 @@ def chip_type_cnn():
     labels_as_chip_type(y)
 
     # Best params seem to be 256 points per segment, 500 samples per batch
-    build_cnn(X, y, epochs=1)
+    build_cnn(X, y, epochs=10)
 
 
 def svm_experiment():
     files = [file for file in os.listdir(PATH) if ".nfc" in file
-             if "tag9" in file or "tag1" in file or "tag6" in file]
+             if "tag1" in file or "tag6" in file or "tag9" in file]
     X, y = read_dataset(PATH, files, segments_size=512, format_segments=segments_2d)
 
     labels_as_chip_type(y)

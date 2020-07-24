@@ -46,7 +46,7 @@ def segments_2d(segments):
     :param segments: A list of data segments with complex values
     :return: A list of arrays with all the real parts followed by all the imaginary parts
     """
-    return [np.append(np.real(lst), [np.imag(lst)]) for lst in segments]
+    return [np.append(np.real(segment), [np.imag(segment)]) for segment in segments]
 
 
 def segments_3d(segments):
@@ -54,7 +54,6 @@ def segments_3d(segments):
     :param segments: A list of data segments with complex values
     :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
     """
-    # return [np.vstack((np.real(lst), np.imag(lst))) for lst in segments]
     return list(zip(np.real(segments), np.imag(segments)))
 
 
@@ -76,8 +75,8 @@ def segments_normalize(segments):
 
 def segments_peaks(segments):
     # TODO Finish and clean up
-    kept = sig.find_peaks(-segments[0], height=-0.2)
-    return []
+    seg = [segment for segment in segments if np.min(np.abs(segment)) < 0.2]
+    return segments_normalize(seg)
 
 
 def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
@@ -104,9 +103,9 @@ def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
         # Partition the signals in segments of 256 samples
         segments = list(partition(signal, segments_size))
         # Format segments and add them to the collection of training/testing data
-        X.extend(format_segments(segments))
+        X.extend(r := format_segments(segments))
 
-        labels.extend([int(file[3])] * len(segments))  # TODO Calculate value of label through function
+        labels.extend([int(file[3])] * len(r))  # TODO Calculate value of label through function
 
     return np.array(X), np.array(labels)
 
