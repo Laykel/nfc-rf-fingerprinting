@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import scipy.signal as sig
 from scipy import complex64
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
@@ -103,9 +102,10 @@ def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
         # Partition the signals in segments of 256 samples
         segments = list(partition(signal, segments_size))
         # Format segments and add them to the collection of training/testing data
-        X.extend(r := format_segments(segments))
+        formatted = format_segments(segments)
+        X.extend(formatted)
 
-        labels.extend([int(file[3])] * len(r))  # TODO Calculate value of label through function
+        labels.extend([int(file[3])] * len(formatted))  # TODO Calculate value of label through function
 
     return np.array(X), np.array(labels)
 
