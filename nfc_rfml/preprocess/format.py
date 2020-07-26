@@ -40,45 +40,63 @@ def partition(lst, n):
         yield lst[i:i + n]
 
 
-def segments_2d(segments):
-    """Store the segments in simple arrays with the real parts first and then the imaginary parts.
-    :param segments: A list of data segments with complex values
-    :return: A list of arrays with all the real parts followed by all the imaginary parts
-    """
-    return [np.append(np.real(segment), [np.imag(segment)]) for segment in segments]
-
-
-def segments_3d(segments):
-    """Store the segments in 2d arrays with one dimension for the real parts and one for the imaginary parts.
-    :param segments: A list of data segments with complex values
-    :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
-    """
-    return list(zip(np.real(segments), np.imag(segments)))
-
-
-def segments_normalize(segments):
-    """
-    Normalize in the range [-1,1]
-    :param segments:
+def normalize_amplitude(signal):
+    """Normalize both components of the signal in the range [-1,1]
+    :param signal:
     :return:
     """
     # TODO clean up
-    real = np.real(segments)
-    imag = np.imag(segments)
+    real = np.real(signal)
+    imag = np.imag(signal)
     max_val = abs(max(max(real.max(), imag.max()),
                       min(real.min(), imag.min()),
                       key=abs))
 
-    return list(zip(real / max_val, imag / max_val))
+    # Convert the normalized lists to complex
+    return (real / max_val) + 1j * (imag / max_val)
 
 
-def segments_peaks(segments):
-    # TODO Finish and clean up
-    seg = [segment for segment in segments if np.min(np.abs(segment)) < 0.2]
-    return segments_normalize(seg)
+def segments_2d(signal, segments_size):
+    """Store the segments in simple arrays with the real parts first and then the imaginary parts.
+    :param signal: A list of data segments with complex values
+    :param segments_size: The wanted size for the data segments
+    :return: A list of arrays with all the real parts followed by all the imaginary parts
+    """
+    segments = list(partition(signal, segments_size))
+    return [np.append(np.real(segment), [np.imag(segment)]) for segment in segments]
 
 
-def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
+def segments_3d(signal, segments_size):
+    """Store the segments in 2d arrays with one dimension for the real parts and one for the imaginary parts.
+    :param signal: A list of data segments with complex values
+    :param segments_size: The wanted size for the data segments
+    :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
+    """
+    segments = list(partition(signal, segments_size))
+    return list(zip(np.real(segments), np.imag(segments)))
+
+
+def segments_peaks(signal, segments_size):
+    """youssef
+
+    :param signal:
+    :param segments_size:
+    :return:
+    """
+    mags = np.abs(signal)
+    # TODO calculate the value instead of hardcoding 0.2
+    indices = np.where(mags < 0.2)[0]
+    segments = []
+
+    while indices.size != 0:
+        start = indices[0]
+        indices = indices[segments_size:]
+        segments.append(signal[start:start + segments_size])
+
+    return list(zip(np.real(segments), np.imag(segments)))
+
+
+def read_dataset(path, files, segments_size=256, format_segments=segments_3d, normalize=False):
     """
     Sort and read the given files as complex numbers and partition them in smaller segments.
     Then, format these segments using a a given function and store them in a list of training/testing data.
@@ -88,6 +106,7 @@ def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
     :param files: The file names of the files to be considered
     :param segments_size: The wanted size for the data segments
     :param format_segments: The function with which to format the signal segments
+    :param normalize: Whether to normalize the signal in terms of amplitude
     :return: A couple of numpy arrays in the form (formatted data, labels)
     """
     files.sort()
@@ -98,11 +117,11 @@ def read_dataset(path, files, segments_size=256, format_segments=segments_3d):
     for file in files:
         # Read each capture
         signal = np.fromfile(os.path.join(path, file), dtype=complex64)
+        if normalize:
+            signal = normalize_amplitude(signal)
 
-        # Partition the signals in segments of 256 samples
-        segments = list(partition(signal, segments_size))
-        # Format segments and add them to the collection of training/testing data
-        formatted = format_segments(segments)
+        # Format signal in segments and add them to the collection of training/testing data
+        formatted = format_segments(signal, segments_size)
         X.extend(formatted)
 
         labels.extend([int(file[3])] * len(formatted))  # TODO Calculate value of label through function
@@ -152,6 +171,9 @@ def _test():
     print(X.shape, y.shape)
 
     X, y = read_dataset(PATH, files)
+    print(X.shape, y.shape)
+
+    X, y = read_dataset(PATH, files, normalize=True)
     print(X.shape, y.shape)
 
     train, validate, test = split_data(X, y, 0.7, 0.2, 0.1)
