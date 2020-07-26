@@ -81,7 +81,6 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
         self.frequency = frequency = 13.56e6
         self.filepath = filepath = '/dev/null'
         self.cutoff = cutoff = samp_rate/5
-        self.boost = boost = 1
 
         ##################################################
         # Blocks
@@ -92,6 +91,17 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 1):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        self._frequency_tool_bar = Qt.QToolBar(self)
+        self._frequency_tool_bar.addWidget(Qt.QLabel('frequency' + ": "))
+        self._frequency_line_edit = Qt.QLineEdit(str(self.frequency))
+        self._frequency_tool_bar.addWidget(self._frequency_line_edit)
+        self._frequency_line_edit.returnPressed.connect(
+            lambda: self.set_frequency(eng_notation.str_to_num(str(self._frequency_line_edit.text()))))
+        self.top_grid_layout.addWidget(self._frequency_tool_bar, 0, 1, 1, 1)
+        for r in range(0, 1):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(1, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self._filepath_tool_bar = Qt.QToolBar(self)
         self._filepath_tool_bar.addWidget(Qt.QLabel('File path' + ": "))
@@ -110,13 +120,6 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
         for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 1):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        self._boost_range = Range(1, 20, 1, 1, 200)
-        self._boost_win = RangeWidget(self._boost_range, self.set_boost, 'boost', "slider", int)
-        self.top_grid_layout.addWidget(self._boost_win, 0, 1, 1, 1)
-        for r in range(0, 1):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(1, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_waterfall_sink_x_0_0 = qtgui.waterfall_sink_c(
             1024, #size
@@ -345,7 +348,7 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
         self._qtgui_const_sink_x_0_win = sip.wrapinstance(self.qtgui_const_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_const_sink_x_0_win)
         self.osmosdr_source_0 = osmosdr.source(
-            args="numchan=" + str(1) + " " + 'airspyhf=0'
+            args="numchan=" + str(1) + " " + 'driver=lime,soapy=0'
         )
         self.osmosdr_source_0.set_sample_rate(samp_rate)
         self.osmosdr_source_0.set_center_freq(frequency, 0)
@@ -364,7 +367,7 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
                 transition,
                 firdes.WIN_HAMMING,
                 6.76))
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(boost)
+        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(2)
         self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, filepath, False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_complex_to_mag_0_0 = blocks.complex_to_mag(1)
@@ -416,6 +419,7 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
 
     def set_frequency(self, frequency):
         self.frequency = frequency
+        Qt.QMetaObject.invokeMethod(self._frequency_line_edit, "setText", Qt.Q_ARG("QString", eng_notation.num_to_str(self.frequency)))
         self.osmosdr_source_0.set_center_freq(self.frequency, 0)
         self.qtgui_freq_sink_x_0_0.set_frequency_range(self.frequency, self.samp_rate)
         self.qtgui_waterfall_sink_x_0_0.set_frequency_range(self.frequency, self.samp_rate)
@@ -434,13 +438,6 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
     def set_cutoff(self, cutoff):
         self.cutoff = cutoff
         self.low_pass_filter_0_0.set_taps(firdes.low_pass(1, self.samp_rate, self.cutoff, self.transition, firdes.WIN_HAMMING, 6.76))
-
-    def get_boost(self):
-        return self.boost
-
-    def set_boost(self, boost):
-        self.boost = boost
-        self.blocks_multiply_const_vxx_0.set_k(self.boost)
 
 
 
