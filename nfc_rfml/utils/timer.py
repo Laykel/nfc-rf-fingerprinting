@@ -1,3 +1,4 @@
+import functools
 from time import process_time
 
 
@@ -6,9 +7,13 @@ def timer(func):
     :param func: The function to time
     :return: The timer wrapper around the given function
     """
-    def wrapper():
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
         start = process_time()
-        func()
-        print("\nExecution time: %s [s]" % (process_time() - start))
+        value = func(*args, **kwargs)
+        end = process_time()
+        print(f"Execution time: {end - start}[s]")
+        return value
 
     return wrapper
