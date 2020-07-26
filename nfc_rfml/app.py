@@ -37,12 +37,11 @@ def chip_type_cnn():
     files = [file for file in os.listdir(PATH) if ".nfc" in file
              if "tag1" in file or "tag6" in file or "tag9" in file]
     X, y = read_dataset(PATH, files, segments_size=256)
-    print(X.shape, y.shape)
 
     labels_as_chip_type(y)
 
     # Best params seem to be 256 points per segment, 500 samples per batch
-    build_cnn(X, y, epochs=10)
+    build_cnn(X, y, epochs=150)
 
 
 @timer

@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from sklearn.metrics import classification_report, confusion_matrix
 
+"""
+Provide functions to save stats on a model and its performance and to plot confusion matrices and performance history.
+"""
+
 
 def write_stats(volume, segments_size, conf_mat, report, model_structure, output_dir):
     """Read information and statistics about our model and store it in a text file.

@@ -8,26 +8,18 @@ from tensorflow.keras.utils import to_categorical
 This module provides functions to load I/Q signals datasets in memory, formatting them as necessary for learning.
 """
 
-# TODO Function to return metadata
-# The IDs of tags of a given model
-NTAG213 = (1, 2, 3, 4, 5)
-MIFARE = (6, 7, 8)
-FELICA = (9,)
-
 
 def labels_as_chip_type(y):
+    """Transform the individual tag labels given as parameter into chip type labels
+    :param y: The labels of individual tags to transform to chip type labels
     """
-    TODO use numpy
-    :param y:
-    :return:
-    """
-    for i, v in enumerate(y):
-        if v in NTAG213:
-            y[i] = 0
-        elif v in MIFARE:
-            y[i] = 1
-        elif v in FELICA:
-            y[i] = 2
+    NTAG213 = (1, 2, 3, 4, 5)
+    MIFARE = (6, 7, 8)
+    FELICA = (9,)
+
+    y[np.isin(y, NTAG213)] = 0
+    y[np.isin(y, MIFARE)] = 1
+    y[np.isin(y, FELICA)] = 2
 
 
 def partition(lst, n):
@@ -42,10 +34,9 @@ def partition(lst, n):
 
 def normalize_amplitude(signal):
     """Normalize both components of the signal in the range [-1,1]
-    :param signal:
-    :return:
+    :param signal: The I/Q signal to be normalized
+    :return: The I/Q signal in the same format as before, but with both components normalized in the range [-1,1]
     """
-    # TODO clean up
     real = np.real(signal)
     imag = np.imag(signal)
     max_val = abs(max(max(real.max(), imag.max()),
@@ -58,7 +49,7 @@ def normalize_amplitude(signal):
 
 def segments_2d(signal, segments_size):
     """Store the segments in simple arrays with the real parts first and then the imaginary parts.
-    :param signal: A list of data segments with complex values
+    :param signal: The I/Q signal as a 1D array of complex numbers
     :param segments_size: The wanted size for the data segments
     :return: A list of arrays with all the real parts followed by all the imaginary parts
     """
@@ -68,7 +59,7 @@ def segments_2d(signal, segments_size):
 
 def segments_3d(signal, segments_size):
     """Store the segments in 2d arrays with one dimension for the real parts and one for the imaginary parts.
-    :param signal: A list of data segments with complex values
+    :param signal: The I/Q signal as a 1D array of complex numbers
     :param segments_size: The wanted size for the data segments
     :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
     """
@@ -77,11 +68,13 @@ def segments_3d(signal, segments_size):
 
 
 def segments_peaks(signal, segments_size):
-    """youssef
+    """
+    Detect a non-trivial part of the signal and create windows of `segments_size` samples, similarly as described by
+    Youssef et al. in their paper (see bibliography).
 
-    :param signal:
-    :param segments_size:
-    :return:
+    :param signal: The I/Q signal as a 1D array of complex numbers
+    :param segments_size: The wanted size for the data segments
+    :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
     """
     mags = np.abs(signal)
     # TODO calculate the value instead of hardcoding 0.2
