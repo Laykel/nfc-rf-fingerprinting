@@ -16,7 +16,7 @@ from learn.evaluate import evaluate_model
 """
 
 
-def build_cnn(X, y, epochs):
+def build_cnn(X, y, epochs=100, batch_size=500):
     # Split data into train, validation and test data
     (X_train, y_train), (X_val, y_val), (X_test, y_test) = split_data(X, y, 0.7, 0.2, 0.1)
 
@@ -42,7 +42,7 @@ def build_cnn(X, y, epochs):
     # Train model and adjust with validation set
     history = model.fit(X_train, y_train,
                         epochs=epochs,
-                        batch_size=500,
+                        batch_size=batch_size,
                         callbacks=callbacks,
                         validation_data=(X_val, y_val))
 
