@@ -262,7 +262,7 @@ blocks:
     ant7: ''
     ant8: ''
     ant9: ''
-    args: airspyhf=0
+    args: driver=lime,soapy=0
     bb_gain0: '16'
     bb_gain1: '20'
     bb_gain10: '20'

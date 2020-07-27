@@ -367,7 +367,7 @@ class nfc_acquisition(gr.top_block, Qt.QWidget):
                 transition,
                 firdes.WIN_HAMMING,
                 6.76))
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(2)
+        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(1)
         self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, filepath, False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_complex_to_mag_0_0 = blocks.complex_to_mag(1)

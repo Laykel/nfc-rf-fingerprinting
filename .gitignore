@@ -2,7 +2,7 @@
 data/archives/
 
 # Saved model weights
-nfc_rfml/saved_models/
+saved_models/
 
 # Pycharm
 .idea/
