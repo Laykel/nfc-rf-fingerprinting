@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
 from preprocess.format import split_data
-from learn.models import rfmlcnn
+from learn.models import youssef_cnn, riyaz_cnn
 from learn.evaluate import evaluate_model
 
 """
@@ -22,7 +22,8 @@ def build_cnn(X, y, epochs=100, batch_size=500):
 
     # Build model and output its structure
     shape = (None,) + X_train.shape[1:]
-    model = rfmlcnn.RFMLCNN(nb_outputs=len(set(y)), input_shape=shape)
+    # model = riyaz_cnn.RiyazCNN(nb_outputs=len(set(y)), input_shape=shape)
+    model = youssef_cnn.YoussefCNN(nb_outputs=len(set(y)), input_shape=shape)
 
     # Configure model
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
