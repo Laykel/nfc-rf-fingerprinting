@@ -13,9 +13,9 @@ def labels_as_chip_type(y):
     """Transform the individual tag labels given as parameter into chip type labels
     :param y: The labels of individual tags to transform to chip type labels
     """
-    NTAG213 = (1, 2, 3, 4, 5)
-    MIFARE = (6, 7, 8)
-    FELICA = (9,)
+    NTAG213 = (0, 1, 2, 3, 4)
+    MIFARE = (5, 6, 7)
+    FELICA = (8,)
 
     y[np.isin(y, NTAG213)] = 0
     y[np.isin(y, MIFARE)] = 1
@@ -117,7 +117,7 @@ def read_dataset(path, files, segments_size=256, format_segments=segments_3d, no
         formatted = format_segments(signal, segments_size)
         X.extend(formatted)
 
-        labels.extend([int(file[3])] * len(formatted))  # TODO Calculate value of label through function
+        labels.extend([int(file[3]) - 1] * len(formatted))  # TODO Calculate value of label through function
 
     return np.array(X), np.array(labels)
 
@@ -158,15 +158,15 @@ def split_data(X, y, train_ratio, validation_ratio, test_ratio):
 def _test():
     PATH = "../../data/dataset/1"
     # Get only the first recording for each tag
-    files = [file for file in os.listdir(PATH) if file.endswith(".nfc") and "-1" in file]
+    files = [file for file in os.listdir(PATH) if file.endswith(".nfc")]
 
     X, y = read_dataset(PATH, files, segments_size=512, format_segments=segments_2d)
     print(X.shape, y.shape)
 
-    X, y = read_dataset(PATH, files)
+    X, y = read_dataset(PATH, files, segments_size=512)
     print(X.shape, y.shape)
 
-    X, y = read_dataset(PATH, files, normalize=True)
+    X, y = read_dataset(PATH, files, format_segments=segments_peaks)
     print(X.shape, y.shape)
 
     train, validate, test = split_data(X, y, 0.7, 0.2, 0.1)

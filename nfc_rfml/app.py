@@ -27,9 +27,9 @@ def among_ntag():
     files = [file for file in os.listdir(PATH) if ".nfc" in file
              if "tag1" in file or "tag2" in file or "tag3" in file
              or "tag4" in file or "tag5" in file]
-    X, y = read_dataset(PATH, files, segments_size=256, format_segments=segments_peaks, normalize=True)
+    X, y = read_dataset(PATH, files, segments_size=256, format_segments=segments_peaks)
 
-    build_cnn(X, y, epochs=100)
+    build_cnn(X, y, epochs=10)
 
 
 def chip_type_cnn():
@@ -48,7 +48,7 @@ def chip_type_cnn():
 def svm_experiment():
     files = [file for file in os.listdir(PATH) if ".nfc" in file
              if "tag1" in file or "tag6" in file or "tag9" in file]
-    X, y = read_dataset(PATH, files, segments_size=512, format_segments=segments_2d)
+    X, y = read_dataset(PATH, files, segments_size=256, format_segments=segments_2d)
 
     labels_as_chip_type(y)
 
