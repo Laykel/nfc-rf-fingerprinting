@@ -27,10 +27,7 @@ Each of the subfolders contains a set of recordings, which we describe below.
 
 ## General parameters for the acquisition
 
-We use an Airspy HF+ SDR device with an NFC antenna for all our captures.
-
-- Number of samples per seconds: 768'000
-- Center frequency: 13.56 MHz
+We use an Airspy HF+ SDR device with an NFC antenna for all our captures. In order to capture the NFC communication, we set the center frequency to 13.56 MHz.
 
 For more details on the setup, please refer to the report.
 
@@ -38,14 +35,29 @@ For more details on the setup, please refer to the report.
 
 This dataset was built while trying to introduce as little variability as possible. The positions of the tags and reader was kept as similar as possible between recordings. Each recording was made using `scripts/capture.py` with `--time 3`.
 
+- Number of samples per seconds: 768'000
 - 3 recordings of each of the 9 tags
 - Length of a recording: 3 seconds
-- Number of samples per recording: 3 * 768'000 = 2'304'000 samples
+- Size of a recording on disk: 18.432 MB
+- Total size of the dataset: 497.664 MB
+- (Content of tags 1 through 7: 36B of the 'A' character.)
+
+## Dataset 2
+
+... Each recording was made using `scripts/capture.py` with `--samplerate 912000` and `--time 30`.
+
+- Distance between reader and tags: ~1.8 cm
+
+- Number of samples per seconds: 912'000
+- 3 recordings of each of the first 8 tags
+- Length of a recording: 20 seconds
+- Size of a recording on disk: 145.92 MB
+- Total size of the dataset: 3502.08 MB
 - (Content of tags 1 through 7: 36B of the 'A' character.)
 
 ## Dataset 9
 
-This dataset is numbered 9 and will probably not be used, because the tags' responses are very weak. We keep it as it might serve in a future experiment. Each recording was made using `scripts/capture.py` with `--time 5`.
+This dataset is numbered 9 and will probably not be used because the tags' responses are very weak. We keep it as it might still serve in a future experiment. Each recording was made using `scripts/capture.py` with `--time 5`.
 
 - 2 recordings of each of the 9 tags
 - Length of a recording: 5 seconds
