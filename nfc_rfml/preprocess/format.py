@@ -47,62 +47,81 @@ def normalize_amplitude(signal):
     return (real / max_val) + 1j * (imag / max_val)
 
 
-def segments_2d(signal, segments_size):
+def windows_2d(windows):
     """Store the segments in simple arrays with the real parts first and then the imaginary parts.
-    :param signal: The I/Q signal as a 1D array of complex numbers
-    :param segments_size: The wanted size for the data segments
+    :param windows:
     :return: A list of arrays with all the real parts followed by all the imaginary parts
     """
-    segments = list(partition(signal, segments_size))
-    return [np.append(np.real(segment), [np.imag(segment)]) for segment in segments]
+    return [np.append(np.real(window), [np.imag(window)]) for window in windows]
 
 
-def segments_3d(signal, segments_size):
+def windows_3d(windows):
     """Store the segments in 2d arrays with one dimension for the real parts and one for the imaginary parts.
-    :param signal: The I/Q signal as a 1D array of complex numbers
-    :param segments_size: The wanted size for the data segments
+    :param windows:
     :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
     """
-    segments = list(partition(signal, segments_size))
-    return list(zip(np.real(segments), np.imag(segments)))
+    return list(zip(np.real(windows), np.imag(windows)))
 
 
-def segments_peaks(signal, segments_size):
+def cut_windows(signal, windows_size, windows_format):
+    windows = list(partition(signal, windows_size))
+    return windows_format(windows)
+
+
+def filter_peaks_windows(signal, windows_size, windows_format):
     """
     Detect a non-trivial part of the signal and create windows of `segments_size` samples, similarly as described by
     Youssef et al. in their paper (see bibliography).
 
     :param signal: The I/Q signal as a 1D array of complex numbers
-    :param segments_size: The wanted size for the data segments
-    :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
+    :param windows_size: The wanted size for the signal windows (data segments)
+    :param windows_format: The function to use to format the
+    :return: ...
     """
     mags = np.abs(signal)
     # TODO calculate the value instead of hardcoding 0.2
     indices = np.where(mags < 0.2)[0]
-    segments = []
+    windows = []
 
     while indices.size != 0:
         start = indices[0]
-        indices = indices[segments_size:]
-        segments.append(signal[start:start + segments_size])
+        indices = indices[windows_size:]
+        windows.append(signal[start:start + windows_size])
 
-    return list(zip(np.real(segments), np.imag(segments)))
+    # Remove the last one, since it can be truncated
+    return windows_format(windows[:-1])
 
 
-def read_dataset(path, files, segments_size=256, format_segments=segments_3d, normalize=False):
+def tags_files(path, tags):
+    """
+    TODO
+    :param path:
+    :param tags:
+    :return:
+    """
+    tags_names = [f"tag{x}" for x in tags]
+
+    files = [file for file in os.listdir(path) if ".nfc" in file
+             if any((True for x in tags_names if x in file))]
+    files.sort()
+
+    return files
+
+
+def read_dataset(path, tags, windows_size=256, windows_format=windows_3d, filter_peaks=False, normalize=False):
     """
     Sort and read the given files as complex numbers and partition them in smaller segments.
     Then, format these segments using a a given function and store them in a list of training/testing data.
     Finally, build a list of labels using the filename.
 
     :param path: The path to the folder where the data files are stored
-    :param files: The file names of the files to be considered
-    :param segments_size: The wanted size for the data segments
-    :param format_segments: The function with which to format the signal segments
+    :param tags: A list of tags numbers as defined in the dataset's description
+    :param windows_size: The wanted size for the signal windows (data segments)
+    :param windows_format: The function with which to format the signal into windows
     :param normalize: Whether to normalize the signal in terms of amplitude
     :return: A couple of numpy arrays in the form (formatted data, labels)
     """
-    files.sort()
+    files = tags_files(path, tags)
 
     X = []  # The training/testing data
     labels = []  # The associated labels
@@ -114,10 +133,15 @@ def read_dataset(path, files, segments_size=256, format_segments=segments_3d, no
             signal = normalize_amplitude(signal)
 
         # Format signal in segments and add them to the collection of training/testing data
-        formatted = format_segments(signal, segments_size)
+        if filter_peaks:
+            formatted = filter_peaks_windows(signal, windows_size, windows_format)
+        else:
+            formatted = cut_windows(signal, windows_size, windows_format)
+
         X.extend(formatted)
 
-        labels.extend([int(file[3]) - 1] * len(formatted))  # TODO Calculate value of label through function
+        # Get the label from the filename
+        labels.extend([int(file[3]) - 1] * len(formatted))
 
     return np.array(X), np.array(labels)
 
@@ -156,17 +180,18 @@ def split_data(X, y, train_ratio, validation_ratio, test_ratio):
 
 
 def _test():
-    PATH = "../../data/dataset/1"
-    # Get only the first recording for each tag
-    files = [file for file in os.listdir(PATH) if file.endswith(".nfc")]
+    PATH = "../../data/dataset/2"
+    tags = range(6)
 
-    X, y = read_dataset(PATH, files, segments_size=512, format_segments=segments_2d)
+    X, y = read_dataset(PATH, tags, windows_format=windows_2d)
     print(X.shape, y.shape)
+    del X, y
 
-    X, y = read_dataset(PATH, files, segments_size=512)
+    X, y = read_dataset(PATH, tags)
     print(X.shape, y.shape)
+    del X, y
 
-    X, y = read_dataset(PATH, files, format_segments=segments_peaks)
+    X, y = read_dataset(PATH, tags, filter_peaks=True)
     print(X.shape, y.shape)
 
     train, validate, test = split_data(X, y, 0.7, 0.2, 0.1)
