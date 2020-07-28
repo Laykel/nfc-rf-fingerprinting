@@ -20,15 +20,15 @@ The first part of the analysis phase was conducted using a LimeSDR Mini\footnote
 
 Despite these setbacks, we were able to record communications well enough to decode the reader's transmissions, as described in section \ref{validation}. The tag's response, though, was drowned in the noise most of the time, as far as we can tell. These are the reasons why we replaced the LimeSDR Mini with the Airspy HF+\footnote{\url{https://airspy.com/airspy-hf-plus}} you can see in figure \ref{fig:radio-setup}, courtesy of Mr Joël Conus.
 
-The Airspy HF+, as its name suggests, is built for HF (the frequency range in which NFC operates). As such, it proved a lot more stable at 13.56MHz (picking up our signal every time) and a lot less prone to heating. Most importantly, the noise level is much lower with this device, which allows us to clearly distinguish a tag's response. The only drawback is its sampling rate which can only be set at one of five values, the highest of which is 768kS/s. \cite{rtlsdr_our_2017, marks_airspy}
+The Airspy HF+, as its name suggests, is built for HF (the frequency range in which NFC operates). As such, it proved a lot more stable at 13.56MHz (picking up our signal every time) and a lot less prone to heating. Most importantly, the noise level is much lower with this device, which allows us to clearly distinguish a tag's response. The only drawback is its sampling rate which can only be set at one of seven values, the highest of which is 912kS/s. (There used to be only five possible values, before we applied the latest firmware patch for the device.) \cite{rtlsdr_our_2017, marks_airspy}
 
 \begin{table}[h!]
   \centering
   \begin{tabular}{|l|l|l|l|}
     \hline
-    \textbf{Name}         & \textbf{Frequency range}                                                       & \textbf{Bandwidth}                                           & \textbf{Transmitter?} \\ \hline
+    \textbf{Name}         & \textbf{Frequency range}                                                       & \textbf{Bandwidth}                                           & \textbf{Transmit} \\ \hline
     \textbf{LimeSDR Mini} & 10MHz - 3.5GHz                                                                 & Up to 30.72MHz                                                                  & Yes                        \\ \hline
-    \textbf{Airspy HF+}   & \begin{tabular}[c]{@{}l@{}}HF: 9kHz - 31MHz\\ VHF: 60MHZ - 260MHZ\end{tabular} & \begin{tabular}[c]{@{}l@{}}768kHz, 384kHz, 192kHz,\\ 96kHz or 48kHz\end{tabular} & No                         \\ \hline
+    \textbf{Airspy HF+}   & \begin{tabular}[c]{@{}l@{}}HF: 9kHz - 31MHz\\ VHF: 60MHz - 260MHz\end{tabular} & \begin{tabular}[c]{@{}l@{}}912kHz, 768kHz, 456kHz, 384kHz,\\ 192kHz, 96kHz or 48kHz\end{tabular} & No                         \\ \hline
   \end{tabular}
   \caption{Theoretical characteristics of mentioned SDRs}
   \label{tab:pcd-inventory}
@@ -136,18 +136,37 @@ The script is written for the Airspy HF+, but is very easy to modify for one's n
 
 \subsubsection{First dataset}
 
-In our first attempt at building a dataset, we tried to make things simple. We recorded three communications between the reader and each of the nine tags. This was so we could compare the signals and their features between different tags but also between different captures of the same tag.
+In our first attempt at building a dataset, we tried to make things simple. We recorded three communications between the reader and each of the nine tags. This was so we could compare the signals and their features between different tags but also between different captures of the same tag. The acquisition started after the communication was already established, so the transient part of the signal is absent.
 
 As the list below shows, the captures each stopped after a fixed amount of samples were received. We used the script described in section \ref{script} to simplify the process and minimize variability.
 
 \begin{itemize}
   \item 3 recordings of each of the 9 tags
+  \item Sample rate: 768 kS/s
   \item Length of a recording: 3 seconds
-  \item Number of samples per recording: 3 * 768'000 = 2'304'000 samples
+  \item Size of a recording on disk: 18.432 MB
+  \item Total size of the dataset: 497.664 MB
   \item (Content of tags 1 through 7: 36B of the 'A' character.)
 \end{itemize}
 
 \textbf{MAYBE PUT GRAPHS ONLY FOR MORE ADVANCED DATASETS THAT DONT EXIST YET?}
+
+\subsubsection{Second dataset}
+
+This dataset was built in the same manner as the previous one but the captures are much longer and more variable. We were also able to increase the sample rate thanks to a firmware update of the Airspy HF+. The goal here was to address the shortcomings of our first dataset in terms of volume and "realism". To achieve that, we made the capture time longer and also captured the very start of the communications: the transient part.
+
+... \textbf{TODO}
+
+We removed tag9 from this dataset since it is so different from the NFC-A tags.
+
+\begin{itemize}
+  \item 3 recordings of each of the first 8 tags
+  \item Sample rate: 912 kS/s
+  \item Length of a recording: 20 seconds
+  \item Size of a recording on disk: \textbf{TODO}
+  \item Total size of the dataset: \textbf{TODO}
+  \item (Content of tags 1 through 7: 36B of the 'A' character.)
+\end{itemize}
 
 % -------------------------------------------------------------------------------------------------------------
 \subsection{Validating the dataset} \label{validation}
@@ -181,9 +200,16 @@ Using \textcite{rona_sniffing_2017}'s GNU Radio Companion module \texttt{gr-nfc}
 
 \subsubsection{Measure tools}
 
-Spreadsheet?
+tool characteristics
 
-% -------------------------------------------------------------------------------------------------------------
-\subsection{More complete dataset}
+find features to then look for them in our datasets
+
+Despite our efforts, we weren't able to find discriminative features using this method. Table ... shows a few of our observations, just to highlight the fact that even for a single tag, the readings can differ quite a bit.
+
+\textbf{table}
+
+\subsubsection{Features extraction}
+
+Although our initial goal was to let our deep learning models extract the features from the raw data, we decided (for the same reasons we used the measure tools mentioned in the previous section) to try and find features in the datasets we produced. To do so, we used the TSFRESH library...
 
 \textbf{TBC}
