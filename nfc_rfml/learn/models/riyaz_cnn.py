@@ -2,6 +2,7 @@ from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Input,
 from .rfml_cnn import RFMLCNN
 
 
+# TODO l2 reg
 class RiyazCNN(RFMLCNN):
     """
     A Convolutional Neural network based on the one described in

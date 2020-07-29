@@ -16,30 +16,30 @@ from learn.evaluate import evaluate_model
 """
 
 
-def build_cnn(X, y, epochs=100, batch_size=500):
+def build_cnn(X, y, epochs=100, batch_size=500, early_stopping=True):
     # Split data into train, validation and test data
     (X_train, y_train), (X_val, y_val), (X_test, y_test) = split_data(X, y, 0.7, 0.2, 0.1)
 
     # Build model and output its structure
     shape = (None,) + X_train.shape[1:]
+    print(shape)
     # model = riyaz_cnn.RiyazCNN(nb_outputs=len(set(y)), input_shape=shape)
     model = youssef_cnn.YoussefCNN(nb_outputs=len(set(y)), input_shape=shape)
 
     # Configure model
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
-    # TODO Clean up the folder creation part
     # Setup the folder structure
     dt = datetime.now().strftime("%Y-%m-%d %Hh%M")
     model_dir = Path(f"../saved_models/{dt}")
     os.makedirs(model_dir)
     model_path = str(model_dir / "model.tf")
 
-    # TODO Don't stop early for final plots
     # Make sure the training stops when the performance stops getting better
     # and save the best model to disk
-    callbacks = [EarlyStopping(monitor="val_loss", patience=5),
-                 ModelCheckpoint(filepath=model_path, monitor="val_loss", save_best_only=True)]
+    callbacks = [ModelCheckpoint(filepath=model_path, monitor="val_loss", save_best_only=True)]
+    if early_stopping:
+        callbacks.append(EarlyStopping(monitor="val_loss", patience=5))
 
     # Train model and adjust with validation set
     history = model.fit(X_train, y_train,
