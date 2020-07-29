@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import numpy as np
+from detecta import detect_peaks
 from scipy import complex64
 import pandas as pd
 
@@ -9,21 +10,22 @@ from tsfresh.feature_extraction import EfficientFCParameters, MinimalFCParameter
 from tsfresh.utilities.dataframe_functions import impute
 
 
-def find_transfers(signal):
+def find_transfers(signal, window_size=256):
     mags = np.abs(signal)
-    indices = np.where(mags < 0.2)[0]
+    # Detect peaks higher than height and with vertical distance to neighbours higher than threshold
+    indices = detect_peaks(mags, mph=0.15, threshold=0.005)
     filtered = []
 
     while indices.size != 0:
         start = indices[0]
-        indices = indices[1024:]
-        filtered.extend(signal[start:start + 1024])
+        indices = indices[indices > start + window_size]
+        filtered.extend(signal[start:start + window_size])
 
     return filtered
 
 
 def main():
-    path = Path("../data/dataset/1")
+    path = Path("../data/dataset/2")
     files = [file for file in os.listdir(path) if ".nfc" in file
              and "-1" in file]
 
@@ -36,7 +38,7 @@ def main():
 
     for file in files:
         signal = np.fromfile(os.path.join(path, file), dtype=complex64)
-        filtered = find_transfers(signal)
+        filtered = find_transfers(signal)[:5000]
         table = np.vstack((np.real(filtered),
                            np.imag(filtered),
                            # np.full(len(filtered), labels[int(file[3])]),
