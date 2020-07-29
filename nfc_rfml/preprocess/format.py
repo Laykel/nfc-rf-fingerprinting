@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from detecta import detect_peaks
 from scipy import complex64
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
@@ -60,55 +61,57 @@ def windows_3d(windows):
     :param windows:
     :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
     """
-    return list(zip(np.real(windows), np.imag(windows)))
+    return np.stack((np.real(windows), np.imag(windows)), axis=1)
 
 
-def cut_windows(signal, windows_size, windows_format):
-    windows = list(partition(signal, windows_size))
-    return windows_format(windows)
-
-
-def filter_peaks_windows(signal, windows_size, windows_format):
+def filter_peaks_windows(signal, window_size, format_windows, threshold=0.005):
     """
     Detect a non-trivial part of the signal and create windows of `segments_size` samples, similarly as described by
     Youssef et al. in their paper (see bibliography).
 
     :param signal: The I/Q signal as a 1D array of complex numbers
-    :param windows_size: The wanted size for the signal windows (data segments)
-    :param windows_format: The function to use to format the
-    :return: ...
+    :param window_size: The wanted size for the signal windows (data segments)
+    :param format_windows: The function with which to format the signal into windows
+    :param threshold: The prominence parameter used to find peaks in the signal
+    :return: A list of windows filtered using a peak finding method and formatted according to given function
     """
     mags = np.abs(signal)
-    # TODO calculate the value instead of hardcoding 0.2
-    indices = np.where(mags < 0.2)[0]
+    # Detect peaks higher than height and with vertical distance to neighbours higher than threshold
+    indices = detect_peaks(mags, mph=0.15, threshold=threshold)
     windows = []
 
+    # Partition the signal into windows
     while indices.size != 0:
         start = indices[0]
-        indices = indices[windows_size:]
-        windows.append(signal[start:start + windows_size])
+        indices = indices[indices > start + window_size]
+        windows.append(signal[start:start + window_size])
 
-    # Remove the last one, since it can be truncated
-    return windows_format(windows[:-1])
+    # Remove the last window, if it is truncated
+    if len(windows[-1]) < window_size:
+        windows = windows[:-1]
+
+    return format_windows(windows)
 
 
 def tags_files(path, tags):
+    """Inspect the files in the given path and return the ones which contain the tag numbers specified.
+    :param path: The path to the dataset's folder
+    :param tags: The tag numbers whose signals have to be read
+    :return: The file names which contain the necessary numbers
     """
-    TODO
-    :param path:
-    :param tags:
-    :return:
-    """
-    tags_names = [f"tag{x}" for x in tags]
+    tag_names = [f"tag{x}" for x in tags]
 
     files = [file for file in os.listdir(path) if ".nfc" in file
-             if any((True for x in tags_names if x in file))]
+             if any((True for name in tag_names if name in file))]
     files.sort()
 
-    return files
+    n = sum(1 for file in files if tag_names[0] in file)
+    file_groups = list(zip(*[iter(files)] * n))
+
+    return file_groups
 
 
-def read_dataset(path, tags, windows_size=256, windows_format=windows_3d, filter_peaks=False, normalize=False):
+def read_dataset(path, tags, window_size=256, format_windows=windows_3d, filter_peaks=False, normalize=False):
     """
     Sort and read the given files as complex numbers and partition them in smaller segments.
     Then, format these segments using a a given function and store them in a list of training/testing data.
@@ -116,34 +119,48 @@ def read_dataset(path, tags, windows_size=256, windows_format=windows_3d, filter
 
     :param path: The path to the folder where the data files are stored
     :param tags: A list of tags numbers as defined in the dataset's description
-    :param windows_size: The wanted size for the signal windows (data segments)
-    :param windows_format: The function with which to format the signal into windows
+    :param window_size: The wanted size for the signal windows (data segments)
+    :param format_windows: The function with which to format the signal into windows
+    :param filter_peaks: Whether to apply our peak detection function to the signal
     :param normalize: Whether to normalize the signal in terms of amplitude
     :return: A couple of numpy arrays in the form (formatted data, labels)
     """
-    files = tags_files(path, tags)
+    file_groups = tags_files(path, tags)
 
-    X = []  # The training/testing data
+    data = []  # The training/testing data
     labels = []  # The associated labels
 
-    for file in files:
+    for files in file_groups:
         # Read each capture
-        signal = np.fromfile(os.path.join(path, file), dtype=complex64)
+        signal = np.array([])
+        for file in files:
+            signal = np.append(signal, np.fromfile(os.path.join(path, file), dtype=complex64), 0)
+
         if normalize:
             signal = normalize_amplitude(signal)
 
         # Format signal in segments and add them to the collection of training/testing data
         if filter_peaks:
-            formatted = filter_peaks_windows(signal, windows_size, windows_format)
+            formatted = filter_peaks_windows(signal, window_size, format_windows)
         else:
-            formatted = cut_windows(signal, windows_size, windows_format)
+            windows = list(partition(signal, window_size))
+            formatted = format_windows(windows)
 
-        X.extend(formatted)
-
+        data.append(formatted)
         # Get the label from the filename
-        labels.extend([int(file[3]) - 1] * len(formatted))
+        labels.append(int(files[0][3]) - 1)
 
-    return np.array(X), np.array(labels)
+    # Find the class with the smallest number of windows
+    min_window_number = min([len(x) for x in data])
+
+    # Go through the added data and truncate it to ensure a balanced dataset
+    X, y = [], []
+
+    for idx, label in enumerate(labels):
+        X.extend(data[idx][:min_window_number])
+        y.extend([label] * min_window_number)
+
+    return np.array(X), np.array(y)
 
 
 def split_data(X, y, train_ratio, validation_ratio, test_ratio):
@@ -165,10 +182,10 @@ def split_data(X, y, train_ratio, validation_ratio, test_ratio):
                                                     test_size=test_ratio / (test_ratio + validation_ratio),
                                                     shuffle=False)
 
-    # TODO determine axis with input dimensionality
-    X_train = np.expand_dims(X_train, axis=3)
-    X_val = np.expand_dims(X_val, axis=3)
-    X_test = np.expand_dims(X_test, axis=3)
+    dimensions = len(X.shape)
+    X_train = np.expand_dims(X_train, axis=dimensions)
+    X_val = np.expand_dims(X_val, axis=dimensions)
+    X_test = np.expand_dims(X_test, axis=dimensions)
 
     nb_classes = len(set(y))
 
@@ -180,26 +197,14 @@ def split_data(X, y, train_ratio, validation_ratio, test_ratio):
 
 
 def _test():
-    PATH = "../../data/dataset/2"
-    tags = range(6)
-
-    X, y = read_dataset(PATH, tags, windows_format=windows_2d)
-    print(X.shape, y.shape)
-    del X, y
-
-    X, y = read_dataset(PATH, tags)
-    print(X.shape, y.shape)
-    del X, y
+    PATH = "../../data/dataset/1"
+    tags = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     X, y = read_dataset(PATH, tags, filter_peaks=True)
     print(X.shape, y.shape)
 
     train, validate, test = split_data(X, y, 0.7, 0.2, 0.1)
     print(train[0].shape, validate[0].shape, test[0].shape)
-
-    print(y)
-    labels_as_chip_type(y)
-    print(y)
 
 
 if __name__ == "__main__":

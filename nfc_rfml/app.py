@@ -17,32 +17,32 @@ PATH = Path("../data/dataset/2")
 def identify_tag():
     # All tags but the FeliCa one (9)
     tags = [1, 2, 3, 4, 5, 6, 7, 8]
-    X, y = read_dataset(PATH, tags, windows_size=512)
+    X, y = read_dataset(PATH, tags, window_size=512, filter_peaks=True)
     build_cnn(X, y, epochs=100)
 
 
 def among_ntag():
     # All NTAG213 tags
     tags = [1, 2, 3, 4, 5]
-    X, y = read_dataset(PATH, tags, windows_size=256)
+    X, y = read_dataset(PATH, tags, window_size=256, filter_peaks=True)
     build_cnn(X, y, epochs=10)
 
 
 def chip_type_cnn():
     # One tag of each type
     tags = [1, 6, 9]
-    X, y = read_dataset(PATH, tags, windows_size=256)
+    X, y = read_dataset(PATH, tags, window_size=256, filter_peaks=True)
 
     labels_as_chip_type(y)
 
     # Best params for this experiment seem to be 256 points per segment, 500 samples per batch
-    build_cnn(X, y, epochs=150)
+    build_cnn(X, y, epochs=10)
 
 
 @timer
 def svm_experiment():
-    tags = [1, 6, 9]
-    X, y = read_dataset(PATH, tags, windows_size=256, windows_format=windows_2d)
+    tags = [1, 2, 6, 7]
+    X, y = read_dataset(PATH, tags, window_size=128, filter_peaks=True, format_windows=windows_2d)
 
     labels_as_chip_type(y)
 
@@ -50,4 +50,4 @@ def svm_experiment():
 
 
 if __name__ == '__main__':
-    among_ntag()
+    svm_experiment()
