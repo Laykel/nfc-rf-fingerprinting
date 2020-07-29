@@ -44,7 +44,11 @@ This dataset was built while trying to introduce as little variability as possib
 
 ## Dataset 2
 
-... Each recording was made using `scripts/capture.py` with `--samplerate 912000` and `--time 30`.
+This dataset was built in the same manner as the previous one but the captures are much longer and more variable. We were also able to increase the sample rate thanks to a firmware update of the Airspy HF+. The goal here was to address the shortcomings of our first dataset in terms of volume and variability. To achieve that, we made the capture time longer and also captured the very start of the communications: the transient part.
+
+There is no synchronization for the beginning of the communications, so the transient part can happen anywhere within the 2 first seconds of the recording. We chose to keep theses datasets as raw as possible.
+
+Each recording was made using `scripts/capture.py` with `--samplerate 912000` and `--time 30`.
 
 - Distance between reader and tags: ~1.8 cm
 
