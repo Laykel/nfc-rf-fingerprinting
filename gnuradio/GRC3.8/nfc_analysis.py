@@ -342,7 +342,7 @@ class nfc_analysis(gr.top_block, Qt.QWidget):
                 6.76))
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(boost)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/raw/tag1-2M-1.nfc', True, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/home/luc/HEIG/TB/REPO_nfc-rf-fingerprinting/data/dataset/2/tag3-3.nfc', True, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_complex_to_mag_0 = blocks.complex_to_mag(1)
 
