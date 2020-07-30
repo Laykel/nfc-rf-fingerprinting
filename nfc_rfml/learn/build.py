@@ -12,7 +12,7 @@ from learn.models import youssef_cnn, riyaz_cnn
 from learn.evaluate import evaluate_model
 
 """
-...
+Provide some do-all functions to configure, train and evaluate models.
 """
 
 
@@ -22,7 +22,6 @@ def build_cnn(X, y, epochs=100, batch_size=500, early_stopping=True):
 
     # Build model and output its structure
     shape = (None,) + X_train.shape[1:]
-    print(shape)
     # model = riyaz_cnn.RiyazCNN(nb_outputs=len(set(y)), input_shape=shape)
     model = youssef_cnn.YoussefCNN(nb_outputs=len(set(y)), input_shape=shape)
 

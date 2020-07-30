@@ -50,7 +50,7 @@ def normalize_amplitude(signal):
 
 def windows_2d(windows):
     """Store the segments in simple arrays with the real parts first and then the imaginary parts.
-    :param windows:
+    :param windows: A list of partitions each containing a fixed number of complex numbers
     :return: A list of arrays with all the real parts followed by all the imaginary parts
     """
     return [np.append(np.real(window), [np.imag(window)]) for window in windows]
@@ -58,13 +58,13 @@ def windows_2d(windows):
 
 def windows_3d(windows):
     """Store the segments in 2d arrays with one dimension for the real parts and one for the imaginary parts.
-    :param windows:
+    :param windows: A list of partitions each containing a fixed number of complex numbers
     :return: A list of two-dimensional arrays with each an array for real parts and one for imaginary parts
     """
     return np.stack((np.real(windows), np.imag(windows)), axis=1)
 
 
-def filter_peaks_windows(signal, window_size, format_windows, threshold=0.005):
+def filter_peaks_windows(signal, window_size, format_windows, height=0.1, threshold=0.005):
     """
     Detect a non-trivial part of the signal and create windows of `segments_size` samples, similarly as described by
     Youssef et al. in their paper (see bibliography).
@@ -72,12 +72,13 @@ def filter_peaks_windows(signal, window_size, format_windows, threshold=0.005):
     :param signal: The I/Q signal as a 1D array of complex numbers
     :param window_size: The wanted size for the signal windows (data segments)
     :param format_windows: The function with which to format the signal into windows
+    :param height: The minimum height for a peak to be considered
     :param threshold: The prominence parameter used to find peaks in the signal
     :return: A list of windows filtered using a peak finding method and formatted according to given function
     """
     mags = np.abs(signal)
     # Detect peaks higher than height and with vertical distance to neighbours higher than threshold
-    indices = detect_peaks(mags, mph=0.15, threshold=threshold)
+    indices = detect_peaks(mags, mph=height, threshold=threshold)
     windows = []
 
     # Partition the signal into windows

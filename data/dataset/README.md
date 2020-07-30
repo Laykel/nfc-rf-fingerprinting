@@ -48,7 +48,7 @@ This dataset was built in the same manner as the previous one but the captures a
 
 There is no synchronization for the beginning of the communications, so the transient part can happen anywhere within the 2 first seconds of the recording. We chose to keep theses datasets as raw as possible.
 
-Each recording was made using `scripts/capture.py` with `--samplerate 912000` and `--time 30`.
+Each recording was made using `scripts/capture.py` with `--samplerate 912000` and `--time 20`.
 
 - Distance between reader and tags: ~1.8 cm
 
