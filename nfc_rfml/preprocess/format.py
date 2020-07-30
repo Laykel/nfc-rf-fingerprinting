@@ -1,7 +1,7 @@
 import os
 import numpy as np
-from detecta import detect_peaks
 from scipy import complex64
+from scipy.signal import find_peaks
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 
@@ -63,7 +63,7 @@ def filter_peaks_windows(signal, window_size, format_windows, height=0.1, thresh
     """
     mags = np.abs(signal)
     # Detect peaks higher than height and with vertical distance to neighbours higher than threshold
-    indices = detect_peaks(mags, mph=height, threshold=threshold)
+    indices = find_peaks(mags, height=height, threshold=threshold)[0]
     windows = []
 
     # Partition the signal into windows
