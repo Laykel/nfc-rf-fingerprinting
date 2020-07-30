@@ -34,14 +34,14 @@ This repository's folders can be described as follows:
 
 - `data` contains decoding tests as well as the `dataset` folder, which contains the data captured for the project (stored using [Git LFS](https://git-lfs.github.com/)). See [the dataset readme](data/dataset/README.md).
 - `gnuradio` contains the different GRC flowgraphs used in the project.
-- `nfc_rfml` contains the source code used to pre-process the signals, train the model, and test its performance.
+- `nfc_rfml` contains the source code used to pre-process the signals, train the model, and test its performance. See [the project's readme](nfc_rfml/README.md).
 - `notebooks` contains the notebooks used during the analysis and prototyping phase of the project.
 - `report` contains the LaTeX sources and the compiled pdf of the report. It also contains the bibliography and figures used in it.
 - `scripts` contains small programs like the acquisition script.
 
 ## How to run
 
-### The project
+The first step to run anything from this project is to clone the repo (warning, this will also download the datasets if you have git LFS installed). For more information on the main python project, see [the its readme](nfc_rfml/README.md).
 
 ### The acquisition script
 
@@ -57,10 +57,6 @@ python capture.py your_filename.bin --time 4 --samplerate 500000 --freq 13560000
 ### The notebooks
 
 ```
-# Clone the repo
-# TODO see if this also downloads the datasets (depends on git lfs)
-git clone https://github.com/Laykel/nfc-rf-fingerprinting.git
-
 # Install dependencies (after creating a virtual env as you usually do)
 cd notebooks
 pip install -r requirements.txt
