@@ -63,7 +63,7 @@ def filter_peaks_windows(signal, window_size, format_windows, height=0.1, thresh
     """
     mags = np.abs(signal)
     # Detect peaks higher than height and with vertical distance to neighbours higher than threshold
-    indices = find_peaks(mags, height=height, threshold=threshold)[0]
+    indices, _ = find_peaks(mags, height=height, threshold=threshold)
     windows = []
 
     # Partition the signal into windows
