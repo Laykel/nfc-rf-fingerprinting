@@ -33,21 +33,6 @@ def partition(lst, n):
         yield lst[i:i + n]
 
 
-def normalize_amplitude(signal):
-    """Normalize both components of the signal in the range [-1,1]
-    :param signal: The I/Q signal to be normalized
-    :return: The I/Q signal in the same format as before, but with both components normalized in the range [-1,1]
-    """
-    real = np.real(signal)
-    imag = np.imag(signal)
-    max_val = abs(max(max(real.max(), imag.max()),
-                      min(real.min(), imag.min()),
-                      key=abs))
-
-    # Convert the normalized lists to complex
-    return (real / max_val) + 1j * (imag / max_val)
-
-
 def windows_2d(windows):
     """Store the segments in simple arrays with the real parts first and then the imaginary parts.
     :param windows: A list of partitions each containing a fixed number of complex numbers
@@ -112,7 +97,7 @@ def tags_files(path, tags):
     return file_groups
 
 
-def read_dataset(path, tags, window_size=256, format_windows=windows_3d, filter_peaks=False, normalize=False):
+def read_dataset(path, tags, window_size=256, format_windows=windows_3d, filter_peaks=True, normalize=True):
     """
     Sort and read the given files as complex numbers and partition them in smaller segments.
     Then, format these segments using a a given function and store them in a list of training/testing data.
@@ -137,9 +122,6 @@ def read_dataset(path, tags, window_size=256, format_windows=windows_3d, filter_
         for file in files:
             signal = np.append(signal, np.fromfile(os.path.join(path, file), dtype=complex64), 0)
 
-        if normalize:
-            signal = normalize_amplitude(signal)
-
         # Format signal in segments and add them to the collection of training/testing data
         if filter_peaks:
             formatted = filter_peaks_windows(signal, window_size, format_windows)
@@ -156,12 +138,16 @@ def read_dataset(path, tags, window_size=256, format_windows=windows_3d, filter_
 
     # Go through the added data and truncate it to ensure a balanced dataset
     X, y = [], []
-
     for idx, label in enumerate(labels):
         X.extend(data[idx][:min_window_number])
         y.extend([label] * min_window_number)
 
-    return np.array(X), np.array(y)
+    X, y = np.array(X), np.array(y)
+    if normalize:
+        max_value = np.abs(X).max()
+        X = X / max_value
+
+    return X, y
 
 
 def split_data(X, y, train_ratio, validation_ratio, test_ratio):
@@ -201,7 +187,7 @@ def _test():
     PATH = "../../data/dataset/1"
     tags = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    X, y = read_dataset(PATH, tags, filter_peaks=True)
+    X, y = read_dataset(PATH, tags, filter_peaks=True, normalize=True)
     print(X.shape, y.shape)
 
     train, validate, test = split_data(X, y, 0.7, 0.2, 0.1)

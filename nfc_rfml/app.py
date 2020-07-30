@@ -51,4 +51,4 @@ def svm_experiment():
 
 
 if __name__ == '__main__':
-    among_ntag()
+    identify_tag()
