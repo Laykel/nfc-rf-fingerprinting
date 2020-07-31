@@ -32,23 +32,23 @@ def chip_type_cnn():
     path = Path("../data/dataset/1")
     # One tag of each type
     tags = [1, 6, 9]
-    X, y = read_dataset(path, tags, window_size=256, filter_peaks=False)
+    X, y = read_dataset(path, tags, window_size=512, filter_peaks=False)
+    print(X.shape)
 
     labels_as_chip_type(y)
 
-    # Best params for this experiment seem to be 256 points per segment, 500 samples per batch
-    build_cnn(X, y, epochs=100)
+    build_cnn(X, y, epochs=50)
 
 
 @timer
 def svm_experiment():
-    tags = [1, 2, 6, 7]
+    tags = [1, 2, 3, 4, 5, 6, 7, 8]
     X, y = read_dataset(PATH, tags, window_size=256, format_windows=windows_2d)
 
-    labels_as_chip_type(y)
+    # labels_as_chip_type(y)
 
     build_svm(X, y)
 
 
 if __name__ == '__main__':
-    identify_tag()
+    chip_type_cnn()

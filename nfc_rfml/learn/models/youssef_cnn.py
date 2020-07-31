@@ -38,4 +38,6 @@ class YoussefCNN(RFMLCNN):
 
         x = self.flat(x)
         x = self.dense(x)
+        if training:
+            x = self.dropout(x, training=training)
         return self.out(x)
