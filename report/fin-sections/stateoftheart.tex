@@ -65,7 +65,7 @@ Although it isn't specified as such in any of the considered articles, we can de
 
 \subsubsection{Features selection}
 
-Even if we don't plan to manually select and extract the features that will form the fingerprints of our devices, it is useful to learn about them. It will allow us to make sure they are present for the algorithm to extract and also allow us to design preprocessing methods that magnify the features.
+Even if we don't plan to manually select and extract the features that will form the fingerprints of our devices, it is useful to learn about them. It will allow us to know whether they can be found in a given dataset or not, what to look for in theory, and what preprocessing methods could be useful to magnify them.
 
 Whether we end up with a system that is able to identify many devices uniquely, or one that only tries to separate a specific device from the others, we will need device specific accuracy. We don't want to make relay attacks impossible only if the attacker doesn't use a device from the same vendor as the victim's device. This is why in section \ref{features_tax}, we concluded that the features we are most interested in are from the physical layer.
 
@@ -75,8 +75,9 @@ Because of their nature, these features should be appropriate no matter the prot
   \item{I/Q imbalance:} The amplitude and the phase are not exactly the same on the in-phase and the quadrature signals, because of the imperfections in the quadrature mixers.
   \item{Phase noise:} When the baseband signal is up-converted to the carrier frequency, it is sensible to phase noise which creates rotational vibrations.
   \item{Carrier frequency offset:} The difference between the carrier frequency of the transmitter and the carrier frequency of the receiver.
-  \item{Harmonic distortions:} The Digital-to-Analog Converters (DAC) cause harmonic distortions because of imperfections.
 \end{itemize}
+
+We chose to mention these features because of what they can teach us about the task at hand. They meet the criteria we previously established and are an example of what we would like our end models to extract. We won't extract them manually but learning about them is still important to understand the subject.
 
 \subsubsection{Preprocessing}
 
@@ -133,4 +134,4 @@ In section \ref{challenges}, we noted that one of the challenges we face is to f
 
 Another of the challenges previously noted is finding the optimal architecture for a neural network in the context of RF fingerprinting. Studying the various architectures employed in previous works can help us define what is effective and what direction to take for our own experiences. We won't describe specific architectures in this section, but will reference elements from them when conceiving our experiments.
 
-In general, the works cited throughout this section train their models to output the ID of a specific device. In this project, we would like to try training our model to simply discriminate between a legitimate device and the others. Elements like incremental learning (the ability to train the model again with more devices without starting from zero) and shift invariance (the ability not to care about the position of values in the input) are also important to take into consideration.
+In general, the works cited throughout this section train their models to output the ID of a specific device. In this project, we would like to try and do the same for NFC tags. Elements like incremental learning (the ability to train the model again with more devices without starting from zero) and shift invariance (the ability not to care about the position of values in the input) are also important to take into consideration.

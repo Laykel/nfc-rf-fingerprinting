@@ -21,9 +21,7 @@ To finish this introduction to SDR, we will describe the representation of the d
 
 Here, the X axis represents the sample number (starting at 0) rather than a time value. The link between the sample number and the time elapsed is the sampling rate ($F_s$), expressed in number of samples per second (S/s). For example, considering a sampling rate of 3MS/s, figure \ref{fig:iq-signal} shows a signal over 10ms: $\dfrac{30000[S]}{3000000[S/s]} = 0.01[s]$.
 
-In this document, we will often use the magnitudes representation of a signal. Said representation is built by taking the magnitude (or module) of each complex sample and plotting it. Figure \ref{fig:mag} shows the magnitudes of the samples in figure \ref{fig:iq-signal}.
-
-\textbf{DO SOMETHING FOR THE MAGNITUDES...}
+In this document, we will often use the magnitudes representation of a signal. Said representation is built by taking the magnitude (or module) of each complex sample (calculated with $\sqrt{I^2 + Q^2}$) and plotting it. Figure \ref{fig:mag} shows the magnitudes of the samples in figure \ref{fig:iq-signal}.
 
 \begin{figure}[htp!]
   \centering
@@ -31,6 +29,8 @@ In this document, we will often use the magnitudes representation of a signal. S
   \caption{A signal represented as the magnitudes of its samples}
   \label{fig:mag}
 \end{figure}
+
+It is important to note that neither representation shown here use absolute units. The amplitude reported in these figures is the one returned by our SDR setup, which is not a calibrated instrument.
 
 % -------------------------------------------------------------------------------------------------------------
 \subsection{Near-field communication} \label{nfc}
