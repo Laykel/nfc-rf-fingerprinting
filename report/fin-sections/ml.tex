@@ -61,13 +61,11 @@ Except if stated otherwise, the following experiments will use the model paramet
 \end{table}
 
 % -------------------------------------------------------------------------------------------------------------
-\subsection{Experiments with the first dataset}
+\subsection{Documenting experiments}
 
-no  find-peaks here
+\subsubsection{Discriminating between chip types}
 
-\subsubsection{Discriminating on chip type}
-
-The first experiment we report on is about classifying tags from different types. To do so, we use tags 1, 6 and 9. The first is an NTAG213, the second a MiFare 1k and the last a FeliCa chip. Our SVM attained an accuracy of 69\%, and the confusion matrix is shown in figure \ref{fig:cmsvmchip}.
+The first experiment we report on is about classifying tags from different types. To do so, we use tags 1, 6 and 9 from the first dataset. The first is an NTAG213, the second a MiFare 1k and the last a FeliCa chip. As the first dataset is quite small, we use it in its entirety, rather than applying the peak detection algorithm on it. Our SVM attained an accuracy of 69\%, and the confusion matrix is shown in figure \ref{fig:cmsvmchip}.
 
 \begin{figure}[htbp!]
   \centering
@@ -75,10 +73,6 @@ The first experiment we report on is about classifying tags from different types
   \caption{Confusion matrix for the first experiment on SVM}
   \label{fig:cmsvmchip}
 \end{figure}
-
-As we had anticipated, discriminating between our NFC-A tags (the NTAG and the MiFare) and the FeliCa tag is trivial, but finding the difference between NFC-A tags is a lot more difficult. Here the SVM probably does little better than random guessing for the first two classes.
-
-This experience is what motivated us not to include the FeliCa tag in the second dataset. It shows that its presence doesn't add any value to the experiments.
 
 At this task, our CNN performed slightly better with an accuracy of 74\%. Its confusion matrix is shown in figure \ref{fig:cmcnnchip}.
 
@@ -89,18 +83,59 @@ At this task, our CNN performed slightly better with an accuracy of 74\%. Its co
   \label{fig:cmcnnchip}
 \end{figure}
 
-\subsubsection{Discriminating on tag}
+As we had anticipated, discriminating between our NFC-A tags (the NTAG and the MiFare) and the FeliCa tag is trivial, but finding the difference between NFC-A tags is a lot more difficult. Here the SVM probably does little better than random guessing for the first two classes.
 
-Might not have enough information in signal...
+This experience is what motivated us not to include the FeliCa tag in the second dataset. It shows that its presence doesn't add any value to the experiments.
+
+\subsubsection{Discriminating between tags}
+
+Here, we use the second dataset with the peak finding algorithm to evaluate the performance of our model in the scenario that interests us the most: discriminating between individual tags. Is our model able to extract features to fingerprint the devices?
+
+In figure \ref{fig:svmcnn}, we compare the accuracy of our model for different number of tags with the accuracy of the SVM for the same numbers of tags. Of course, such a simple summary doesn't capture the full picture, but it gives a good idea of the performance of each model in different conditions. We ran the training several times and confirm that those scores are consistent.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=0.65]{figures/ml_svmcnn.png}
+  \caption{SVM and CNN accuracy per number of tag}
+  \label{fig:svmcnn}
+\end{figure}
+
+We'll now observe the performance of our CNN when trying to discriminate between our eight tags. For this experiment, we increased the window size to 640, and found that it consistently gave slightly better results in this scenario. Continuing to increase the window size past this number does not help the performance.
+
+In this experiment, we got an accuracy of 76\%. The confusion matrix is detailed in figure \ref{fig:cnn640} and we can see how close together the training accuracy and the validation accuracy are in figure \ref{fig:cnn640acc}. This indicates a welcome lack of overfitting with these parameters.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=0.6]{figures/ml_cnn640cm.png}
+  \caption{Confusion matrix for the CNN experiment}
+  \label{fig:cnn640}
+\end{figure}
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=0.6]{figures/ml_cnn640acc.png}
+  \caption{Accuracy history for the CNN experiment}
+  \label{fig:cnn640acc}
+\end{figure}
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=0.6]{figures/ml_cnn640loss.png}
+  \caption{Loss history for the CNN experiment}
+  \label{fig:cnn640loss}
+\end{figure}
+
+We also observed the model after 500 epochs to make sure it didn't continue to improve after the 200 standard epochs. This is not the case as the validation accuracy locks at around 75\% accuracy, while the model starts to overfit slightly.
 
 % -------------------------------------------------------------------------------------------------------------
-\subsection{Experiments with the more complete dataset}
+\subsection{Thoughts on the results}
 
-SVM is unable to ...
+76\% top accuracy is not a very high number, but it is high enough to prove the network is able to extract features which belong to an individual tag. On the other hand, it is not so high as to show that the problem is trivial, or that we have made it trivial by mishandling some element of the pipeline.
 
+The fact that the SVM performs barely 5\% better than a random guess ($1/8 = 0.125$) in the most complicated scenario shows that the problem is hard. Any bias we could have introduced in the acquisition phase doesn't seem to make the problem easier. Despite this, our CNN is able to solve the problem, at least to some extent.
 
-plot performance per number of tags for svm and cnn
+Furthermore, all the confusion matrices and accuracy scores we have shown here come from the trained model making prediction on the testing set. It has never seen those specific signal windows during training, which is another indicator that the features extracted by the convolution layers are meaningful.
 
+Finally, as we could see from figures \ref{fig:cnn640acc} and \ref{fig:cnn640loss}, our CNN with these parameters isn't really prone to overfitting. The validation accuracy doesn't stay down while the training accuracy increases, as was the case with the first CNN we used. One last positive indicator is the stability of the accuracy and the loss. There is no rough movement up and down, which means the adam optimizer is able to do its job without trouble.
 
-% -------------------------------------------------------------------------------------------------------------
-\subsection{Reflection on the results}
+All these points tend to show that we met our goal, at least in some proportion. However, the numbers tell us that this is not a scalable solution. Figure \ref{fig:svmcnn} clearly shows how quickly the accuracy drops as the number of devices increases. This is consistent with the findings of some of the papers we considered for this thesis. This is why we mentioned alternative ways or additional steps in the pipeline at several points in this report. It is important to go further and inspect additional techniques to refine the process in the future. This field is very new and very active at the time of writing, exciting evolutions will happen.
