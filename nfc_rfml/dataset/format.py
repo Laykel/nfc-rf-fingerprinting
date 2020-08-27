@@ -160,6 +160,9 @@ def split_data(X, y, train_ratio, validation_ratio, test_ratio):
     :return: Three couples with training data and labels, validation data and labels, and test data and labels
     """
     # https://datascience.stackexchange.com/a/53161
+    nb_classes = len(set(y))
+    y = to_categorical(y.astype(int), nb_classes)
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1 - train_ratio)
 
     X_val, X_test, y_val, y_test = train_test_split(X_test, y_test,

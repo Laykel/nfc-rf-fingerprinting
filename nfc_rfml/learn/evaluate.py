@@ -9,6 +9,17 @@ Provide functions to save stats on a model and its performance and to plot confu
 """
 
 
+def analyse_model(model, X, y, labels):
+    # TODO harmonize with evaluate_model
+    # Predict and then if y != y_pred, get X[of this y] and plot it.
+    y_pred = model.predict(X)
+    y_pred = np.argmax(y_pred, axis=1)
+
+    conf_mat = confusion_matrix(y, y_pred, labels=labels)
+    plot_confusion_matrix(conf_mat, labels, Path("."))
+    print(classification_report(y, y_pred))
+
+
 def write_stats(volume, segments_size, conf_mat, report, model_structure, output_dir):
     """Read information and statistics about our model and store it in a text file.
     :param volume: The volume of data of each class

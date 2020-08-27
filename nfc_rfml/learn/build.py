@@ -16,7 +16,16 @@ Provide some do-all functions to configure, train and evaluate models.
 """
 
 
+def reload_model(model_path, conf, Xshape):
+    shape = (None,) + Xshape[1:]
+
+    model = conf['model']['type'](nb_outputs=len(conf['data']['tags']), input_shape=shape)
+    model.load_weights(str(model_path)).expect_partial()
+    return model
+
+
 def build_cnn(X, y, epochs=100, batch_size=500, early_stopping=True):
+    # TODO clean up with conf
     # Split data into train, validation and test data
     (X_train, y_train), (X_val, y_val), (X_test, y_test) = split_data(X, y, 0.7, 0.2, 0.1)
 
@@ -51,6 +60,8 @@ def build_cnn(X, y, epochs=100, batch_size=500, early_stopping=True):
     model.load_weights(model_path)
 
     evaluate_model(model, history, y, X_test, y_test, model_dir)
+
+    return model_dir
 
 
 def build_svm(X, y):
