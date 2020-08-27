@@ -7,7 +7,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
-from preprocess.format import split_data
+from dataset.format import split_data
 from learn.models import youssef_cnn, riyaz_cnn
 from learn.evaluate import evaluate_model
 

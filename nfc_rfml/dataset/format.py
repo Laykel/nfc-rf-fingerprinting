@@ -3,24 +3,12 @@ import numpy as np
 from scipy import complex64
 from scipy.signal import find_peaks
 from sklearn.model_selection import train_test_split
+
 from tensorflow.keras.utils import to_categorical
 
 """
 This module provides functions to load I/Q signals datasets in memory, formatting them as necessary for learning.
 """
-
-
-def labels_as_chip_type(y):
-    """Transform the individual tag labels given as parameter into chip type labels
-    :param y: The labels of individual tags to transform to chip type labels
-    """
-    NTAG213 = (0, 1, 2, 3, 4)
-    MIFARE = (5, 6, 7)
-    FELICA = (8,)
-
-    y[np.isin(y, NTAG213)] = 0
-    y[np.isin(y, MIFARE)] = 1
-    y[np.isin(y, FELICA)] = 2
 
 
 def partition(lst, n):
@@ -97,24 +85,8 @@ def tags_files(path, tags):
     return file_groups
 
 
-def read_dataset(path, tags, window_size=256, format_windows=windows_3d, filter_peaks=True, normalize=True):
-    """
-    Sort and read the given files as complex numbers and partition them in smaller segments.
-    Then, format these segments using a a given function and store them in a list of training/testing data.
-    Finally, build a list of labels using the filename.
-
-    :param path: The path to the folder where the data files are stored
-    :param tags: A list of tags numbers as defined in the dataset's description
-    :param window_size: The wanted size for the signal windows (data segments)
-    :param format_windows: The function with which to format the signal into windows
-    :param filter_peaks: Whether to apply our peak detection function to the signal
-    :param normalize: Whether to normalize the signal in terms of amplitude
-    :return: A couple of numpy arrays in the form (formatted data, labels)
-    """
-    file_groups = tags_files(path, tags)
-
-    data = []  # The training/testing data
-    labels = []  # The associated labels
+def load_data(path, file_groups):
+    data = []
 
     for files in file_groups:
         # Read each capture
@@ -122,28 +94,53 @@ def read_dataset(path, tags, window_size=256, format_windows=windows_3d, filter_
         for file in files:
             signal = np.append(signal, np.fromfile(os.path.join(path, file), dtype=complex64), 0)
 
-        # Format signal in segments and add them to the collection of training/testing data
-        if filter_peaks:
-            formatted = filter_peaks_windows(signal, window_size, format_windows)
-        else:
-            windows = list(partition(signal, window_size))
-            formatted = format_windows(windows)
+        data.append(signal)
 
-        data.append(formatted)
-        # Get the label from the filename
-        labels.append(int(files[0][3]) - 1)
+    return data
 
-    # Find the class with the smallest number of windows
+
+def harmonize_length(data, labels):
+    # Find the smallest number of windows in a class
     min_window_number = min([len(x) for x in data])
 
-    # Go through the added data and truncate it to ensure a balanced dataset
     X, y = [], []
-    for idx, label in enumerate(labels):
-        X.extend(data[idx][:min_window_number])
+    # Go through the added data and truncate it to ensure a balanced dataset
+    for label in labels:
+        X.extend(data[label][:min_window_number])
         y.extend([label] * min_window_number)
 
     X, y = np.array(X), np.array(y)
-    if normalize:
+
+    return X, y
+
+
+def read_dataset(conf):
+    """
+    Sort and read the given files as complex numbers and partition them in smaller segments.
+    Then, format these segments using a a given function and store them in a list of training/testing data.
+    Finally, build a list of labels using the filename.
+
+    :param conf: A dictionary containing the experiment's parameters
+    :return: A couple of numpy arrays in the form (formatted data, labels)
+    """
+    files_per_tag = tags_files(conf['data']['datapath'], conf['data']['tags'])
+    tags = load_data(conf['data']['datapath'], files_per_tag)
+
+    data = []
+    for tag in tags:
+        # Format signal in segments and add them to the collection of training/testing data
+        if conf['data']['filter']:
+            formatted = filter_peaks_windows(tag, conf['data']['windowsize'], conf['data']['windows'])
+        else:
+            windows = list(partition(tag, conf['data']['windowsize']))
+            formatted = conf['data']['windows'](windows)
+
+        data.append(formatted)
+
+    X, y = harmonize_length(data, conf['data']['classes'])
+
+    # Normalize our data
+    if conf['data']['normalize']:
         max_value = np.abs(X).max()
         X = X / max_value
 
@@ -174,25 +171,4 @@ def split_data(X, y, train_ratio, validation_ratio, test_ratio):
     X_val = np.expand_dims(X_val, axis=dimensions)
     X_test = np.expand_dims(X_test, axis=dimensions)
 
-    nb_classes = len(set(y))
-
-    y_train = to_categorical(y_train.astype(int) - 1, nb_classes)
-    y_val = to_categorical(y_val.astype(int) - 1, nb_classes)
-    y_test = to_categorical(y_test.astype(int) - 1, nb_classes)
-
     return (X_train, y_train), (X_val, y_val), (X_test, y_test)
-
-
-def _test():
-    PATH = "../../data/dataset/1"
-    tags = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-    X, y = read_dataset(PATH, tags, filter_peaks=True, normalize=True)
-    print(X.shape, y.shape)
-
-    train, validate, test = split_data(X, y, 0.7, 0.2, 0.1)
-    print(train[0].shape, validate[0].shape, test[0].shape)
-
-
-if __name__ == "__main__":
-    _test()
