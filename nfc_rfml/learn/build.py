@@ -17,6 +17,13 @@ Provide some do-all functions to configure, train and evaluate models.
 
 
 def reload_model(model_path, conf, Xshape):
+    """
+    TODO
+    :param model_path:
+    :param conf:
+    :param Xshape:
+    :return:
+    """
     shape = (None,) + Xshape[1:]
 
     model = conf['model']['type'](nb_outputs=len(conf['data']['tags']), input_shape=shape)
@@ -40,14 +47,15 @@ def build_cnn(X, y, epochs=100, batch_size=500, early_stopping=True):
     # Setup the folder structure
     dt = datetime.now().strftime("%Y-%m-%d %Hh%M")
     model_dir = Path(f"../saved_models/{dt}")
-    os.makedirs(model_dir)
+    os.makedirs(model_dir / "wrong-predictions")
+    os.makedirs(model_dir / "correct-predictions")
     model_path = str(model_dir / "model.tf")
 
-    # Make sure the training stops when the performance stops getting better
-    # and save the best model to disk
+    # Save the best model to disk
     callbacks = [ModelCheckpoint(filepath=model_path, monitor="val_loss", save_best_only=True)]
+    # Make sure the training stops when the performance stops getting better
     if early_stopping:
-        callbacks.append(EarlyStopping(monitor="val_loss", patience=5))
+        callbacks.append(EarlyStopping(monitor="val_loss", patience=8))
 
     # Train model and adjust with validation set
     history = model.fit(X_train, y_train,

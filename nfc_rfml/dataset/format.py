@@ -86,6 +86,12 @@ def tags_files(path, tags):
 
 
 def load_data(path, file_groups):
+    """
+    TODO
+    :param path:
+    :param file_groups:
+    :return:
+    """
     data = []
 
     for files in file_groups:
@@ -100,6 +106,12 @@ def load_data(path, file_groups):
 
 
 def harmonize_length(data, labels):
+    """
+    TODO
+    :param data:
+    :param labels:
+    :return:
+    """
     # Find the smallest number of windows in a class
     min_window_number = min([len(x) for x in data])
 
