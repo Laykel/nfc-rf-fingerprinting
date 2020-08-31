@@ -9,17 +9,6 @@ Provide functions to save stats on a model and its performance and to plot confu
 """
 
 
-def analyse_model(model, X, y, labels):
-    # TODO harmonize with evaluate_model
-    # Predict and then if y != y_pred, get X[of this y] and plot it.
-    y_pred = model.predict(X)
-    y_pred = np.argmax(y_pred, axis=1)
-
-    conf_mat = confusion_matrix(y, y_pred, labels=labels)
-    plot_confusion_matrix(conf_mat, labels, Path("."))
-    print(classification_report(y, y_pred))
-
-
 def write_stats(volume, segments_size, conf_mat, report, model_structure, output_dir):
     """Read information and statistics about our model and store it in a text file.
     :param volume: The volume of data of each class
@@ -100,6 +89,77 @@ def plot_history(history, output_dir):
     plt.close(fig)
 
 
+def plot_signal_window(window, index, label, output_dir):
+    """
+    TODO
+    :param window:
+    :param index:
+    :param label:
+    :param output_dir:
+    :return:
+    """
+    fig, ax = plt.subplots(figsize=(30, 10))
+
+    ax.plot(window[0], 'b-')
+    ax.plot(window[1], 'r-')
+    ax.grid(True)
+    ax.set_title(f"Window index: {index}, Label: {label}")
+    ax.set_xlabel("Samples")
+    ax.set_ylabel("Amplitude")
+    ax.legend(["In phase", "In quadrature"], loc="upper left")
+
+    fig.savefig(output_dir / f"t{label}-{index}.png", bbox_inches="tight")
+    plt.close(fig)
+
+
+def analyse_predictions(y, y_pred, X, output_dir):
+    """
+    TODO
+    :param y:
+    :param y_pred:
+    :param X:
+    :param output_dir:
+    :return:
+    """
+    wrong_indices = np.nonzero((y_pred != y))[0]
+    print("Wrong predictions:", wrong_indices)
+
+    for index in wrong_indices:
+        plot_signal_window(X[index], index, y[index], output_dir / "wrong-predictions")
+
+    correct_indices = np.delete(np.arange(len(y)), wrong_indices)
+    # Take as many correctly labelled windows as there are wrong ones
+    selection = np.random.choice(correct_indices, len(wrong_indices), replace=False)
+
+    for index in selection:
+        plot_signal_window(X[index], index, y[index], output_dir / "correct-predictions")
+
+
+def analyse_model(model, X, y, labels, output_dir):
+    """
+    TODO
+    :param model:
+    :param X:
+    :param y:
+    :param labels:
+    :param output_dir:
+    :return:
+    """
+    y_pred = model.predict(X)
+    y_pred = np.argmax(y_pred, axis=1)
+
+    conf_mat = confusion_matrix(y, y_pred, labels=labels)
+    plot_confusion_matrix(conf_mat, labels, output_dir)
+
+    unique, counts = np.unique(y, return_counts=True)
+    amounts = dict(zip(unique, counts))
+    report = classification_report(y, y_pred)
+
+    write_stats(amounts, len(X[0][0]), conf_mat, report, "", output_dir)
+
+    analyse_predictions(y, y_pred, X, output_dir)
+
+
 def evaluate_model(model, history, y, X_test, y_test, output_dir):
     """Get all the necessary data to fill our performance results folder and call appropriate functions.
     :param model: The classifier itself
@@ -132,6 +192,8 @@ def evaluate_model(model, history, y, X_test, y_test, output_dir):
 
     plot_confusion_matrix(conf_mat, labels, output_dir)
     plot_history(history, output_dir)
+
+    analyse_predictions(y_test, y_pred, X_test, output_dir)
 
 
 def _test():
