@@ -31,15 +31,13 @@ def reload_model(model_path, conf, Xshape):
     return model
 
 
-def build_cnn(X, y, epochs=100, batch_size=500, early_stopping=True):
-    # TODO clean up with conf
+def build_cnn(X, y, model_conf):
     # Split data into train, validation and test data
     (X_train, y_train), (X_val, y_val), (X_test, y_test) = split_data(X, y, 0.7, 0.2, 0.1)
 
     # Build model and output its structure
     shape = (None,) + X_train.shape[1:]
-    # model = riyaz_cnn.RiyazCNN(nb_outputs=len(set(y)), input_shape=shape)
-    model = youssef_cnn.YoussefCNN(nb_outputs=len(set(y)), input_shape=shape)
+    model = model_conf['type'](nb_outputs=len(set(y)), input_shape=shape)
 
     # Configure model
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
@@ -54,19 +52,20 @@ def build_cnn(X, y, epochs=100, batch_size=500, early_stopping=True):
     # Save the best model to disk
     callbacks = [ModelCheckpoint(filepath=model_path, monitor="val_loss", save_best_only=True)]
     # Make sure the training stops when the performance stops getting better
-    if early_stopping:
+    if model_conf['earlystopping']:
         callbacks.append(EarlyStopping(monitor="val_loss", patience=8))
 
     # Train model and adjust with validation set
     history = model.fit(X_train, y_train,
-                        epochs=epochs,
-                        batch_size=batch_size,
+                        epochs=model_conf['epochs'],
+                        batch_size=model_conf['batchsize'],
                         callbacks=callbacks,
                         validation_data=(X_val, y_val))
 
     # Get the best model's parameters
     model.load_weights(model_path)
 
+    print("Evaluate model________________________")
     evaluate_model(model, history, y, X_test, y_test, model_dir)
 
     return model_dir

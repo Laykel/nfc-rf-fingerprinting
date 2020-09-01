@@ -13,8 +13,8 @@ windows = {
 
 model_type = {
     "youssef": YoussefCNN,
-    "riyaz": RiyazCNN
-    # TODO SVM?
+    "riyaz": RiyazCNN,
+    "svm": "svm"
 }
 
 
