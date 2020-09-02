@@ -124,33 +124,33 @@ def harmonize_length(data, labels):
     return X, y
 
 
-def read_dataset(conf):
+def read_dataset(data_conf):
     """
     Sort and read the given files as complex numbers and partition them in smaller segments.
     Then, format these segments using a a given function and store them in a list of training/testing data.
     Finally, build a list of labels using the filename.
 
-    :param conf: A dictionary containing the experiment's parameters
+    :param data_conf: A dictionary containing the experiment's parameters
     :return: A couple of numpy arrays in the form (formatted data, labels)
     """
-    files_per_tag = tags_files(conf['data']['datapath'], conf['data']['tags'])
-    tags = load_data(conf['data']['datapath'], files_per_tag)
+    files_per_tag = tags_files(data_conf['datapath'], data_conf['tags'])
+    tags = load_data(data_conf['datapath'], files_per_tag)
 
     data = []
     for tag in tags:
         # Format signal in segments and add them to the collection of training/testing data
-        if conf['data']['filter']:
-            formatted = filter_peaks_windows(tag, conf['data']['windowsize'], conf['data']['windows'])
+        if data_conf['filter']:
+            formatted = filter_peaks_windows(tag, data_conf['windowsize'], data_conf['windows'])
         else:
-            windows = list(partition(tag, conf['data']['windowsize']))
-            formatted = conf['data']['windows'](windows)
+            windows = list(partition(tag, data_conf['windowsize']))
+            formatted = data_conf['windows'](windows)
 
         data.append(formatted)
 
-    X, y = harmonize_length(data, conf['data']['classes'])
+    X, y = harmonize_length(data, data_conf['classes'])
 
     # Normalize our data
-    if conf['data']['normalize']:
+    if data_conf['normalize']:
         max_value = np.abs(X).max()
         X = X / max_value
 

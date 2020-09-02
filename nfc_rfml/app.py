@@ -9,13 +9,14 @@ from learn.evaluate import analyse_model
 
 CONF = Path("experiment.json")
 MODELS = Path("../saved_models")
+MODEL_TO_RELOAD = Path("youssef-ds2-all-640-fixed")
 
 
 def train_model():
     print("Load experiment configuration_________")
     conf = load_conf(CONF)
     print("Read dataset__________________________")
-    X, y = read_dataset(conf)
+    X, y = read_dataset(conf['data'])
 
     print("Build model and train it______________")
     if conf['model']['type'] == "svm":
@@ -30,15 +31,15 @@ def load_model(model_path):
     print("Load experiment configuration_________")
     conf = load_conf(model_path / CONF)
     print("Read dataset__________________________")
-    X, y = read_dataset(conf)
+    X, y = read_dataset(conf['data'])
     X = np.expand_dims(X, axis=3)
 
     print("Reload model__________________________")
-    model = reload_model(model_path / "model.tf", conf, X.shape)
+    model = reload_model(model_path / "model.tf", conf, X.shape[1:])
     print("Analyse model performance_____________")
     analyse_model(model, X, y, conf['data']['classes'], model_path / "rerun-model")
 
 
 if __name__ == '__main__':
-    train_model()
-    # load_model(MODELS / "youssef-ds2-all-640-fixed")
+    # train_model()
+    load_model(MODELS / MODEL_TO_RELOAD)

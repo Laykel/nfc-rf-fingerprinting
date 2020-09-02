@@ -8,7 +8,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
 from dataset.format import split_data
-from learn.models import youssef_cnn, riyaz_cnn
 from learn.evaluate import evaluate_model
 
 """
