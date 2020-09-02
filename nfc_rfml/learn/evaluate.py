@@ -90,13 +90,11 @@ def plot_history(history, output_dir):
 
 
 def plot_signal_window(window, index, label, output_dir):
-    """
-    TODO
-    :param window:
-    :param index:
-    :param label:
-    :param output_dir:
-    :return:
+    """Plot a signal window
+    :param window: The window to plot
+    :param index: The window index over the whole dataset
+    :param label: The label to which the window actually belongs
+    :param output_dir: The folder where our different files are to be written
     """
     fig, ax = plt.subplots(figsize=(30, 10))
 
@@ -113,13 +111,11 @@ def plot_signal_window(window, index, label, output_dir):
 
 
 def analyse_predictions(y, y_pred, X, output_dir):
-    """
-    TODO
-    :param y:
-    :param y_pred:
-    :param X:
-    :param output_dir:
-    :return:
+    """Determine the wrongly predicted windows and plot them with some of the correctly predicted ones
+    :param y: The complete labels set
+    :param y_pred: The predicted labels
+    :param X: The complete dataset
+    :param output_dir: The folder where our different files are to be written
     """
     wrong_indices = np.nonzero((y_pred != y))[0]
     print("Wrong predictions:", wrong_indices)
@@ -136,14 +132,12 @@ def analyse_predictions(y, y_pred, X, output_dir):
 
 
 def analyse_model(model, X, y, labels, output_dir):
-    """
-    TODO
-    :param model:
-    :param X:
-    :param y:
-    :param labels:
-    :param output_dir:
-    :return:
+    """Get the necessary data to analyse a reloaded model
+    :param model: The classifier itself
+    :param X: The test data
+    :param y: The test labels
+    :param labels: The labels for the whole dataset
+    :param output_dir: The folder where our different files are to be written
     """
     y_pred = model.predict(X)
     y_pred = np.argmax(y_pred, axis=1)

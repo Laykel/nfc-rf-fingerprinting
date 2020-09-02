@@ -86,11 +86,10 @@ def tags_files(path, tags):
 
 
 def load_data(path, file_groups):
-    """
-    TODO
-    :param path:
-    :param file_groups:
-    :return:
+    """Read data from the raw files and concatenate signals from the same tags in a dataset array
+    :param path: The path to the data files
+    :param file_groups: The way in which to concatenate the files
+    :return: An array of the appended signals in order of label
     """
     data = []
 
@@ -106,11 +105,10 @@ def load_data(path, file_groups):
 
 
 def harmonize_length(data, labels):
-    """
-    TODO
-    :param data:
-    :param labels:
-    :return:
+    """Harmonize the length of the different labels, make sure each one has the same amount of data
+    :param data: The dataset containing all data
+    :param labels: The labels for the data
+    :return: The harmonized dataset and the labels correctly set for this dataset
     """
     # Find the smallest number of windows in a class
     min_window_number = min([len(x) for x in data])

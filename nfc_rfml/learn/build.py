@@ -17,14 +17,13 @@ Provide some do-all functions to configure, train and evaluate models.
 
 
 def reload_model(model_path, conf, Xshape):
+    """Reload a given model's weights and return the model object
+    :param model_path: The path to the saved model weights
+    :param conf: A dictionary containing the experiment's parameters
+    :param Xshape: The shape of the dataset
+    :return: The correct model with its trained weights, ready to make predictions
     """
-    TODO
-    :param model_path:
-    :param conf:
-    :param Xshape:
-    :return:
-    """
-    shape = (None,) + Xshape[1:]
+    shape = (None,) + Xshape
 
     model = conf['model']['type'](nb_outputs=len(conf['data']['tags']), input_shape=shape)
     model.load_weights(str(model_path)).expect_partial()
@@ -32,6 +31,12 @@ def reload_model(model_path, conf, Xshape):
 
 
 def build_cnn(X, y, model_conf):
+    """Split the dataset, build the CNN with the given parameters and train it, recording performance
+    :param X: The full dataset
+    :param y: The labels for the dataset
+    :param model_conf: The experiment parameters for the model
+    :return: The directory in which to save model-related data
+    """
     # Split data into train, validation and test data
     (X_train, y_train), (X_val, y_val), (X_test, y_test) = split_data(X, y, 0.7, 0.2, 0.1)
 
@@ -72,6 +77,10 @@ def build_cnn(X, y, model_conf):
 
 
 def build_svm(X, y):
+    """Split the dataset, build the SVM, and train it, printing the performance
+    :param X: The full dataset
+    :param y: The labels for the dataset
+    """
     # Split data into train and test data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
     print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
