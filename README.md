@@ -32,7 +32,7 @@ This project is conducted in the context of my bachelor thesis at [HEIG-VD](http
 
 This repository's folders can be described as follows:
 
-- `data` contains decoding tests as well as the `dataset` folder, which contains the data captured for the project (stored using [Git LFS](https://git-lfs.github.com/)). See [the dataset readme](data/dataset/README.md).
+- `data` contains decoding tests as well as the `dataset` folder, ~~which contains the data captured for the project (stored using [Git LFS](https://git-lfs.github.com/)). See [the dataset readme](data/dataset/README.md).~~ (The datasets were removed from git LFS after the end of the project. Please open an issue if you're unable to create your own datasets.)
 - `gnuradio` contains the different GRC flowgraphs used in the project.
 - `nfc_rfml` contains the source code used to pre-process the signals, train the model, and test its performance. See [the project's readme](nfc_rfml/README.md).
 - `notebooks` contains the notebooks used during the analysis and prototyping phase of the project.
@@ -41,7 +41,7 @@ This repository's folders can be described as follows:
 
 ## How to run
 
-The first step to run anything from this project is to clone the repo (warning, this will also download the datasets if you have git LFS installed). For more information on the main python project, see [the its readme](nfc_rfml/README.md).
+The first step to run anything from this project is to clone the repo. (Warning, the datasets were removed from git LFS. Open an issue if you're unable to build your own datasets.) For more information on the main python project, see [the its readme](nfc_rfml/README.md).
 
 ### The acquisition script
 

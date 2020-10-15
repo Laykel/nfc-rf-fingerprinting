@@ -1,0 +1,1 @@
+data/dataset/**/*.nfc filter=lfs diff=lfs merge=lfs -text
