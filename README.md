@@ -1,5 +1,7 @@
 # RF fingerprinting for NFC device identification
 
+_Warning: Dependabot alerts are disabled on this repo, as it won't be updated anymore. If you base something on this project, make sure to review the dependencies and update them._
+
 ## Description
 
 (See the project's [report](report/final-report.pdf) for a precise account of every step.)
